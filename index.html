@@ -4,12 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Сос & Сусанна ❤️</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-
 <style>
 html { scroll-behavior: smooth; }
-
 body {
   margin: 0;
   font-family: 'Montserrat', sans-serif;
@@ -30,203 +27,53 @@ body {
 }
 
 /* Секции */
-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 50px 20px;
-  opacity: 0;
-  transform: translateY(40px);
-  transition: 0.8s;
-}
+section { display: flex; justify-content: center; align-items: center; padding: 50px 20px; opacity: 0; transform: translateY(40px); transition: 0.8s; }
 
 /* Карточки */
-.card {
-  position: relative;
-  background: rgba(255,250,245,0.9);
-  padding: 70px 60px;
-  border-radius: 30px;
-  max-width: 700px;
-  text-align: center;
-
-  outline: 6px solid #d9c8b6;
-  outline-offset: 10px;
-
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-
-  opacity: 0;
-  transform: translateY(40px) scale(0.98);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.card.visible {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
+.card { position: relative; background: rgba(255,250,245,0.9); padding: 70px 60px; border-radius: 30px; max-width: 700px; text-align: center; outline: 6px solid #d9c8b6; outline-offset: 10px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); opacity: 0; transform: translateY(40px) scale(0.98); transition: opacity 0.8s ease, transform 0.8s ease; }
+.card.visible { opacity: 1; transform: translateY(0) scale(1); }
 
 /* Цветы */
-.corner {
-  position: absolute;
-  width: 90px;
-  pointer-events: none;
-  z-index: 3;
-
-  opacity: 0;
-  transform: scale(0.7);
-  transition: all 0.8s ease;
-}
-
-.card.visible .corner {
-  opacity: 1;
-  transform: scale(1);
-  transition-delay: 0.3s;
-}
-
-.corner-tl { top: -30px; left: -30px; }
-.corner-tr { top: -30px; right: -30px; }
-.corner-bl { bottom: -30px; left: -30px; }
-.corner-br { bottom: -30px; right: -30px; }
+.corner { position: absolute; width: 90px; pointer-events: none; z-index: 3; opacity: 0; transform: scale(0.7); transition: all 0.8s ease; }
+.card.visible .corner { opacity: 1; transform: scale(1); transition-delay: 0.3s; }
+.corner-tl { top: -30px; left: -30px; } .corner-tr { top: -30px; right: -30px; } .corner-bl { bottom: -30px; left: -30px; } .corner-br { bottom: -30px; right: -30px; }
 
 /* Текст */
-.names {
-  font-family: 'Playfair Display', serif;
-  font-size: 60px;
-  line-height: 1.1;
-  color: #d9c8b6;
-}
+.names { font-family: 'Playfair Display', serif; font-size: 60px; line-height: 1.1; color: #d9c8b6; }
 .names span { display: block; }
-
-h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 32px;
-  color: #d9c8b6;
-  margin-bottom: 20px;
-}
-
-button {
-  margin-top: 20px;
-  padding: 15px 40px;
-  border-radius: 50px;
-  border: none;
-  background: #d9c8b6;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-#timer {
-  font-size: 28px;
-  margin-top: 20px;
-  font-family: 'Playfair Display', serif;
-}
-
-/* Дата */
-.date {
-  font-size: 28px;
-  font-weight: 600;
-  color: #d9c8b6;
-  margin: 15px 0;
-  font-family: 'Playfair Display', serif;
-  text-shadow: 0 0 10px rgba(217,200,182,0.4);
-}
-
-/* Светлое сердце */
-.heart {
-  display: inline-block;
-  color: #f7e7d0;
-  animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.25); }
-  100% { transform: scale(1); }
-}
-
-/* Финал */
-.final h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 96px;
-  color: #d9c8b6;
-  text-shadow: 0 0 15px #d9c8b6, 0 0 30px #ecd8b5;
-  margin: 0;
-  animation: glow 2s infinite alternate;
-}
+h2 { font-family: 'Playfair Display', serif; font-size: 32px; color: #d9c8b6; margin-bottom: 20px; }
+button { margin-top: 20px; padding: 15px 40px; border-radius: 50px; border: none; background: #d9c8b6; color: white; font-size: 16px; cursor: pointer; }
+#timer { font-size: 28px; margin-top: 20px; font-family: 'Playfair Display', serif; }
+.date { font-size: 28px; font-weight: 600; color: #d9c8b6; margin: 15px 0; font-family: 'Playfair Display', serif; text-shadow: 0 0 10px rgba(217,200,182,0.4); }
+.heart { display: inline-block; color: #f7e7d0; animation: pulse 1.5s infinite; }
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.25); } 100% { transform: scale(1); } }
+.final h1 { font-family: 'Playfair Display', serif; font-size: 96px; color: #d9c8b6; text-shadow: 0 0 15px #d9c8b6, 0 0 30px #ecd8b5; margin: 0; animation: glow 2s infinite alternate; }
 .final p { font-size: 36px; margin-bottom: 20px; }
+@keyframes glow { from { text-shadow:0 0 10px #d9c8b6;} to { text-shadow:0 0 30px #ecd8b5;} }
 
-@keyframes glow { 
-  from { text-shadow:0 0 10px #d9c8b6;} 
-  to { text-shadow:0 0 30px #ecd8b5;} 
-}
-
-/* ===== МОБИЛКА ===== */
 @media (max-width: 600px) {
-
-  html, body {
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
-
-  section {
-    padding: 45px 10px;
-  }
-
-  section:first-of-type {
-    min-height: 80vh;
-    justify-content: center;
-    align-items: center;
-    padding: 0 10px;
-  }
-
-  section:not(:first-of-type) {
-    margin-top: 30px;
-  }
-
-  .card {
-    max-width: 80%;
-    padding: 35px 20px;
-  }
-
+  html, body { overflow-x: hidden; overflow-y: auto; }
+  section { padding: 45px 10px; }
+  section:first-of-type { min-height: 80vh; justify-content: center; align-items: center; padding: 0 10px; }
+  section:not(:first-of-type) { margin-top: 30px; }
+  .card { max-width: 80%; padding: 35px 20px; }
   .corner { width: 100px; }
-
-  .names { font-size: 38px; }
-  h2 { font-size: 22px; }
-  #timer { font-size: 20px; }
-  .final h1 { font-size: 60px; }
-  .final p { font-size: 24px; }
+  .names { font-size: 38px; } h2 { font-size: 22px; } #timer { font-size: 20px; } .final h1 { font-size: 60px; } .final p { font-size: 24px; }
 }
 
 /* Модалка */
-.modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-}
-.modal-content {
-  background: white;
-  margin: 20% auto;
-  padding: 20px;
-  border-radius: 20px;
-  width: 80%;
-  max-width: 300px;
-  text-align: center;
-}
+.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); }
+.modal-content { background: white; margin: 20% auto; padding: 20px; border-radius: 20px; width: 80%; max-width: 300px; text-align: center; }
 input { width: 90%; margin: 10px 0; padding: 10px; }
-
-footer {
-  text-align: center;
-  padding: 40px;
-  font-family: 'Playfair Display', serif;
-}
+footer { text-align: center; padding: 40px; font-family: 'Playfair Display', serif; }
 </style>
 </head>
-
 <body>
 
 <div class="video-bg">
   <video autoplay muted loop playsinline>
-    <source src="IMG_3921.MP4" type="video/mp4">
+    <source src="https://adamyan02.github.io/Sos-Susanna/IMG_3921.mp4" type="video/mp4">
+    Ваш браузер не поддерживает видео.
   </video>
 </div>
 
@@ -236,13 +83,9 @@ footer {
 <img class="corner corner-bl" src="Floral-Beige-Frame-2.png">
 <img class="corner corner-br" src="Floral-Beige-Frame-3.png">
 <img class="corner corner-tr" src="Floral-Beige-Frame-4.png">
-
 <h1 class="names"><span>Сос</span><span>&</span><span>Сусанна</span></h1>
-
 <p class="date">09.08.2026</p>
-
 <p>Мы начинаем нашу свадьбу и будем рады разделить этот день с вами <span class="heart">🤍</span></p>
-
 <button id="confirmBtn">Подтвердить присутствие</button>
 </div>
 </section>
@@ -268,7 +111,6 @@ footer {
 
 <script>
 const sections = document.querySelectorAll("section");
-
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry, index) => {
     if (entry.isIntersecting) {
@@ -286,7 +128,6 @@ const observer = new IntersectionObserver((entries) => {
     }
   });
 }, { threshold: 0.3 });
-
 sections.forEach(section => observer.observe(section));
 
 // Таймер
