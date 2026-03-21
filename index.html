@@ -30,7 +30,20 @@ body {
 section { display: flex; justify-content: center; align-items: center; padding: 50px 20px; opacity: 0; transform: translateY(40px); transition: 0.8s; }
 
 /* Карточки */
-.card { position: relative; background: rgba(255,250,245,0.9); padding: 70px 60px; border-radius: 30px; max-width: 700px; text-align: center; outline: 6px solid #d9c8b6; outline-offset: 10px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); opacity: 0; transform: translateY(40px) scale(0.98); transition: opacity 0.8s ease, transform 0.8s ease; }
+.card {
+  position: relative;
+  background: rgba(255,250,245,0.9);
+  padding: 70px 60px;
+  border-radius: 30px;
+  max-width: 700px;
+  text-align: center;
+  outline: 6px solid #c8b79e; /* рамки темнее для контраста */
+  outline-offset: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  opacity: 0;
+  transform: translateY(40px) scale(0.98);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
 .card.visible { opacity: 1; transform: translateY(0) scale(1); }
 
 /* Цветы */
@@ -90,13 +103,51 @@ footer { text-align: center; padding: 40px; font-family: 'Playfair Display', ser
 </div>
 </section>
 
-<section><div class="card"><img class="corner corner-tl" src="Floral-Beige-Frame-1.png"><img class="corner corner-bl" src="Floral-Beige-Frame-2.png"><img class="corner corner-br" src="Floral-Beige-Frame-3.png"><img class="corner corner-tr" src="Floral-Beige-Frame-4.png"><h2>Локация</h2><p>Банкетный зал «Версаль»</p><p>Уфа, Элеваторная улица, 13, Уфа</p><button onclick="openRoute()">Проложить маршрут</button></div></section>
+<section>
+<div class="card">
+<img class="corner corner-tl" src="Floral-Beige-Frame-1.png">
+<img class="corner corner-bl" src="Floral-Beige-Frame-2.png">
+<img class="corner corner-br" src="Floral-Beige-Frame-3.png">
+<img class="corner corner-tr" src="Floral-Beige-Frame-4.png">
+<h2>Локация</h2>
+<p>Банкетный зал «Версаль»</p>
+<p>Уфа, Элеваторная улица, 13</p>
+<button onclick="openRoute()">Проложить маршрут</button>
+</div>
+</section>
 
-<section><div class="card"><img class="corner corner-tl" src="Floral-Beige-Frame-1.png"><img class="corner corner-bl" src="Floral-Beige-Frame-2.png"><img class="corner corner-br" src="Floral-Beige-Frame-3.png"><img class="corner corner-tr" src="Floral-Beige-Frame-4.png"><h2>До свадьбы осталось</h2><div id="timer"></div></div></section>
+<section>
+<div class="card">
+<img class="corner corner-tl" src="Floral-Beige-Frame-1.png">
+<img class="corner corner-bl" src="Floral-Beige-Frame-2.png">
+<img class="corner corner-br" src="Floral-Beige-Frame-3.png">
+<img class="corner corner-tr" src="Floral-Beige-Frame-4.png">
+<h2>До свадьбы осталось</h2>
+<div id="timer"></div>
+</div>
+</section>
 
-<section><div class="card"><img class="corner corner-tl" src="Floral-Beige-Frame-1.png"><img class="corner corner-bl" src="Floral-Beige-Frame-2.png"><img class="corner corner-br" src="Floral-Beige-Frame-3.png"><img class="corner corner-tr" src="Floral-Beige-Frame-4.png"><h2>Дресс-код</h2><p>Будем признательны, если дамы воздержатся от платьев в оттенках белого 🤍</p></div></section>
+<section>
+<div class="card">
+<img class="corner corner-tl" src="Floral-Beige-Frame-1.png">
+<img class="corner corner-bl" src="Floral-Beige-Frame-2.png">
+<img class="corner corner-br" src="Floral-Beige-Frame-3.png">
+<img class="corner corner-tr" src="Floral-Beige-Frame-4.png">
+<h2>Дресс-код</h2>
+<p>Будем признательны, если дамы воздержатся от платьев в оттенках белого 🤍</p>
+</div>
+</section>
 
-<section><div class="card final"><img class="corner corner-tl" src="Floral-Beige-Frame-1.png"><img class="corner corner-bl" src="Floral-Beige-Frame-2.png"><img class="corner corner-br" src="Floral-Beige-Frame-3.png"><img class="corner corner-tr" src="Floral-Beige-Frame-4.png"><p>До встречи</p><h1>S & S</h1></div></section>
+<section>
+<div class="card final">
+<img class="corner corner-tl" src="Floral-Beige-Frame-1.png">
+<img class="corner corner-bl" src="Floral-Beige-Frame-2.png">
+<img class="corner corner-br" src="Floral-Beige-Frame-3.png">
+<img class="corner corner-tr" src="Floral-Beige-Frame-4.png">
+<p>До встречи</p>
+<h1>S & S</h1>
+</div>
+</section>
 
 <footer>© 2026 Сос & Сусанна</footer>
 
