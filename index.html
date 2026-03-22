@@ -62,7 +62,7 @@ section {
   max-width: 600px;
   width: 100%;
   text-align: center;
-  outline: 6px solid #8b5e3c; /* бронзовая рамка */
+  outline: 6px solid #8b5e3c; /* коричнево-бронзовая рамка */
   outline-offset: 10px;
   box-shadow: 0 30px 70px rgba(0,0,0,0.2);
   transform-origin: center bottom;
@@ -101,18 +101,19 @@ section {
   position: absolute;
   width: 90px;
   pointer-events: none;
-  z-index: 10;
-  opacity: 1;
-  transform: scale(1);
+  z-index: 20; 
+  opacity: 0;
+  transform: scale(0.7);
+  transition: all 1.2s ease;
 }
-.corner-tl { top:0; left:0; }
-.corner-tr { top:0; right:0; }
-.corner-bl { bottom:0; left:0; }
-.corner-br { bottom:0; right:0; }
+.corner-tl { top:-30px; left:-30px; }
+.corner-tr { top:-30px; right:-30px; }
+.corner-bl { bottom:-30px; left:-30px; }
+.corner-br { bottom:-30px; right:-30px; }
 
 /* Заголовки и тексты */
 .names span { display:block; }
-h2 { font-family: 'Dancing Script', cursive; font-size:34px; color:#8b5e3c; margin-bottom:20px; } /* бронзовый */
+h2 { font-family: 'Dancing Script', cursive; font-size:34px; color:#8b5e3c; margin-bottom:20px; } /* коричневый */
 p { font-family: 'Dancing Script', cursive; line-height:1.6; margin:8px 0; }
 
 /* Кнопки */
@@ -201,25 +202,27 @@ input { width:90%; margin:10px 0; padding:10px; }
 </div>
 <div class="video-overlay"></div>
 
-<!-- Карточки -->
+<!-- Первый блок -->
 <section>
   <div class="card first-block">
     <h1 class="names"><span>Сос</span><span>&</span><span>Сусанна</span></h1>
-    <p class="date">18.08.2026</p>
+    <p class="date">09.08.2026</p>
     <p>Мы создаём нашу семью и будем искренне счастливы разделить этот особенный день вместе с вами. Для нас очень важно ваше присутствие и поддержка 💙</p>
     <button id="confirmBtn">Подтвердить присутствие</button>
   </div>
 </section>
 
+<!-- Блок локации -->
 <section>
   <div class="card">
     <h2>Локация</h2>
-    <p>Банкетный зал «На семи ветрах»</p>
-    <p>Саратов, Московское шоссе, 154 к1</p>
+    <p>Банкетный зал «Версаль»</p>
+    <p>г. Уфа, поселок Мелькомбинат, ул. Элеваторская, д. 13</p>
     <button onclick="openRoute()">Проложить маршрут</button>
   </div>
 </section>
 
+<!-- Блок карты -->
 <section style="flex-direction: column; align-items: flex-start;">
   <div class="card" style="margin-bottom:10px; max-width:600px;">
     <h2>Локация на карте</h2>
@@ -228,6 +231,7 @@ input { width:90%; margin:10px 0; padding:10px; }
   <div id="map" class="full-map"></div>
 </section>
 
+<!-- Таймер -->
 <section>
   <div class="card">
     <h2>До свадьбы осталось</h2>
@@ -235,6 +239,7 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
+<!-- Дресс-код -->
 <section>
   <div class="card">
     <h2>Дресс-код</h2>
@@ -244,6 +249,7 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
+<!-- Финальный блок -->
 <section>
   <div class="card final">
     <p>С нетерпением ждём встречи с вами</p>
@@ -269,13 +275,13 @@ input { width:90%; margin:10px 0; padding:10px; }
 ymaps.ready(init);
 function init() {
   var map = new ymaps.Map("map", {
-    center: [51.616945, 45.880925],
+    center: [54.77, 55.98],
     zoom: 16,
     controls: ['zoomControl','fullscreenControl']
   });
-  var placemark = new ymaps.Placemark([51.616945, 45.880925], {
+  var placemark = new ymaps.Placemark([54.77, 55.98], {
     hintContent: 'Место проведения',
-    balloonContent: 'Банкетный зал «На семи ветрах»'
+    balloonContent: 'Банкетный зал «Версаль»'
   }, {
     preset: 'islands#redDotIcon'
   });
@@ -308,7 +314,7 @@ window.addEventListener('touchend', e=>{
   else scrollToSection(current-1);
 });
 
-// --- Автоматическое добавление угловых рамок ---
+// --- Автоматическое добавление угловых рамок с анимацией ---
 const cornerImages = [
   "Floral-Blue-Frame-1.png",
   "Floral-Blue-Frame-2.png",
@@ -316,19 +322,46 @@ const cornerImages = [
   "Floral-Blue-Frame-4.png"
 ];
 
-document.querySelectorAll('.card').forEach(card => {
-  const positions = ['tl', 'bl', 'br', 'tr'];
-  positions.forEach((pos, i) => {
+sections.forEach(section=>{
+  const card = section.querySelector('.card');
+  if(!card) return;
+  const positions = ['tl','bl','br','tr'];
+  positions.forEach((pos,i)=>{
     const img = document.createElement('img');
     img.src = cornerImages[i];
     img.classList.add('corner', `corner-${pos}`);
     card.appendChild(img);
   });
-  card.classList.add('visible'); // сразу видимая
 });
 
+// --- IntersectionObserver для анимации ---
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    const card = entry.target.querySelector('.card');
+    const corners = entry.target.querySelectorAll('.corner');
+    if(entry.isIntersecting){
+      card.classList.remove('visible');
+      corners.forEach(c=>{
+        c.style.transition='none';
+        c.style.opacity='0';
+        c.style.transform='scale(0.7)';
+      });
+      void card.offsetWidth;
+      setTimeout(()=>{
+        card.classList.add('visible');
+        corners.forEach(c=>{
+          c.style.transition='all 1.2s ease';
+          c.style.opacity='1';
+          c.style.transform='scale(1)';
+        });
+      },50);
+    }
+  });
+},{threshold:0.6});
+sections.forEach(s=>observer.observe(s));
+
 // --- Таймер ---
-const targetDate = new Date('2026-08-18T00:00:00');
+const targetDate = new Date('2026-08-09T00:00:00');
 setInterval(()=>{
   const now = new Date();
   let diff = targetDate-now;
