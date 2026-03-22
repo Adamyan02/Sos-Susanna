@@ -73,7 +73,7 @@ section {
   flex-direction: column;
   justify-content: center;
   box-sizing: border-box;
-  margin: 20px 0;
+  margin: 20px auto; /* центрирование + отступ сверху/снизу */
 }
 
 /* Первый блок компактный */
@@ -82,9 +82,15 @@ section {
   padding: 30px 30px;
 }
 .card.first-block .names {
-  font-size: 50px;
+  font-size: 42px; /* уменьшенный шрифт */
   font-family: 'Great Vibes', cursive;
-  line-height: 1.2;
+  line-height: 1.1;
+  display: flex;
+  justify-content: center;
+  gap: 8px; /* пробел между именами */
+}
+.card.first-block .names span {
+  display: inline; /* в одну строку */
 }
 .card.first-block .date { font-size: 22px; margin-top:10px; }
 .card.first-block p { font-size: 16px; line-height: 1.5; margin-top:15px; }
@@ -135,14 +141,14 @@ button {
 .final h1 {
   font-family: 'Great Vibes', cursive;
   font-size: 100px;
-  color: #8b5e3c;
-  text-shadow: 0 0 15px #8b5e3c, 0 0 30px #a67c52;
+  color: #f5e6d3; /* более нежный бежевый */
+  text-shadow: 2px 4px 12px rgba(139,94,60,0.3); /* мягкая тень */
 }
 
 /* Мобильные */
 @media (max-width:600px){
-  section { padding:0 20px; }
-  .card { padding:25px 20px; }
+  section { padding: 0 15px; }
+  .card { padding: 20px 15px; margin: 15px auto; }
   .card.first-block { padding:25px 20px; }
   .names { font-size:36px; }
   h2 { font-size:28px; }
@@ -373,7 +379,9 @@ setInterval(()=>{
 },1000);
 
 // --- Модалка ---
-function openRoute(){ window.open('https://yandex.ru/maps/-/CPRav60J'); }
+function openRoute(){ 
+    window.open('https://yandex.ru/maps/?text=г.%20Уфа,%20поселок%20Мелькомбинат,%20ул.%20Элеваторская%2013'); 
+}
 const modal = document.getElementById('modal');
 const closeBtn = modal.querySelector('.close');
 document.getElementById('confirmBtn').onclick = () => modal.style.display='block';
