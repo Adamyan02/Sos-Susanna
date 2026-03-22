@@ -62,7 +62,7 @@ section {
   max-width: 600px;
   width: 100%;
   text-align: center;
-  outline: 6px solid #9bbcff;
+  outline: 6px solid #8b5e3c; /* бронзовая рамка */
   outline-offset: 10px;
   box-shadow: 0 30px 70px rgba(0,0,0,0.2);
   transform-origin: center bottom;
@@ -96,27 +96,22 @@ section {
   opacity: 1;
 }
 
-/* Цветы */
+/* Цветы / углы */
 .corner {
   position: absolute;
   width: 90px;
   pointer-events: none;
-  opacity: 0;
-  transform: scale(0.7);
-  transition: all 1.2s ease;
-}
-.card.visible .corner {
-  opacity: 1;
+  opacity: 1; /* всегда видны */
   transform: scale(1);
 }
-.corner-tl { top:-30px; left:-30px; }
-.corner-tr { top:-30px; right:-30px; }
-.corner-bl { bottom:-30px; left:-30px; }
-.corner-br { bottom:-30px; right:-30px; }
+.corner-tl { top:0; left:0; }
+.corner-tr { top:0; right:0; }
+.corner-bl { bottom:0; left:0; }
+.corner-br { bottom:0; right:0; }
 
-/* Заголовки */
+/* Заголовки и тексты */
 .names span { display:block; }
-h2 { font-family: 'Dancing Script', cursive; font-size:34px; color:#7faaff; margin-bottom:20px; }
+h2 { font-family: 'Dancing Script', cursive; font-size:34px; color:#8b5e3c; margin-bottom:20px; } /* бронзовый */
 p { font-family: 'Dancing Script', cursive; line-height:1.6; margin:8px 0; }
 
 /* Кнопки */
@@ -125,21 +120,21 @@ button {
   padding: 15px 40px;
   border-radius: 50px;
   border: none;
-  background: #9bbcff;
+  background: #8b5e3c; /* коричнево-бронзовый */
   color: white;
   font-size: 16px;
   cursor: pointer;
 }
 
-.date { font-size: 28px; color: #7faaff; font-family:'Dancing Script', cursive; }
+.date { font-size: 28px; color: #8b5e3c; font-family:'Dancing Script', cursive; }
 #timer { font-size:26px; font-family:'Dancing Script', cursive; margin-top:10px; }
 
 /* Финальный блок S&S */
 .final h1 {
   font-family: 'Great Vibes', cursive;
   font-size: 100px;
-  color: #7faaff;
-  text-shadow: 0 0 15px #7faaff, 0 0 30px #aaccff;
+  color: #8b5e3c;
+  text-shadow: 0 0 15px #8b5e3c, 0 0 30px #a67c52;
 }
 
 /* Мобильные */
@@ -171,7 +166,6 @@ button {
   text-align: center;
   position: relative;
 }
-/* Крестик закрытия */
 .modal-content .close {
   position: absolute;
   top: 10px;
@@ -299,7 +293,7 @@ input { width:90%; margin:10px 0; padding:10px; }
 
 <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
 <script>
-// Инициализация интерактивной карты
+// --- Карта ---
 ymaps.ready(init);
 function init() {
   var map = new ymaps.Map("map", {
@@ -316,7 +310,7 @@ function init() {
   map.geoObjects.add(placemark);
 }
 
-// Snap scroll
+// --- Snap scroll ---
 let isScrolling = false;
 const sections = document.querySelectorAll('section');
 let current = 0;
@@ -342,33 +336,10 @@ window.addEventListener('touchend', e=>{
   else scrollToSection(current-1);
 });
 
-// Анимация цветов при каждом листании
-const observer = new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    const card = entry.target.querySelector('.card');
-    const corners = entry.target.querySelectorAll('.corner');
-    if(entry.isIntersecting){
-      card.classList.remove('visible');
-      corners.forEach(c=>{
-        c.style.transition='none';
-        c.style.opacity='0';
-        c.style.transform='scale(0.7)';
-      });
-      void card.offsetWidth;
-      setTimeout(()=>{
-        card.classList.add('visible');
-        corners.forEach(c=>{
-          c.style.transition='all 1.2s ease';
-          c.style.opacity='1';
-          c.style.transform='scale(1)';
-        });
-      },50);
-    }
-  });
-},{threshold:0.6});
-sections.forEach(s=>observer.observe(s));
+// --- Анимация: сразу видимые карточки и углы ---
+document.querySelectorAll('.card').forEach(c => c.classList.add('visible'));
 
-// Таймер
+// --- Таймер ---
 const targetDate = new Date('2026-08-18T00:00:00');
 setInterval(()=>{
   const now = new Date();
@@ -380,7 +351,7 @@ setInterval(()=>{
   document.getElementById('timer').innerHTML=`${d} дней ${h} часов ${m} минут ${s} секунд`;
 },1000);
 
-// Модалка
+// --- Модалка ---
 function openRoute(){ window.open('https://yandex.ru/maps/-/CPRav60J'); }
 const modal = document.getElementById('modal');
 const closeBtn = modal.querySelector('.close');
