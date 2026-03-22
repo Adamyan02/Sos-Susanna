@@ -62,7 +62,7 @@ section {
   max-width: 600px;
   width: 100%;
   text-align: center;
-  outline: 6px solid #8b5e3c; /* бронзовая рамка */
+  outline: 6px solid #8b5e3c;
   outline-offset: 10px;
   box-shadow: 0 30px 70px rgba(0,0,0,0.2);
   transform-origin: center bottom;
@@ -213,7 +213,7 @@ input { width:90%; margin:10px 0; padding:10px; }
   <div class="card first-block">
     <h1 class="names"><span>Сос</span><span>&</span><span>Сусанна</span></h1>
     <p class="date">09.08.2026</p>
-    <p>Мы создаём нашу семью и будем искренне счастливы разделить этот особенный день вместе с вами. Для нас очень важно ваше присутствие и поддержка 💙</p>
+    <p>Мы создаём нашу семью и будем искренне счастливы разделить этот особенный день вместе с вами. Для нас очень важно ваше присутствие и поддержка <span style="color:red;">❤️</span></p>
     <button id="confirmBtn">Подтвердить присутствие</button>
   </div>
 </section>
@@ -321,17 +321,17 @@ window.addEventListener('wheel', e=>{
 
 let touchStartY=0;
 window.addEventListener('touchstart', e=>{
-  if(e.target.closest('#map')) return; // игнор карты
+  if(e.target.closest('#map')) return;
   touchStartY=e.touches[0].clientY;
 });
 window.addEventListener('touchend', e=>{
-  if(e.target.closest('#map')) return; // игнор карты
+  if(e.target.closest('#map')) return;
   let diff=touchStartY-e.changedTouches[0].clientY;
   if(Math.abs(diff)<30) return;
   scrollHandler({deltaY: diff});
 });
 
-// --- Автоматическое добавление угловых рамок с анимацией ---
+// --- Автоматическое добавление угловых рамок ---
 const cornerImages = [
   "Floral-Blue-Frame-1.png",
   "Floral-Blue-Frame-2.png",
