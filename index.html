@@ -73,7 +73,7 @@ section {
   flex-direction: column;
   justify-content: center;
   box-sizing: border-box;
-  margin: 20px auto; /* центрирование + отступ сверху/снизу */
+  margin: 20px auto;
 }
 
 /* Первый блок компактный */
@@ -82,15 +82,15 @@ section {
   padding: 30px 30px;
 }
 .card.first-block .names {
-  font-size: 42px; /* уменьшенный шрифт */
+  font-size: 42px;
   font-family: 'Great Vibes', cursive;
   line-height: 1.1;
   display: flex;
   justify-content: center;
-  gap: 8px; /* пробел между именами */
+  gap: 8px;
 }
 .card.first-block .names span {
-  display: inline; /* в одну строку */
+  display: inline;
 }
 .card.first-block .date { font-size: 22px; margin-top:10px; }
 .card.first-block p { font-size: 16px; line-height: 1.5; margin-top:15px; }
@@ -141,8 +141,8 @@ button {
 .final h1 {
   font-family: 'Great Vibes', cursive;
   font-size: 100px;
-  color: #f5e6d3; /* более нежный бежевый */
-  text-shadow: 2px 4px 12px rgba(139,94,60,0.3); /* мягкая тень */
+  color: #f5e6d3;
+  text-shadow: 2px 4px 12px rgba(139,94,60,0.3);
 }
 
 /* Мобильные */
@@ -294,10 +294,11 @@ function init() {
   map.geoObjects.add(placemark);
 }
 
-// --- Snap scroll ---
+// --- Snap scroll с исключением для карты ---
 let isScrolling = false;
 const sections = document.querySelectorAll('section');
 let current = 0;
+
 function scrollToSection(index){
   if(index<0 || index>=sections.length) return;
   isScrolling=true;
@@ -306,18 +307,28 @@ function scrollToSection(index){
   window.scrollTo({top: top, behavior:'smooth'});
   setTimeout(()=>isScrolling=false, 700);
 }
-window.addEventListener('wheel', e=>{
+
+function scrollHandler(e){
   if(isScrolling) return;
   if(e.deltaY>20) scrollToSection(current+1);
   else if(e.deltaY<-20) scrollToSection(current-1);
+}
+
+window.addEventListener('wheel', e=>{
+  if(isScrolling) return;
+  scrollHandler(e);
 });
+
 let touchStartY=0;
-window.addEventListener('touchstart', e=>touchStartY=e.touches[0].clientY);
+window.addEventListener('touchstart', e=>{
+  if(e.target.closest('#map')) return; // игнор карты
+  touchStartY=e.touches[0].clientY;
+});
 window.addEventListener('touchend', e=>{
+  if(e.target.closest('#map')) return; // игнор карты
   let diff=touchStartY-e.changedTouches[0].clientY;
   if(Math.abs(diff)<30) return;
-  if(diff>0) scrollToSection(current+1);
-  else scrollToSection(current-1);
+  scrollHandler({deltaY: diff});
 });
 
 // --- Автоматическое добавление угловых рамок с анимацией ---
@@ -378,9 +389,9 @@ setInterval(()=>{
   document.getElementById('timer').innerHTML=`${d} дней ${h} часов ${m} минут ${s} секунд`;
 },1000);
 
-// --- Модалка ---
+// --- Модалка и кнопка маршрут ---
 function openRoute(){ 
-    window.open('https://yandex.ru/maps/?text=г.%20Уфа,%20поселок%20Мелькомбинат,%20ул.%20Элеваторская%2013'); 
+    window.open('https://yandex.com/maps/-/CPRKiP-R'); 
 }
 const modal = document.getElementById('modal');
 const closeBtn = modal.querySelector('.close');
