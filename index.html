@@ -2,221 +2,402 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Сос & Сусанна ❤️</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Сос и Сусанна ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+
 <style>
-html { scroll-behavior: smooth; }
-body {
+html, body {
   margin: 0;
-  font-family: 'Montserrat', sans-serif;
-  color: #1a1a1a;
+  padding: 0;
   overflow-x: hidden;
+  overflow-y: auto;
+  font-family: 'Dancing Script', cursive;
+  color: #1a1a1a;
+  touch-action: pan-y;
 }
 
-/* Видео */
+/* Видео фон */
 .video-bg {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   z-index: -10;
+  pointer-events: none;
 }
 .video-bg video {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
+}
+.video-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(245,235,220,0);
+  z-index: -5;
+  pointer-events: none;
 }
 
 /* Секции */
-section { display: flex; justify-content: center; align-items: center; padding: 50px 20px; opacity: 0; transform: translateY(40px); transition: 0.8s; }
+section {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 120px;
+  perspective: 1600px;
+  box-sizing: border-box;
+}
 
 /* Карточки */
 .card {
   position: relative;
-  background: rgba(255,250,245,0.9);
-  padding: 70px 60px;
+  background: rgba(255,255,255,0.92);
+  padding: 40px 40px;
   border-radius: 30px;
-  max-width: 700px;
+  max-width: 600px;
+  width: 100%;
   text-align: center;
-  outline: 6px solid #c8b79e; /* рамки темнее для контраста */
+  outline: 6px solid #9bbcff;
   outline-offset: 10px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  box-shadow: 0 30px 70px rgba(0,0,0,0.2);
+  transform-origin: center bottom;
+  transform: rotateX(25deg) translateY(150px) scale(0.95);
   opacity: 0;
-  transform: translateY(40px) scale(0.98);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition: opacity 1.2s ease, transform 1.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  margin: 20px 0;
 }
-.card.visible { opacity: 1; transform: translateY(0) scale(1); }
+
+/* Первый блок компактный */
+.card.first-block {
+  max-width: 480px;
+  padding: 30px 30px;
+}
+.card.first-block .names {
+  font-size: 50px;
+  font-family: 'Great Vibes', cursive;
+  line-height: 1.2;
+}
+.card.first-block .date { font-size: 22px; margin-top:10px; }
+.card.first-block p { font-size: 16px; line-height: 1.5; margin-top:15px; }
+.card.first-block button { padding: 12px 28px; font-size: 14px; margin-top:20px; }
+
+/* Видимая карточка */
+.card.visible {
+  transform: rotateX(0deg) translateY(0) scale(1);
+  opacity: 1;
+}
 
 /* Цветы */
-.corner { position: absolute; width: 90px; pointer-events: none; z-index: 3; opacity: 0; transform: scale(0.7); transition: all 0.8s ease; }
-.card.visible .corner { opacity: 1; transform: scale(1); transition-delay: 0.3s; }
-.corner-tl { top: -30px; left: -30px; } .corner-tr { top: -30px; right: -30px; } .corner-bl { bottom: -30px; left: -30px; } .corner-br { bottom: -30px; right: -30px; }
+.corner {
+  position: absolute;
+  width: 90px;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.7);
+  transition: all 1.2s ease;
+}
+.card.visible .corner {
+  opacity: 1;
+  transform: scale(1);
+}
+.corner-tl { top:-30px; left:-30px; }
+.corner-tr { top:-30px; right:-30px; }
+.corner-bl { bottom:-30px; left:-30px; }
+.corner-br { bottom:-30px; right:-30px; }
 
-/* Текст */
-.names { font-family: 'Playfair Display', serif; font-size: 60px; line-height: 1.1; color: #d9c8b6; }
-.names span { display: block; }
-h2 { font-family: 'Playfair Display', serif; font-size: 32px; color: #d9c8b6; margin-bottom: 20px; }
-button { margin-top: 20px; padding: 15px 40px; border-radius: 50px; border: none; background: #d9c8b6; color: white; font-size: 16px; cursor: pointer; }
-#timer { font-size: 28px; margin-top: 20px; font-family: 'Playfair Display', serif; }
-.date { font-size: 28px; font-weight: 600; color: #d9c8b6; margin: 15px 0; font-family: 'Playfair Display', serif; text-shadow: 0 0 10px rgba(217,200,182,0.4); }
-.heart { display: inline-block; color: #f7e7d0; animation: pulse 1.5s infinite; }
-@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.25); } 100% { transform: scale(1); } }
-.final h1 { font-family: 'Playfair Display', serif; font-size: 96px; color: #d9c8b6; text-shadow: 0 0 15px #d9c8b6, 0 0 30px #ecd8b5; margin: 0; animation: glow 2s infinite alternate; }
-.final p { font-size: 36px; margin-bottom: 20px; }
-@keyframes glow { from { text-shadow:0 0 10px #d9c8b6;} to { text-shadow:0 0 30px #ecd8b5;} }
+/* Заголовки */
+.names span { display:block; }
+h2 { font-family: 'Dancing Script', cursive; font-size:34px; color:#7faaff; margin-bottom:20px; }
+p { font-family: 'Dancing Script', cursive; line-height:1.6; margin:8px 0; }
 
-@media (max-width: 600px) {
-  html, body { overflow-x: hidden; overflow-y: auto; }
-  section { padding: 45px 10px; }
-  section:first-of-type { min-height: 80vh; justify-content: center; align-items: center; padding: 0 10px; }
-  section:not(:first-of-type) { margin-top: 30px; }
-  .card { max-width: 80%; padding: 35px 20px; }
-  .corner { width: 100px; }
-  .names { font-size: 38px; } h2 { font-size: 22px; } #timer { font-size: 20px; } .final h1 { font-size: 60px; } .final p { font-size: 24px; }
+/* Кнопки */
+button {
+  margin-top: 20px;
+  padding: 15px 40px;
+  border-radius: 50px;
+  border: none;
+  background: #9bbcff;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.date { font-size: 28px; color: #7faaff; font-family:'Dancing Script', cursive; }
+#timer { font-size:26px; font-family:'Dancing Script', cursive; margin-top:10px; }
+
+/* Финальный блок S&S */
+.final h1 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 100px;
+  color: #7faaff;
+  text-shadow: 0 0 15px #7faaff, 0 0 30px #aaccff;
+}
+
+/* Мобильные */
+@media (max-width:600px){
+  section { padding:0 20px; }
+  .card { padding:25px 20px; }
+  .card.first-block { padding:25px 20px; }
+  .names { font-size:36px; }
+  h2 { font-size:28px; }
+  #timer { font-size:20px; }
+  .final h1 { font-size:70px; }
 }
 
 /* Модалка */
-.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); }
-.modal-content { background: white; margin: 20% auto; padding: 20px; border-radius: 20px; width: 80%; max-width: 300px; text-align: center; }
-input { width: 90%; margin: 10px 0; padding: 10px; }
-footer { text-align: center; padding: 40px; font-family: 'Playfair Display', serif; }
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+}
+.modal-content {
+  background: white;
+  margin: 30% auto;
+  padding: 20px 20px 30px 20px;
+  border-radius: 20px;
+  width: 80%;
+  max-width: 300px;
+  text-align: center;
+  position: relative;
+}
+/* Крестик закрытия */
+.modal-content .close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #aaa;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.modal-content .close:hover { color: #333; }
+input { width:90%; margin:10px 0; padding:10px; }
+
+/* Блок карты растянутый */
+.full-map {
+  width: 100%;
+  height: 400px;
+  margin-top: 20px;
+  border-radius: 20px;
+}
 </style>
 </head>
+
 <body>
 
+<!-- Видео фон -->
 <div class="video-bg">
   <video autoplay muted loop playsinline>
-    <source src="https://adamyan02.github.io/Sos-Susanna/IMG_3921.mp4" type="video/mp4">
+    <source src="IMG_3309.mp4" type="video/mp4">
     Ваш браузер не поддерживает видео.
   </video>
 </div>
+<div class="video-overlay"></div>
 
+<!-- Первый блок -->
 <section>
-<div class="card">
-<img class="corner corner-tl" src="Floral-Beige-Frame-1.png">
-<img class="corner corner-bl" src="Floral-Beige-Frame-2.png">
-<img class="corner corner-br" src="Floral-Beige-Frame-3.png">
-<img class="corner corner-tr" src="Floral-Beige-Frame-4.png">
-<h1 class="names"><span>Сос</span><span>&</span><span>Сусанна</span></h1>
-<p class="date">09.08.2026</p>
-<p>Мы создаем нашу семью и будем счастливы разделить этот день с вами <span class="heart">🤍</span></p>
-<button id="confirmBtn">Подтвердить присутствие</button>
-</div>
+  <div class="card first-block">
+    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
+    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
+    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
+    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
+    <h1 class="names"><span>Сос</span><span>&</span><span>Сусанна</span></h1>
+    <p class="date">18.08.2026</p>
+    <p>Мы создаём нашу семью и будем искренне счастливы разделить этот особенный день вместе с вами. Для нас очень важно ваше присутствие и поддержка 💙</p>
+    <button id="confirmBtn">Подтвердить присутствие</button>
+  </div>
 </section>
 
+<!-- Блок локации -->
 <section>
-<div class="card">
-<img class="corner corner-tl" src="Floral-Beige-Frame-1.png">
-<img class="corner corner-bl" src="Floral-Beige-Frame-2.png">
-<img class="corner corner-br" src="Floral-Beige-Frame-3.png">
-<img class="corner corner-tr" src="Floral-Beige-Frame-4.png">
-<h2>Локация</h2>
-<p>Банкетный зал «Версаль»</p>
-<p>Уфа, Элеваторная улица, 13</p>
-<button onclick="openRoute()">Проложить маршрут</button>
-</div>
+  <div class="card">
+    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
+    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
+    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
+    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
+    <h2>Локация</h2>
+    <p>Банкетный зал «На семи ветрах»</p>
+    <p>Саратов, Московское шоссе, 154 к1</p>
+    <button onclick="openRoute()">Проложить маршрут</button>
+  </div>
 </section>
 
-<section>
-<div class="card">
-<img class="corner corner-tl" src="Floral-Beige-Frame-1.png">
-<img class="corner corner-bl" src="Floral-Beige-Frame-2.png">
-<img class="corner corner-br" src="Floral-Beige-Frame-3.png">
-<img class="corner corner-tr" src="Floral-Beige-Frame-4.png">
-<h2>До свадьбы осталось</h2>
-<div id="timer"></div>
-</div>
+<!-- Блок рамки + карта -->
+<section style="flex-direction: column; align-items: flex-start;">
+  <div class="card" style="margin-bottom:10px; max-width:600px;">
+    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
+    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
+    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
+    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
+    <h2>Локация на карте</h2>
+    <p>Для вашего удобства мы добавили интерактивную карту с отметкой места проведения</p>
+  </div>
+  <div id="map" class="full-map"></div>
 </section>
 
+<!-- Таймер -->
 <section>
-<div class="card">
-<img class="corner corner-tl" src="Floral-Beige-Frame-1.png">
-<img class="corner corner-bl" src="Floral-Beige-Frame-2.png">
-<img class="corner corner-br" src="Floral-Beige-Frame-3.png">
-<img class="corner corner-tr" src="Floral-Beige-Frame-4.png">
-<h2>Дресс-код</h2>
-<p>Будем признательны, если дамы воздержатся от платьев в оттенках белого 🤍</p>
-</div>
+  <div class="card">
+    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
+    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
+    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
+    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
+    <h2>До свадьбы осталось</h2>
+    <div id="timer"></div>
+  </div>
 </section>
 
+<!-- Дресс-код -->
 <section>
-<div class="card final">
-<img class="corner corner-tl" src="Floral-Beige-Frame-1.png">
-<img class="corner corner-bl" src="Floral-Beige-Frame-2.png">
-<img class="corner corner-br" src="Floral-Beige-Frame-3.png">
-<img class="corner corner-tr" src="Floral-Beige-Frame-4.png">
-<p>До встречи</p>
-<h1>S & S</h1>
-</div>
+  <div class="card">
+    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
+    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
+    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
+    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
+    <h2>Дресс-код</h2>
+    <p>Мы будем очень признательны, если вы поддержите атмосферу нашего праздника и выберете элегантные образы.</p>
+    <p>Просим дам по возможности воздержаться от платьев в белых и близких оттенках 🤍</p>
+    <p>Джентльменам будем рады в классическом или smart-casual стиле.</p>
+  </div>
 </section>
 
-<footer>© 2026 Сос & Сусанна</footer>
+<!-- Финальный блок -->
+<section>
+  <div class="card final">
+    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
+    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
+    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
+    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
+    <p>С нетерпением ждём встречи с вами</p>
+    <h1>S & S</h1>
+    <p style="margin-top:30px;opacity:0.6;font-size:14px;">© 2026 Сос & Сусанна</p>
+  </div>
+</section>
 
+<!-- Модалка -->
 <div class="modal" id="modal">
-<div class="modal-content">
-<h3>Введите данные</h3>
-<input id="firstName" placeholder="Имя">
-<input id="lastName" placeholder="Фамилия">
-<button id="sendBtn">Отправить</button>
-</div>
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3>Введите данные</h3>
+    <input id="firstName" placeholder="Имя">
+    <input id="lastName" placeholder="Фамилия">
+    <button id="sendBtn">Отправить</button>
+  </div>
 </div>
 
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
 <script>
-const sections = document.querySelectorAll("section");
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry, index) => {
-    if (entry.isIntersecting) {
-      setTimeout(() => {
-        entry.target.style.opacity = 1;
-        entry.target.style.transform = "translateY(0)";
-        const card = entry.target.querySelector(".card");
-        if(card) card.classList.add("visible");
-      }, index * 150);
-    } else {
-      const card = entry.target.querySelector(".card");
-      if(card) card.classList.remove("visible");
-      entry.target.style.opacity = 0;
-      entry.target.style.transform = "translateY(40px)";
+// Инициализация интерактивной карты
+ymaps.ready(init);
+function init() {
+  var map = new ymaps.Map("map", {
+    center: [51.616945, 45.880925],
+    zoom: 16,
+    controls: ['zoomControl','fullscreenControl']
+  });
+  var placemark = new ymaps.Placemark([51.616945, 45.880925], {
+    hintContent: 'Место проведения',
+    balloonContent: 'Банкетный зал «На семи ветрах»'
+  }, {
+    preset: 'islands#redDotIcon'
+  });
+  map.geoObjects.add(placemark);
+}
+
+// Snap scroll
+let isScrolling = false;
+const sections = document.querySelectorAll('section');
+let current = 0;
+function scrollToSection(index){
+  if(index<0 || index>=sections.length) return;
+  isScrolling=true;
+  current=index;
+  const top = sections[index].offsetTop + sections[index].offsetHeight/2 - window.innerHeight/2;
+  window.scrollTo({top: top, behavior:'smooth'});
+  setTimeout(()=>isScrolling=false, 700);
+}
+window.addEventListener('wheel', e=>{
+  if(isScrolling) return;
+  if(e.deltaY>20) scrollToSection(current+1);
+  else if(e.deltaY<-20) scrollToSection(current-1);
+});
+let touchStartY=0;
+window.addEventListener('touchstart', e=>touchStartY=e.touches[0].clientY);
+window.addEventListener('touchend', e=>{
+  let diff=touchStartY-e.changedTouches[0].clientY;
+  if(Math.abs(diff)<30) return;
+  if(diff>0) scrollToSection(current+1);
+  else scrollToSection(current-1);
+});
+
+// Анимация цветов при каждом листании
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    const card = entry.target.querySelector('.card');
+    const corners = entry.target.querySelectorAll('.corner');
+    if(entry.isIntersecting){
+      card.classList.remove('visible');
+      corners.forEach(c=>{
+        c.style.transition='none';
+        c.style.opacity='0';
+        c.style.transform='scale(0.7)';
+      });
+      void card.offsetWidth;
+      setTimeout(()=>{
+        card.classList.add('visible');
+        corners.forEach(c=>{
+          c.style.transition='all 1.2s ease';
+          c.style.opacity='1';
+          c.style.transform='scale(1)';
+        });
+      },50);
     }
   });
-}, { threshold: 0.3 });
-sections.forEach(section => observer.observe(section));
+},{threshold:0.6});
+sections.forEach(s=>observer.observe(s));
 
 // Таймер
-const targetDate = new Date('2026-08-09T00:00:00');
-function updateTimer(){
+const targetDate = new Date('2026-08-18T00:00:00');
+setInterval(()=>{
   const now = new Date();
-  let diff = targetDate - now;
-  const days = Math.floor(diff/86400000);
-  const hours = Math.floor(diff/3600000 %24);
-  const minutes = Math.floor(diff/60000 %60);
-  const seconds = Math.floor(diff/1000 %60);
-  document.getElementById('timer').innerHTML =
-    `${days} дней ${hours} часов ${minutes} минут ${seconds} секунд`;
-}
-setInterval(updateTimer, 1000);
-updateTimer();
-
-// Маршрут
-function openRoute(){
-  window.open("https://yandex.com/maps/-/CPRfZ8mU");
-}
+  let diff = targetDate-now;
+  const d = Math.floor(diff/86400000);
+  const h = Math.floor(diff/3600000%24);
+  const m = Math.floor(diff/60000%60);
+  const s = Math.floor(diff/1000%60);
+  document.getElementById('timer').innerHTML=`${d} дней ${h} часов ${m} минут ${s} секунд`;
+},1000);
 
 // Модалка
-const modal = document.getElementById("modal");
-document.getElementById("confirmBtn").onclick = ()=> modal.style.display="block";
-document.getElementById("sendBtn").onclick = function(){
-  const firstName = document.getElementById("firstName").value.trim();
-  const lastName = document.getElementById("lastName").value.trim();
-  if(!firstName || !lastName){ alert("Заполните поля"); return; }
-  fetch("/api/send", {
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({ firstName, lastName })
-  })
-  .then(()=>{ alert("Отправлено ❤️"); modal.style.display="none"; })
-  .catch(()=>{ alert("Ошибка отправки."); });
-};
-window.onclick = e => { if(e.target==modal) modal.style.display="none"; };
+function openRoute(){ window.open('https://yandex.ru/maps/-/CPRav60J'); }
+const modal = document.getElementById('modal');
+const closeBtn = modal.querySelector('.close');
+document.getElementById('confirmBtn').onclick = () => modal.style.display='block';
+closeBtn.onclick = () => modal.style.display='none';
+document.getElementById('sendBtn').onclick = function() {
+  const firstName = document.getElementById('firstName').value.trim();
+  const lastName = document.getElementById('lastName').value.trim();
+  if(!firstName || !lastName){ alert('Заполните поля'); return; }
+  fetch('/api/send', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({firstName,lastName})
+  }).then(()=>{ alert('Отправлено ❤️'); modal.style.display='none'; })
+    .catch(()=>{ alert('Ошибка отправки.'); });
+}
+window.onclick = e => { if(e.target==modal) modal.style.display='none'; };
 </script>
 
 </body>
