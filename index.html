@@ -101,7 +101,8 @@ section {
   position: absolute;
   width: 90px;
   pointer-events: none;
-  opacity: 1; /* всегда видны */
+  z-index: 10;
+  opacity: 1;
   transform: scale(1);
 }
 .corner-tl { top:0; left:0; }
@@ -200,13 +201,9 @@ input { width:90%; margin:10px 0; padding:10px; }
 </div>
 <div class="video-overlay"></div>
 
-<!-- Первый блок -->
+<!-- Карточки -->
 <section>
   <div class="card first-block">
-    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
-    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
-    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
-    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
     <h1 class="names"><span>Сос</span><span>&</span><span>Сусанна</span></h1>
     <p class="date">18.08.2026</p>
     <p>Мы создаём нашу семью и будем искренне счастливы разделить этот особенный день вместе с вами. Для нас очень важно ваше присутствие и поддержка 💙</p>
@@ -214,13 +211,8 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
-<!-- Блок локации -->
 <section>
   <div class="card">
-    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
-    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
-    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
-    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
     <h2>Локация</h2>
     <p>Банкетный зал «На семи ветрах»</p>
     <p>Саратов, Московское шоссе, 154 к1</p>
@@ -228,38 +220,23 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
-<!-- Блок рамки + карта -->
 <section style="flex-direction: column; align-items: flex-start;">
   <div class="card" style="margin-bottom:10px; max-width:600px;">
-    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
-    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
-    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
-    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
     <h2>Локация на карте</h2>
     <p>Для вашего удобства мы добавили интерактивную карту с отметкой места проведения</p>
   </div>
   <div id="map" class="full-map"></div>
 </section>
 
-<!-- Таймер -->
 <section>
   <div class="card">
-    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
-    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
-    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
-    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
     <h2>До свадьбы осталось</h2>
     <div id="timer"></div>
   </div>
 </section>
 
-<!-- Дресс-код -->
 <section>
   <div class="card">
-    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
-    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
-    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
-    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
     <h2>Дресс-код</h2>
     <p>Мы будем очень признательны, если вы поддержите атмосферу нашего праздника и выберете элегантные образы.</p>
     <p>Просим дам по возможности воздержаться от платьев в белых и близких оттенках 🤍</p>
@@ -267,13 +244,8 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
-<!-- Финальный блок -->
 <section>
   <div class="card final">
-    <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
-    <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
-    <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
-    <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
     <p>С нетерпением ждём встречи с вами</p>
     <h1>S & S</h1>
     <p style="margin-top:30px;opacity:0.6;font-size:14px;">© 2026 Сос & Сусанна</p>
@@ -336,8 +308,24 @@ window.addEventListener('touchend', e=>{
   else scrollToSection(current-1);
 });
 
-// --- Анимация: сразу видимые карточки и углы ---
-document.querySelectorAll('.card').forEach(c => c.classList.add('visible'));
+// --- Автоматическое добавление угловых рамок ---
+const cornerImages = [
+  "Floral-Blue-Frame-1.png",
+  "Floral-Blue-Frame-2.png",
+  "Floral-Blue-Frame-3.png",
+  "Floral-Blue-Frame-4.png"
+];
+
+document.querySelectorAll('.card').forEach(card => {
+  const positions = ['tl', 'bl', 'br', 'tr'];
+  positions.forEach((pos, i) => {
+    const img = document.createElement('img');
+    img.src = cornerImages[i];
+    img.classList.add('corner', `corner-${pos}`);
+    card.appendChild(img);
+  });
+  card.classList.add('visible'); // сразу видимая
+});
 
 // --- Таймер ---
 const targetDate = new Date('2026-08-18T00:00:00');
