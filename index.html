@@ -58,11 +58,11 @@ section {
   position: relative;
   background: rgba(255,255,255,0.92);
   padding: 40px 40px;
-  border-radius: 30px;
+  border-radius: 30px; /* овальные углы */
   max-width: 600px;
   width: 100%;
   text-align: center;
-  border: 6px solid #8b5e3c;
+  border: 6px solid #8b5e3c; /* коричневая рамка */
   box-shadow: 0 30px 70px rgba(0,0,0,0.25);
   transform-origin: center bottom;
   transform: rotateX(25deg) translateY(150px) scale(0.95);
@@ -103,18 +103,27 @@ section {
 /* Цветы на рамке */
 .corner {
   position: absolute;
-  width: 280px;
+  width: 140px; /* увеличенный размер */
   pointer-events: none;
   z-index: 3;
   opacity: 0;
   transform: scale(0.7);
   transition: all 1.2s ease;
+  filter: drop-shadow(0 8px 12px rgba(0,0,0,0.25));
+  animation: float 6s ease-in-out infinite;
 }
 
-.corner-tl { top: -10px; left: -10px; }
-.corner-tr { top: -10px; right: -10px; }
-.corner-bl { bottom: -10px; left: -10px; }
-.corner-br { bottom: -10px; right: -10px; }
+/* Позиция цветов прямо на рамке */
+.corner-tl { top: -40px; left: -40px; }
+.corner-tr { top: -40px; right: -40px; }
+.corner-bl { bottom: -40px; left: -40px; }
+.corner-br { bottom: -40px; right: -40px; }
+
+@keyframes float {
+  0% { transform: translateY(0) scale(0.7) rotate(0deg); }
+  50% { transform: translateY(-6px) scale(0.73) rotate(1deg); }
+  100% { transform: translateY(0) scale(0.7) rotate(0deg); }
+}
 
 .names span { display:block; }
 h2 { font-family: 'Dancing Script', cursive; font-size:34px; color:#8b5e3c; margin-bottom:20px; } 
@@ -150,7 +159,11 @@ button {
   #timer { font-size:20px; }
   .final h1 { font-size:70px; }
 
-  .corner { width: 180px; }
+  .corner { width: 110px; }
+  .corner-tl { top:-30px; left:-30px; }
+  .corner-tr { top:-30px; right:-30px; }
+  .corner-bl { bottom:-30px; left:-30px; }
+  .corner-br { bottom:-30px; right:-30px; }
 }
 
 .modal {
@@ -270,6 +283,7 @@ input { width:90%; margin:10px 0; padding:10px; }
 </div>
 
 <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
+
 <script>
 ymaps.ready(init);
 function init() {
@@ -323,29 +337,26 @@ window.addEventListener('touchend', e=>{
   scrollHandler({deltaY: diff});
 });
 
-// Цветы на коричневой рамке
-const cornerImages = {
-  tl: "Floral-Blue-Frame-1.png",
-  tr: "Floral-Blue-Frame-2.png",
-  bl: "Floral-Blue-Frame-3.png",
-  br: "Floral-Blue-Frame-4.png"
-};
+// --- Цветы ---
+const cornerImages = [
+  "Floral-Blue-Frame-1.png",
+  "Floral-Blue-Frame-2.png",
+  "Floral-Blue-Frame-3.png",
+  "Floral-Blue-Frame-4.png"
+];
 
-sections.forEach((section, index) => {
+sections.forEach(section=>{
   const card = section.querySelector('.card');
-  if (!card) return;
-
-  let corners = index % 2 === 0 ? ['tl', 'br'] : ['bl', 'tr'];
-
-  corners.forEach(pos => {
+  if(!card) return;
+  const positions = ['tl','bl','br','tr'];
+  positions.forEach((pos,i)=>{
     const img = document.createElement('img');
-    img.src = cornerImages[pos];
+    img.src = cornerImages[i];
     img.classList.add('corner', `corner-${pos}`);
     card.appendChild(img);
   });
 });
 
-// Анимация появления
 const observer = new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     const card = entry.target.querySelector('.card');
