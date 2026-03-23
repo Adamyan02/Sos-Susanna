@@ -345,11 +345,26 @@ const cornerImages = [
   "Floral-Blue-Frame-4.png"
 ];
 
-sections.forEach(section=>{
+// cornersPerBlock: какие углы оставляем для каждого блока
+const cornersPerBlock = [
+  ['tl','br'], // 1 блок: убираем bl и tr
+  ['tr','bl'], // 2 блок: убираем tl и br
+  ['tl','br'], // 3 блок: убираем bl и tr
+  ['tr','bl'], // 4 блок: убираем tl и br
+  ['tl','br'], // 5 блок: убираем bl и tr
+  ['tr','bl']  // 6 блок: убираем tl и br
+];
+
+sections.forEach((section, index)=>{
   const card = section.querySelector('.card');
   if(!card) return;
-  const positions = ['tl','bl','br','tr'];
-  positions.forEach((pos,i)=>{
+
+  const allowedCorners = cornersPerBlock[index] || []; // если нет в списке – показываем все
+  const cornerOrder = ['tl','bl','br','tr']; // порядок для cornerImages
+
+  cornerOrder.forEach((pos,i)=>{
+    if(!allowedCorners.includes(pos)) return; // пропускаем ненужные
+
     const img = document.createElement('img');
     img.src = cornerImages[i];
     img.classList.add('corner', `corner-${pos}`);
