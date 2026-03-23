@@ -62,7 +62,7 @@ section {
   max-width: 600px;
   width: 100%;
   text-align: center;
-  border: 6px solid #8b5e3c; /* коричневая рамка */
+  border: 6px solid #8b5e3c;
   box-shadow: 0 30px 70px rgba(0,0,0,0.25);
   transform-origin: center bottom;
   transform: rotateX(25deg) translateY(150px) scale(0.95);
@@ -103,7 +103,7 @@ section {
 /* Цветы на рамке */
 .corner {
   position: absolute;
-  width: 280px; /* увеличенный размер */
+  width: 280px;
   pointer-events: none;
   z-index: 3;
   opacity: 0;
@@ -111,11 +111,10 @@ section {
   transition: all 1.2s ease;
 }
 
-/* Четкие позиции для углов */
-.corner-tl { top: -20px; left: -20px; }
-.corner-tr { top: -20px; right: -20px; }
-.corner-bl { bottom: -20px; left: -20px; }
-.corner-br { bottom: -20px; right: -20px; }
+.corner-tl { top: -10px; left: -10px; }
+.corner-tr { top: -10px; right: -10px; }
+.corner-bl { bottom: -10px; left: -10px; }
+.corner-br { bottom: -10px; right: -10px; }
 
 .names span { display:block; }
 h2 { font-family: 'Dancing Script', cursive; font-size:34px; color:#8b5e3c; margin-bottom:20px; } 
@@ -271,7 +270,6 @@ input { width:90%; margin:10px 0; padding:10px; }
 </div>
 
 <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
-
 <script>
 ymaps.ready(init);
 function init() {
@@ -325,29 +323,29 @@ window.addEventListener('touchend', e=>{
   scrollHandler({deltaY: diff});
 });
 
-// --- Цветы на углах ---
-const cornerImages = [
-  "Floral-Blue-Frame-1.png",
-  "Floral-Blue-Frame-2.png",
-  "Floral-Blue-Frame-3.png",
-  "Floral-Blue-Frame-4.png"
-];
+// Цветы на коричневой рамке
+const cornerImages = {
+  tl: "Floral-Blue-Frame-1.png",
+  tr: "Floral-Blue-Frame-2.png",
+  bl: "Floral-Blue-Frame-3.png",
+  br: "Floral-Blue-Frame-4.png"
+};
 
-sections.forEach((section,index)=>{
+sections.forEach((section, index) => {
   const card = section.querySelector('.card');
-  if(!card) return;
-  let positions = [];
-  if(index%2===0){ positions=['tl','br']; } // четные блоки
-  else { positions=['bl','tr']; }          // нечетные блоки
-  positions.forEach((pos,i)=>{
+  if (!card) return;
+
+  let corners = index % 2 === 0 ? ['tl', 'br'] : ['bl', 'tr'];
+
+  corners.forEach(pos => {
     const img = document.createElement('img');
-    img.src = cornerImages[i];
+    img.src = cornerImages[pos];
     img.classList.add('corner', `corner-${pos}`);
     card.appendChild(img);
   });
 });
 
-// --- Анимация появления ---
+// Анимация появления
 const observer = new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     const card = entry.target.querySelector('.card');
