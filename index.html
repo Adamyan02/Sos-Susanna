@@ -103,7 +103,7 @@ section {
 /* Цветы на рамке */
 .corner {
   position: absolute;
-  width: 140px; /* увеличенный размер */
+  width: 210px; /* увеличенный размер 140*1.5 */
   pointer-events: none;
   z-index: 3;
   opacity: 0;
@@ -113,11 +113,11 @@ section {
   animation: float 6s ease-in-out infinite;
 }
 
-/* Позиция цветов прямо на рамке */
-.corner-tl { top: -40px; left: -40px; }
-.corner-tr { top: -40px; right: -40px; }
-.corner-bl { bottom: -40px; left: -40px; }
-.corner-br { bottom: -40px; right: -40px; }
+/* Позиция цветов прямо на рамке с учётом увеличения */
+.corner-tl { top: -60px; left: -60px; }
+.corner-tr { top: -60px; right: -60px; }
+.corner-bl { bottom: -60px; left: -60px; }
+.corner-br { bottom: -60px; right: -60px; }
 
 @keyframes float {
   0% { transform: translateY(0) scale(0.7) rotate(0deg); }
@@ -159,11 +159,11 @@ button {
   #timer { font-size:20px; }
   .final h1 { font-size:70px; }
 
-  .corner { width: 110px; }
-  .corner-tl { top:-30px; left:-30px; }
-  .corner-tr { top:-30px; right:-30px; }
-  .corner-bl { bottom:-30px; left:-30px; }
-  .corner-br { bottom:-30px; right:-30px; }
+  .corner { width: 165px; } /* 110 * 1.5 */
+  .corner-tl { top:-45px; left:-45px; }
+  .corner-tr { top:-45px; right:-45px; }
+  .corner-bl { bottom:-45px; left:-45px; }
+  .corner-br { bottom:-45px; right:-45px; }
 }
 
 .modal {
