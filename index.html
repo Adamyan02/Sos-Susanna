@@ -62,7 +62,7 @@ section {
   max-width: 600px;
   width: 100%;
   text-align: center;
-  border: 6px solid #8b5e3c;
+  border: 6px solid #8b5e3c; /* коричневая рамка */
   box-shadow: 0 30px 70px rgba(0,0,0,0.25);
   transform-origin: center bottom;
   transform: rotateX(25deg) translateY(150px) scale(0.95);
@@ -109,15 +109,13 @@ section {
   opacity: 0;
   transform: scale(0.7);
   transition: all 1.2s ease;
-  filter: drop-shadow(0 8px 12px rgba(0,0,0,0.25));
-  animation: float 6s ease-in-out infinite;
 }
 
-@keyframes float {
-  0% { transform: translateY(0) scale(0.7) rotate(0deg); }
-  50% { transform: translateY(-6px) scale(0.73) rotate(1deg); }
-  100% { transform: translateY(0) scale(0.7) rotate(0deg); }
-}
+/* Четкие позиции для углов */
+.corner-tl { top: -20px; left: -20px; }
+.corner-tr { top: -20px; right: -20px; }
+.corner-bl { bottom: -20px; left: -20px; }
+.corner-br { bottom: -20px; right: -20px; }
 
 .names span { display:block; }
 h2 { font-family: 'Dancing Script', cursive; font-size:34px; color:#8b5e3c; margin-bottom:20px; } 
@@ -327,7 +325,7 @@ window.addEventListener('touchend', e=>{
   scrollHandler({deltaY: diff});
 });
 
-// --- Цветы ---
+// --- Цветы на углах ---
 const cornerImages = [
   "Floral-Blue-Frame-1.png",
   "Floral-Blue-Frame-2.png",
@@ -339,7 +337,7 @@ sections.forEach((section,index)=>{
   const card = section.querySelector('.card');
   if(!card) return;
   let positions = [];
-  if(index%2==0){ positions=['tl','br']; } // четные блоки
+  if(index%2===0){ positions=['tl','br']; } // четные блоки
   else { positions=['bl','tr']; }          // нечетные блоки
   positions.forEach((pos,i)=>{
     const img = document.createElement('img');
@@ -349,6 +347,7 @@ sections.forEach((section,index)=>{
   });
 });
 
+// --- Анимация появления ---
 const observer = new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     const card = entry.target.querySelector('.card');
