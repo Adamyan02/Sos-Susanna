@@ -100,19 +100,22 @@ section {
   opacity: 1;
 }
 
+/* 🔥 УВЕЛИЧЕННЫЕ ЦВЕТЫ */
 .corner {
   position: absolute;
-  width: 90px;
+  width: 110px;
   pointer-events: none;
   z-index: 20; 
   opacity: 0;
   transform: scale(0.7);
   transition: all 1.2s ease;
 }
-.corner-tl { top:-30px; left:-30px; }
-.corner-tr { top:-30px; right:-30px; }
-.corner-bl { bottom:-30px; left:-30px; }
-.corner-br { bottom:-30px; right:-30px; }
+
+/* 🔥 меньше вылет */
+.corner-tl { top:-20px; left:-20px; }
+.corner-tr { top:-20px; right:-20px; }
+.corner-bl { bottom:-20px; left:-20px; }
+.corner-br { bottom:-20px; right:-20px; }
 
 .names span { display:block; }
 h2 { font-family: 'Dancing Script', cursive; font-size:34px; color:#8b5e3c; margin-bottom:20px; } 
@@ -139,10 +142,30 @@ button {
   text-shadow: 2px 4px 12px rgba(139,94,60,0.3);
 }
 
+/* 🔥 МОБИЛКА */
 @media (max-width:600px){
-  section { padding: 0 15px; }
-  .card { padding: 20px 15px; margin: 15px auto; }
-  .card.first-block { padding:25px 20px; }
+  section { padding: 0 12px; }
+
+  .card { 
+    padding: 20px 15px; 
+    margin: 15px auto;
+    max-width: 88%;
+  }
+
+  .card.first-block { 
+    padding:25px 20px; 
+    max-width: 88%;
+  }
+
+  .corner {
+    width: 85px;
+  }
+
+  .corner-tl { top:-12px; left:-12px; }
+  .corner-tr { top:-12px; right:-12px; }
+  .corner-bl { bottom:-12px; left:-12px; }
+  .corner-br { bottom:-12px; right:-12px; }
+
   .names { font-size:36px; }
   h2 { font-size:28px; }
   #timer { font-size:20px; }
