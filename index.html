@@ -103,7 +103,7 @@ section {
 /* Цветы на рамке */
 .corner {
   position: absolute;
-  width: 120px;
+  width: 140px; /* увеличенный размер */
   pointer-events: none;
   z-index: 3;
   opacity: 0;
@@ -112,10 +112,10 @@ section {
   filter: drop-shadow(0 8px 12px rgba(0,0,0,0.25));
   animation: float 6s ease-in-out infinite;
 }
-.corner-tl { top:-6px; left:-6px; } /* на рамке */
-.corner-tr { top:-6px; right:-6px; }
-.corner-bl { bottom:-6px; left:-6px; }
-.corner-br { bottom:-6px; right:-6px; }
+.corner-tl { top: -6px; left: -6px; }
+.corner-tr { top: -6px; right: -6px; }
+.corner-bl { bottom: -6px; left: -6px; }
+.corner-br { bottom: -6px; right: -6px; }
 
 @keyframes float {
   0% { transform: translateY(0) scale(0.7) rotate(0deg); }
@@ -157,7 +157,7 @@ button {
   #timer { font-size:20px; }
   .final h1 { font-size:70px; }
 
-  .corner { width: 95px; }
+  .corner { width: 110px; }
   .corner-tl { top:-6px; left:-6px; }
   .corner-tr { top:-6px; right:-6px; }
   .corner-bl { bottom:-6px; left:-6px; }
@@ -378,6 +378,7 @@ const observer = new IntersectionObserver(entries=>{
     }
   });
 },{threshold:0.6});
+
 sections.forEach(s=>observer.observe(s));
 
 const targetDate = new Date('2026-08-09T00:00:00');
