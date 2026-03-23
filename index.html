@@ -62,9 +62,9 @@ section {
   max-width: 600px;
   width: 100%;
   text-align: center;
-  outline: 6px solid #8b5e3c;
-  outline-offset: 10px;
-  box-shadow: 0 30px 70px rgba(0,0,0,0.2);
+  border: 6px solid;
+  border-image: linear-gradient(45deg, #d4af37, #8b5e3c) 1; /* золотой градиент */
+  box-shadow: 0 30px 70px rgba(0,0,0,0.25);
   transform-origin: center bottom;
   transform: rotateX(25deg) translateY(150px) scale(0.95);
   opacity: 0;
@@ -74,6 +74,27 @@ section {
   justify-content: center;
   box-sizing: border-box;
   margin: 20px auto;
+  z-index: 2;
+}
+
+/* Двойная рамка и внутренняя подсветка */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: -12px;
+  border: 2px solid rgba(255, 215, 0, 0.6);
+  border-radius: 34px;
+  z-index: 1;
+  opacity: 0.6;
+}
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 30px;
+  box-shadow: inset 0 0 30px rgba(139,94,60,0.15);
+  z-index: 1;
+  pointer-events: none;
 }
 
 .card.first-block {
@@ -100,22 +121,28 @@ section {
   opacity: 1;
 }
 
-/* 🔥 УВЕЛИЧЕННЫЕ ЦВЕТЫ */
+/* Цветы */
 .corner {
   position: absolute;
-  width: 110px;
+  width: 120px;
   pointer-events: none;
-  z-index: 20; 
+  z-index: 10; 
   opacity: 0;
-  transform: scale(0.7);
+  transform: scale(0.6) rotate(-8deg);
   transition: all 1.2s ease;
+  filter: drop-shadow(0 8px 12px rgba(0,0,0,0.25));
+  animation: float 6s ease-in-out infinite;
 }
+.corner-tl { top:-12px; left:-12px; }
+.corner-tr { top:-12px; right:-12px; }
+.corner-bl { bottom:-12px; left:-12px; }
+.corner-br { bottom:-12px; right:-12px; }
 
-/* 🔥 меньше вылет */
-.corner-tl { top:-20px; left:-20px; }
-.corner-tr { top:-20px; right:-20px; }
-.corner-bl { bottom:-20px; left:-20px; }
-.corner-br { bottom:-20px; right:-20px; }
+@keyframes float {
+  0% { transform: translateY(0) scale(1) rotate(0deg); }
+  50% { transform: translateY(-6px) scale(1.02) rotate(1deg); }
+  100% { transform: translateY(0) scale(1) rotate(0deg); }
+}
 
 .names span { display:block; }
 h2 { font-family: 'Dancing Script', cursive; font-size:34px; color:#8b5e3c; margin-bottom:20px; } 
@@ -142,34 +169,21 @@ button {
   text-shadow: 2px 4px 12px rgba(139,94,60,0.3);
 }
 
-/* 🔥 МОБИЛКА */
 @media (max-width:600px){
-  section { padding: 0 12px; }
-
-  .card { 
-    padding: 20px 15px; 
-    margin: 15px auto;
-    max-width: 88%;
-  }
-
-  .card.first-block { 
-    padding:25px 20px; 
-    max-width: 88%;
-  }
-
-  .corner {
-    width: 85px;
-  }
-
-  .corner-tl { top:-12px; left:-12px; }
-  .corner-tr { top:-12px; right:-12px; }
-  .corner-bl { bottom:-12px; left:-12px; }
-  .corner-br { bottom:-12px; right:-12px; }
-
+  section { padding: 0 15px; }
+  .card { padding: 20px 15px; margin: 15px auto; }
+  .card.first-block { padding:25px 20px; }
   .names { font-size:36px; }
   h2 { font-size:28px; }
   #timer { font-size:20px; }
   .final h1 { font-size:70px; }
+
+  /* Мобильные углы */
+  .corner { width: 95px; }
+  .corner-tl { top:-8px; left:-8px; }
+  .corner-tr { top:-8px; right:-8px; }
+  .corner-bl { bottom:-8px; left:-8px; }
+  .corner-br { bottom:-8px; right:-8px; }
 }
 
 .modal {
@@ -384,13 +398,21 @@ const observer = new IntersectionObserver(entries=>{
         corners.forEach(c=>{
           c.style.transition='all 1.2s ease';
           c.style.opacity='1';
-          c.style.transform='scale(1)';
+          c.style.transform='scale(1) rotate(0deg)';
         });
       },50);
     }
   });
 },{threshold:0.6});
 sections.forEach(s=>observer.observe(s));
+
+// Параллакс цветов при скролле
+window.addEventListener('scroll', ()=>{
+  const scrollY = window.scrollY;
+  document.querySelectorAll('.corner').forEach((c, i)=>{
+    c.style.transform += ` translateY(${scrollY*0.03*(i%2===0?1:-1)}px)`;
+  });
+});
 
 // --- Таймер ---
 const targetDate = new Date('2026-08-09T00:00:00');
