@@ -76,7 +76,6 @@ section {
   margin: 20px auto;
 }
 
-/* Первый блок компактный */
 .card.first-block {
   max-width: 480px;
   padding: 30px 30px;
@@ -96,13 +95,11 @@ section {
 .card.first-block p { font-size: 16px; line-height: 1.5; margin-top:15px; }
 .card.first-block button { padding: 12px 28px; font-size: 14px; margin-top:20px; }
 
-/* Видимая карточка */
 .card.visible {
   transform: rotateX(0deg) translateY(0) scale(1);
   opacity: 1;
 }
 
-/* Цветы / углы */
 .corner {
   position: absolute;
   width: 90px;
@@ -117,12 +114,10 @@ section {
 .corner-bl { bottom:-30px; left:-30px; }
 .corner-br { bottom:-30px; right:-30px; }
 
-/* Заголовки и тексты */
 .names span { display:block; }
 h2 { font-family: 'Dancing Script', cursive; font-size:34px; color:#8b5e3c; margin-bottom:20px; } 
 p { font-family: 'Dancing Script', cursive; line-height:1.6; margin:8px 0; }
 
-/* Кнопки */
 button {
   margin-top: 20px;
   padding: 15px 40px;
@@ -137,7 +132,6 @@ button {
 .date { font-size: 28px; color: #8b5e3c; font-family:'Dancing Script', cursive; }
 #timer { font-size:26px; font-family:'Dancing Script', cursive; margin-top:10px; }
 
-/* Финальный блок S&S */
 .final h1 {
   font-family: 'Great Vibes', cursive;
   font-size: 100px;
@@ -145,7 +139,6 @@ button {
   text-shadow: 2px 4px 12px rgba(139,94,60,0.3);
 }
 
-/* Мобильные */
 @media (max-width:600px){
   section { padding: 0 15px; }
   .card { padding: 20px 15px; margin: 15px auto; }
@@ -156,7 +149,6 @@ button {
   .final h1 { font-size:70px; }
 }
 
-/* Модалка */
 .modal {
   display: none;
   position: fixed;
@@ -187,7 +179,6 @@ button {
 .modal-content .close:hover { color: #333; }
 input { width:90%; margin:10px 0; padding:10px; }
 
-/* Блок карты растянутый */
 .full-map {
   width: 100%;
   height: 400px;
@@ -199,16 +190,22 @@ input { width:90%; margin:10px 0; padding:10px; }
 
 <body>
 
-<!-- Видео фон -->
+<!-- 🔥 ВИДЕО -->
 <div class="video-bg">
-  <video autoplay muted loop playsinline>
+  <video 
+    id="bgVideo"
+    autoplay 
+    muted 
+    loop 
+    playsinline 
+    webkit-playsinline 
+    preload="auto"
+  >
     <source src="IMG_3309.mp4" type="video/mp4">
-    Ваш браузер не поддерживает видео.
   </video>
 </div>
 <div class="video-overlay"></div>
 
-<!-- Первый блок -->
 <section>
   <div class="card first-block">
     <h1 class="names"><span>Сос</span><span>&</span><span>Сусанна</span></h1>
@@ -218,7 +215,6 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
-<!-- Блок локации -->
 <section>
   <div class="card">
     <h2>Локация</h2>
@@ -228,7 +224,6 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
-<!-- Блок карты -->
 <section style="flex-direction: column; align-items: flex-start;">
   <div class="card" style="margin-bottom:10px; max-width:600px;">
     <h2>Локация на карте</h2>
@@ -237,7 +232,6 @@ input { width:90%; margin:10px 0; padding:10px; }
   <div id="map" class="full-map"></div>
 </section>
 
-<!-- Таймер -->
 <section>
   <div class="card">
     <h2>До свадьбы осталось</h2>
@@ -245,7 +239,6 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
-<!-- Дресс-код -->
 <section>
   <div class="card">
     <h2>Дресс-код</h2>
@@ -255,7 +248,6 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
-<!-- Финальный блок -->
 <section>
   <div class="card final">
     <p>С нетерпением ждём встречи с вами</p>
@@ -264,7 +256,6 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
-<!-- Модалка -->
 <div class="modal" id="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
@@ -275,9 +266,10 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </div>
 
-<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
+
 <script>
-// --- Карта с новыми координатами ---
+// --- Карта ---
 ymaps.ready(init);
 function init() {
   var map = new ymaps.Map("map", {
@@ -294,7 +286,7 @@ function init() {
   map.geoObjects.add(placemark);
 }
 
-// --- Snap scroll с исключением для карты ---
+// --- ТВОЙ JS ---
 let isScrolling = false;
 const sections = document.querySelectorAll('section');
 let current = 0;
@@ -331,7 +323,7 @@ window.addEventListener('touchend', e=>{
   scrollHandler({deltaY: diff});
 });
 
-// --- Автоматическое добавление угловых рамок ---
+// --- Углы ---
 const cornerImages = [
   "Floral-Blue-Frame-1.png",
   "Floral-Blue-Frame-2.png",
@@ -351,7 +343,7 @@ sections.forEach(section=>{
   });
 });
 
-// --- IntersectionObserver для анимации углов ---
+// --- Анимация ---
 const observer = new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     const card = entry.target.querySelector('.card');
@@ -389,14 +381,15 @@ setInterval(()=>{
   document.getElementById('timer').innerHTML=`${d} дней ${h} часов ${m} минут ${s} секунд`;
 },1000);
 
-// --- Модалка и кнопка маршрут ---
+// --- Модалка ---
 function openRoute(){ 
-    window.open('https://yandex.com/maps/-/CPRKiP-R'); 
+  window.open('https://yandex.com/maps/-/CPRKiP-R'); 
 }
 const modal = document.getElementById('modal');
 const closeBtn = modal.querySelector('.close');
 document.getElementById('confirmBtn').onclick = () => modal.style.display='block';
 closeBtn.onclick = () => modal.style.display='none';
+
 document.getElementById('sendBtn').onclick = function() {
   const firstName = document.getElementById('firstName').value.trim();
   const lastName = document.getElementById('lastName').value.trim();
@@ -408,7 +401,34 @@ document.getElementById('sendBtn').onclick = function() {
   }).then(()=>{ alert('Отправлено ❤️'); modal.style.display='none'; })
     .catch(()=>{ alert('Ошибка отправки.'); });
 }
+
 window.onclick = e => { if(e.target==modal) modal.style.display='none'; };
+
+// 🔥 ФИКС ВИДЕО ДЛЯ iPHONE
+const video = document.getElementById('bgVideo');
+
+video.muted = true;
+video.playsInline = true;
+
+function forcePlay() {
+  if (video.paused) {
+    video.play().catch(() => {});
+  }
+}
+
+document.addEventListener('DOMContentLoaded', forcePlay);
+document.addEventListener('touchstart', forcePlay, { once: true });
+
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) forcePlay();
+});
+
+video.addEventListener('pause', forcePlay);
+
+video.addEventListener('ended', () => {
+  video.currentTime = 0;
+  forcePlay();
+});
 </script>
 
 </body>
