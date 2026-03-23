@@ -58,11 +58,11 @@ section {
   position: relative;
   background: rgba(255,255,255,0.92);
   padding: 40px 40px;
-  border-radius: 30px; /* овальные углы */
+  border-radius: 30px;
   max-width: 600px;
   width: 100%;
   text-align: center;
-  border: 6px solid #8b5e3c; /* коричневая рамка */
+  border: 6px solid #8b5e3c;
   box-shadow: 0 30px 70px rgba(0,0,0,0.25);
   transform-origin: center bottom;
   transform: rotateX(25deg) translateY(150px) scale(0.95);
@@ -103,7 +103,7 @@ section {
 /* Цветы на рамке */
 .corner {
   position: absolute;
-  width: 140px; /* увеличенный размер */
+  width: 280px; /* увеличенный размер */
   pointer-events: none;
   z-index: 3;
   opacity: 0;
@@ -112,12 +112,6 @@ section {
   filter: drop-shadow(0 8px 12px rgba(0,0,0,0.25));
   animation: float 6s ease-in-out infinite;
 }
-
-/* Позиция цветов прямо на рамке */
-.corner-tl { top: -40px; left: -40px; }
-.corner-tr { top: -40px; right: -40px; }
-.corner-bl { bottom: -40px; left: -40px; }
-.corner-br { bottom: -40px; right: -40px; }
 
 @keyframes float {
   0% { transform: translateY(0) scale(0.7) rotate(0deg); }
@@ -159,11 +153,7 @@ button {
   #timer { font-size:20px; }
   .final h1 { font-size:70px; }
 
-  .corner { width: 110px; }
-  .corner-tl { top:-30px; left:-30px; }
-  .corner-tr { top:-30px; right:-30px; }
-  .corner-bl { bottom:-30px; left:-30px; }
-  .corner-br { bottom:-30px; right:-30px; }
+  .corner { width: 180px; }
 }
 
 .modal {
@@ -345,10 +335,12 @@ const cornerImages = [
   "Floral-Blue-Frame-4.png"
 ];
 
-sections.forEach(section=>{
+sections.forEach((section,index)=>{
   const card = section.querySelector('.card');
   if(!card) return;
-  const positions = ['tl','bl','br','tr'];
+  let positions = [];
+  if(index%2==0){ positions=['tl','br']; } // четные блоки
+  else { positions=['bl','tr']; }          // нечетные блоки
   positions.forEach((pos,i)=>{
     const img = document.createElement('img');
     img.src = cornerImages[i];
