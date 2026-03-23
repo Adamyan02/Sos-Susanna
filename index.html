@@ -112,10 +112,12 @@ section {
   filter: drop-shadow(0 8px 12px rgba(0,0,0,0.25));
   animation: float 6s ease-in-out infinite;
 }
-.corner-tl { top: -6px; left: -6px; }
-.corner-tr { top: -6px; right: -6px; }
-.corner-bl { bottom: -6px; left: -6px; }
-.corner-br { bottom: -6px; right: -6px; }
+
+/* Позиция цветов прямо на рамке */
+.corner-tl { top: -40px; left: -40px; }
+.corner-tr { top: -40px; right: -40px; }
+.corner-bl { bottom: -40px; left: -40px; }
+.corner-br { bottom: -40px; right: -40px; }
 
 @keyframes float {
   0% { transform: translateY(0) scale(0.7) rotate(0deg); }
@@ -158,10 +160,10 @@ button {
   .final h1 { font-size:70px; }
 
   .corner { width: 110px; }
-  .corner-tl { top:-6px; left:-6px; }
-  .corner-tr { top:-6px; right:-6px; }
-  .corner-bl { bottom:-6px; left:-6px; }
-  .corner-br { bottom:-6px; right:-6px; }
+  .corner-tl { top:-30px; left:-30px; }
+  .corner-tr { top:-30px; right:-30px; }
+  .corner-bl { bottom:-30px; left:-30px; }
+  .corner-br { bottom:-30px; right:-30px; }
 }
 
 .modal {
