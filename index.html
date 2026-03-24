@@ -16,6 +16,7 @@ html, body {
   font-family: 'Dancing Script', cursive;
   color: #1a1a1a;
   touch-action: pan-y;
+  scroll-behavior: smooth;
 }
 
 /* Видео фон */
@@ -53,7 +54,7 @@ section {
   box-sizing: border-box;
 }
 
-/* Карточки с матовым прозрачным фоном */
+/* Карточки с матовым фоном */
 .card {
   position: relative;
   background: rgba(255,255,255,0.5);
@@ -147,7 +148,7 @@ button {
   text-shadow: 2px 4px 12px rgba(139,94,60,0.3);
 }
 
-/* Модальное окно с прозрачным матовым фоном */
+/* Модальное окно */
 .modal {
   display: none;
   position: fixed;
@@ -187,6 +188,22 @@ input { width:90%; margin:10px 0; padding:10px; }
   border-radius: 20px;
 }
 
+/* Кнопка наверх */
+#toTop {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  display: none;
+  z-index: 999;
+  background: #8b5e3c;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
 @media (max-width:600px){
   section { padding: 0 15px; }
   .card { padding: 20px 15px; margin: 15px auto; }
@@ -211,6 +228,9 @@ input { width:90%; margin:10px 0; padding:10px; }
   </video>
 </div>
 <div class="video-overlay"></div>
+
+<!-- Кнопка наверх -->
+<button id="toTop">Наверх</button>
 
 <section>
   <div class="card first-block">
@@ -262,6 +282,7 @@ input { width:90%; margin:10px 0; padding:10px; }
   </div>
 </section>
 
+<!-- Модальное окно -->
 <div class="modal" id="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
@@ -281,70 +302,97 @@ function init() {
   map.geoObjects.add(placemark);
 }
 
-let isScrolling = false;
 const sections = document.querySelectorAll('section');
 let current = 0;
+let isScrolling = false;
 function scrollToSection(index){
-  if(index<0 || index>=sections.length) return;
-  isScrolling=true; current=index;
+  if(index<0||index>=sections.length) return;
+  isScrolling=true;
+  current=index;
   const top = sections[index].offsetTop + sections[index].offsetHeight/2 - window.innerHeight/2;
-  window.scrollTo({top: top, behavior:'smooth'});
-  setTimeout(()=>isScrolling=false, 700);
+  window.scrollTo({top, behavior:'smooth'});
+  setTimeout(()=>isScrolling=false,700);
 }
+
 function scrollHandler(e){
   if(isScrolling) return;
   if(e.deltaY>20) scrollToSection(current+1);
   else if(e.deltaY<-20) scrollToSection(current-1);
 }
-window.addEventListener('wheel', scrollHandler);
+
+window.addEventListener('wheel',scrollHandler);
+
 let touchStartY=0;
-window.addEventListener('touchstart', e=>{ if(e.target.closest('#map')) return; touchStartY=e.touches[0].clientY; });
-window.addEventListener('touchend', e=>{ if(e.target.closest('#map')) return; let diff=touchStartY-e.changedTouches[0].clientY; if(Math.abs(diff)<30) return; scrollHandler({deltaY: diff}); });
+window.addEventListener('touchstart',e=>{ if(e.target.closest('#map')) return; touchStartY=e.touches[0].clientY; });
+window.addEventListener('touchend',e=>{ if(e.target.closest('#map')) return; let diff=touchStartY-e.changedTouches[0].clientY; if(Math.abs(diff)<30) return; scrollHandler({deltaY:diff}); });
 
 const observer = new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     const card = entry.target.querySelector('.card');
+    const corners = entry.target.querySelectorAll('.corner');
     if(entry.isIntersecting){ card.classList.add('visible'); }
   });
 },{threshold:0.6});
 sections.forEach(s=>observer.observe(s));
 
+// Цветы PNG
+const cornerImages = ["Floral-Blue-Frame-1.png","Floral-Blue-Frame-2.png","Floral-Blue-Frame-3.png","Floral-Blue-Frame-4.png"];
+const cornersPerBlock = [['tl','br'],['tr','bl'],['tl','br'],['tr','bl'],['tl','br'],['tr','bl']];
+sections.forEach((section,index)=>{
+  const card = section.querySelector('.card');
+  if(!card) return;
+  const allowedCorners = cornersPerBlock[index] || [];
+  ['tl','bl','br','tr'].forEach((pos,i)=>{
+    if(!allowedCorners.includes(pos)) return;
+    const img = document.createElement('img');
+    img.src = cornerImages[i];
+    img.classList.add('corner', `corner-${pos}`);
+    card.appendChild(img);
+  });
+});
+
+// Таймер
 const targetDate = new Date('2026-08-09T00:00:00');
 setInterval(()=>{
   const now = new Date();
   let diff = targetDate-now;
-  const d = Math.floor(diff/86400000);
-  const h = Math.floor(diff/3600000%24);
-  const m = Math.floor(diff/60000%60);
-  const s = Math.floor(diff/1000%60);
+  const d=Math.floor(diff/86400000);
+  const h=Math.floor(diff/3600000%24);
+  const m=Math.floor(diff/60000%60);
+  const s=Math.floor(diff/1000%60);
   document.getElementById('timer').innerHTML=`${d} дней ${h} часов ${m} минут ${s} секунд`;
 },1000);
 
 function openRoute(){ window.open('https://yandex.com/maps/-/CPRKiP-R'); }
 
-const modal = document.getElementById('modal');
-const closeBtn = modal.querySelector('.close');
-document.getElementById('confirmBtn').onclick = () => modal.style.display='block';
-closeBtn.onclick = () => modal.style.display='none';
-document.getElementById('sendBtn').onclick = function() {
-  const firstName = document.getElementById('firstName').value.trim();
-  const lastName = document.getElementById('lastName').value.trim();
-  if(!firstName || !lastName){ alert('Заполните поля'); return; }
-  fetch('/api/send',{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({firstName,lastName}) })
-    .then(()=>{ alert('Отправлено ❤️'); modal.style.display='none'; })
-    .catch(()=>{ alert('Ошибка отправки.'); });
+const modal=document.getElementById('modal');
+const closeBtn=modal.querySelector('.close');
+document.getElementById('confirmBtn').onclick=()=>modal.style.display='block';
+closeBtn.onclick=()=>modal.style.display='none';
+document.getElementById('sendBtn').onclick=function(){
+  const firstName=document.getElementById('firstName').value.trim();
+  const lastName=document.getElementById('lastName').value.trim();
+  if(!firstName||!lastName){ alert('Заполните поля'); return; }
+  fetch('/api/send',{method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({firstName,lastName})})
+  .then(()=>{ alert('Отправлено ❤️'); modal.style.display='none'; })
+  .catch(()=>{ alert('Ошибка отправки.'); });
 }
-window.onclick = e => { if(e.target==modal) modal.style.display='none'; };
+window.onclick=e=>{ if(e.target==modal) modal.style.display='none'; };
 
-const video = document.getElementById('bgVideo');
-video.muted = true;
-video.playsInline = true;
-function forcePlay() { if(video.paused){ video.play().catch(()=>{}); } }
-document.addEventListener('DOMContentLoaded', forcePlay);
-document.addEventListener('touchstart', forcePlay, { once: true });
-document.addEventListener('visibilitychange', () => { if (!document.hidden) forcePlay(); });
-video.addEventListener('pause', forcePlay);
-video.addEventListener('ended', () => { video.currentTime = 0; forcePlay(); });
+// Видео
+const video=document.getElementById('bgVideo');
+video.muted=true; video.playsInline=true;
+function forcePlay(){ if(video.paused){ video.play().catch(()=>{}); } }
+document.addEventListener('DOMContentLoaded',forcePlay);
+document.addEventListener('touchstart',forcePlay,{once:true});
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden) forcePlay(); });
+video.addEventListener('pause',forcePlay);
+video.addEventListener('ended',()=>{ video.currentTime=0; forcePlay(); });
+
+// Кнопка Наверх
+const toTop=document.getElementById('toTop');
+window.addEventListener('scroll',()=>{ toTop.style.display=(window.scrollY>300)?'block':'none'; });
+toTop.onclick=()=>scrollToSection(0);
 </script>
 
 </body>
