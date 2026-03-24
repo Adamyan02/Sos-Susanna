@@ -160,49 +160,71 @@ button {
   font-weight: bold;
   font-size: 18px;
 }
+/* Финальный блок S&S — исправлено на коричневый */
 .final h1 {
-  font-size: 90px;  /* чуть меньше для гармонии */
-  color: #5f8cd8;
+  font-family: 'Great Vibes', cursive;
+  font-size: 90px;  /* гармоничный размер */
+  color: #8B5E3C;   /* заменено с синего на коричневый */
   text-shadow:
-    0 0 15px rgba(95,140,216,0.5),
-    0 0 30px rgba(95,140,216,0.3);
+    0 0 15px rgba(139,94,60,0.5),
+    0 0 30px rgba(139,94,60,0.3);
   text-align: center;
 }
 
 .final h1 .letter {
   display: inline-block;
-  font-family: 'Dancing Script', cursive; /* заменили шрифт на прямой */
-  font-style: normal; /* убираем наклон */
+  font-family: 'Dancing Script', cursive;
+  font-style: normal;
   font-size: 90px;
+  color: #8B5E3C; /* добавлено, чтобы буквы были коричневыми */
 }
 
 .final h1 .heart {
   display: inline-block;
-  color: #1E90FF;
+  color: #8B5E3C; /* заменено с ярко-синего на коричневый */
   font-size: 90px;
   transform-origin: center center;
   animation: heartBeat 1.5s ease-in-out infinite;
-  margin: 0 12px; /* подбирается визуально */
-}
-  .final-names {
-  font-family: 'Great Vibes', cursive;
-  font-size: 70px;       /* уменьшили с 90px */
-  color: #5f8cd8;
-  text-align: center;
-  line-height: 1.1;     /* компактно для трёх строк */
+  margin: 0 12px;
 }
 
-.final-names .name {
+.final-names {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 200px;
+  font-family: 'Great Vibes', cursive;
+  font-size: 70px;
+  color: #8B5E3C;  /* заменено с синего на коричневый */
+  text-align: center;
+  line-height: 0.9;
+}
+
+.final-names .line {
   display: block;
+  color: #8B5E3C; /* все строки коричневые */
 }
 
 .final-names .heart {
   display: inline-block;
-  color: #1E90FF;
-  font-size: 65px;       /* чуть меньше, чем буквы */
+  font-size: 65px;
+  color: #8B5E3C; /* сердце тоже коричневое */
   transform-origin: center center;
   animation: heartBeat 1.5s ease-in-out infinite;
-  margin: 10px 0;       /* пространство между сердцем и именами */
+  margin: 5px 0;
+}
+
+.final p {
+  opacity: 0.8;
+  color: #1a1a1a; /* текст ниже — чёрный */
+  font-weight: bold;
+  font-size: 18px;
+}
+
+#toTopBtn {
+  background: #8B5E3C; /* кнопка коричневая */
+  margin-top: 20px;
 }
   
 @keyframes heartBeat {
