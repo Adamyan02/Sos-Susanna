@@ -167,6 +167,18 @@ button {
   display: inline-block;
   animation: beat 1s infinite;
 }
+  .heart {
+  display: inline-block;
+  color: #1E90FF;       /* синий, можно поменять на любой */
+  font-size: 100px;      /* такой же размер, как буквы S */
+  transform-origin: center center;
+  animation: heartBeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); } /* плавное увеличение */
+}
 
 @keyframes beat {
   0%, 100% { transform: scale(1); }
