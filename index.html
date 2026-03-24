@@ -149,10 +149,10 @@ button {
 .final h1 {
   font-family: 'Great Vibes', cursive;
   font-size: 100px;
-  color: #8B5E3C; /* заменено с синего */
+  color: #5f8cd8;
   text-shadow:
-    0 0 15px rgba(139,94,60,0.5),
-    0 0 30px rgba(139,94,60,0.3);
+    0 0 15px rgba(95,140,216,0.5),
+    0 0 30px rgba(95,140,216,0.3);
 }
 .final p {
   opacity: 0.8;
@@ -160,71 +160,33 @@ button {
   font-weight: bold;
   font-size: 18px;
 }
-/* Финальный блок S&S — исправлено на коричневый */
-.final h1 {
-  font-family: 'Great Vibes', cursive;
-  font-size: 90px;  /* гармоничный размер */
-  color: #8B5E3C;   /* заменено с синего на коричневый */
-  text-shadow:
-    0 0 15px rgba(139,94,60,0.5),
-    0 0 30px rgba(139,94,60,0.3);
-  text-align: center;
-}
-
-.final h1 .letter {
+  
+.heart {
   display: inline-block;
-  font-family: 'Dancing Script', cursive;
-  font-style: normal;
-  font-size: 90px;
-  color: #8B5E3C; /* добавлено, чтобы буквы были коричневыми */
-}
-
-.final h1 .heart {
-  display: inline-block;
-  color: #8B5E3C; /* заменено с ярко-синего на коричневый */
-  font-size: 90px;
+  color: #1E90FF;       /* синий, можно поменять на любой */
+  font-size: 100px;      /* такой же размер, как буквы S */
   transform-origin: center center;
   animation: heartBeat 1.5s ease-in-out infinite;
-  margin: 0 12px;
 }
-
-.final-names {
+  .final-names {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  height: 200px;
+  justify-content: space-between;  /* равные промежутки между строками */
+  height: 200px;                   /* высота блока — подбирается визуально */
   font-family: 'Great Vibes', cursive;
   font-size: 70px;
-  color: #8B5E3C;  /* заменено с синего на коричневый */
-  text-align: center;
-  line-height: 0.9;
+  color: #5f8cd8;
 }
 
 .final-names .line {
   display: block;
-  color: #8B5E3C; /* все строки коричневые */
 }
 
 .final-names .heart {
-  display: inline-block;
   font-size: 65px;
-  color: #8B5E3C; /* сердце тоже коричневое */
-  transform-origin: center center;
+  color: #1E90FF;
   animation: heartBeat 1.5s ease-in-out infinite;
-  margin: 5px 0;
-}
-
-.final p {
-  opacity: 0.8;
-  color: #1a1a1a; /* текст ниже — чёрный */
-  font-weight: bold;
-  font-size: 18px;
-}
-
-#toTopBtn {
-  background: #8B5E3C; /* кнопка коричневая */
-  margin-top: 20px;
 }
   
 @keyframes heartBeat {
@@ -427,7 +389,7 @@ input { width:90%; margin:10px 0; padding:10px; }
 
     <p style="margin-top:30px;opacity:0.6;font-size:14px;">© 2026 Сос & Сусанна</p>
 
-    <button id="toTopBtn" style="background:#8B5E3C; margin-top:20px;">Вернуться наверх</button>
+    <button id="toTopBtn" style="background:#7aa0e3; margin-top:20px;">Вернуться наверх</button>
   </div>
 </section>
 <!-- Модалка -->
