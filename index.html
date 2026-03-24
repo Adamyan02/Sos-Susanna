@@ -160,7 +160,21 @@ button {
   font-weight: bold;
   font-size: 18px;
 }
+.final-heart {
+  font-family: 'Great Vibes', cursive;
+  font-size: 100px; /* по размеру с буквы S */
+  color: #e63946;   /* красное сердце */
+  display: inline-block;
+  animation: beat 1s infinite;
+}
 
+@keyframes beat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.1); }
+  50% { transform: scale(1.2); }
+  75% { transform: scale(1.1); }
+}
+  
 /* Мобильные */
 @media (max-width:600px){
   section { padding:0 20px; }
@@ -232,7 +246,7 @@ input { width:90%; margin:10px 0; padding:10px; }
     <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
     <img class="corner corner-tr hide-tr" src="Floral-Blue-Frame-4.png">
-    <h1 class="names"><span>Сос</span><span>&</span><span>Сусанна</span></h1>
+    <h1 class="names"><span>Сос</span><span>и</span><span>Сусанна</span></h1>
     <p class="date">09.08.2026</p>
     <p>Мы создаём нашу семью и будем искренне счастливы разделить этот особенный день вместе с вами. Для нас очень важно ваше присутствие и поддержка ❤️</p>
     <button id="confirmBtn">Подтвердить присутствие</button>
@@ -299,7 +313,7 @@ input { width:90%; margin:10px 0; padding:10px; }
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
     <img class="corner corner-tr hide-tr" src="Floral-Blue-Frame-4.png">
     <p>С нетерпением ждём встречи с вами</p>
-    <h1>S & S</h1>
+    <h1 class="final-heart">S ❤️ S</h1>
     <p style="margin-top:30px;opacity:0.6;font-size:14px;">© 2026 Сос & Сусанна</p>
     <button id="toTopBtn" style="background:#8B5E3C; margin-top:20px;">Вернуться наверх</button>
   </div>
