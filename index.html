@@ -237,24 +237,24 @@ button {
   margin: 5px 0;         /* минимальный отступ сверху/снизу */
 }
   .final-names {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;  /* равные промежутки между строками */
+  height: 200px;                   /* высота блока — подбирается визуально */
   font-family: 'Great Vibes', cursive;
-  font-size: 70px;       /* размер букв */
+  font-size: 70px;
   color: #5f8cd8;
-  text-align: center;
 }
 
 .final-names .line {
   display: block;
-  margin: 8px 0;          /* одинаковый отступ между строками */
 }
 
 .final-names .heart {
-  display: block;
+  font-size: 65px;
   color: #1E90FF;
-  font-size: 65px;        /* чуть меньше букв */
-  transform-origin: center center;
   animation: heartBeat 1.5s ease-in-out infinite;
-  margin: 8px 0;          /* такой же отступ сверху/снизу */
 }
   
 /* Мобильные */
@@ -397,11 +397,11 @@ input { width:90%; margin:10px 0; padding:10px; }
 
     <p>С нетерпением ждём встречи с вами</p>
 
-    <h1 class="final-names">
+    <div class="final-names">
       <span class="line">Sos</span>
       <span class="line heart">♥</span>
       <span class="line">Susanna</span>
-    </h1>
+    </div>
 
     <p style="margin-top:30px;opacity:0.6;font-size:14px;">© 2026 Сос & Сусанна</p>
 
