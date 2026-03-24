@@ -216,6 +216,26 @@ button {
   50% { transform: scale(1.2); }
   75% { transform: scale(1.1); }
 }
+  .final-names {
+  font-family: 'Great Vibes', cursive;
+  font-size: 70px;       /* уменьшенный размер букв */
+  color: #5f8cd8;
+  text-align: center;
+  line-height: 0.9;      /* более компактные строки */
+}
+
+.final-names .name {
+  display: block;
+}
+
+.final-names .heart {
+  display: inline-block;
+  color: #1E90FF;
+  font-size: 65px;       /* сердце чуть меньше букв */
+  transform-origin: center center;
+  animation: heartBeat 1.5s ease-in-out infinite;
+  margin: 5px 0;         /* минимальный отступ сверху/снизу */
+}
   
 /* Мобильные */
 @media (max-width:600px){
