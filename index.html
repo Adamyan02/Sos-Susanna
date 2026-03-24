@@ -184,6 +184,26 @@ button {
   animation: heartBeat 1.5s ease-in-out infinite;
   margin: 0 12px; /* подбирается визуально */
 }
+  .final-names {
+  font-family: 'Great Vibes', cursive;
+  font-size: 70px;       /* уменьшили с 90px */
+  color: #5f8cd8;
+  text-align: center;
+  line-height: 1.1;     /* компактно для трёх строк */
+}
+
+.final-names .name {
+  display: block;
+}
+
+.final-names .heart {
+  display: inline-block;
+  color: #1E90FF;
+  font-size: 65px;       /* чуть меньше, чем буквы */
+  transform-origin: center center;
+  animation: heartBeat 1.5s ease-in-out infinite;
+  margin: 10px 0;       /* пространство между сердцем и именами */
+}
   
 @keyframes heartBeat {
   0%, 100% { transform: scale(1); }
