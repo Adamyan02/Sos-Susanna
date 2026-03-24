@@ -161,8 +161,7 @@ button {
   font-size: 18px;
 }
 .final h1 {
-  font-family: 'Great Vibes', cursive;
-  font-size: 90px;  /* уменьшили с 100px */
+  font-size: 90px;  /* чуть меньше для гармонии */
   color: #5f8cd8;
   text-shadow:
     0 0 15px rgba(95,140,216,0.5),
@@ -172,17 +171,18 @@ button {
 
 .final h1 .letter {
   display: inline-block;
-  font-family: 'Great Vibes', cursive;
-  font-size: 90px;  /* тоже уменьшили */
+  font-family: 'Dancing Script', cursive; /* заменили шрифт на прямой */
+  font-style: normal; /* убираем наклон */
+  font-size: 90px;
 }
 
 .final h1 .heart {
   display: inline-block;
   color: #1E90FF;
-  font-size: 90px;  /* тоже уменьшили */
+  font-size: 90px;
   transform-origin: center center;
   animation: heartBeat 1.5s ease-in-out infinite;
-  margin: 0 12px; /* визуально симметрично */
+  margin: 0 12px; /* подбирается визуально */
 }
   
 @keyframes heartBeat {
