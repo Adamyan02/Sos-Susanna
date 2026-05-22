@@ -65,7 +65,7 @@ section {
   max-width: 600px;
   width: 100%;
   text-align: center;
-  outline: 6px solid #8B5E3C; /* заменено с синего на коричневый */
+  outline: 6px solid #8B5E3C;
   outline-offset: 10px;
   box-shadow: 0 30px 70px rgba(0,0,0,0.2);
   transform-origin: center bottom;
@@ -88,11 +88,27 @@ section {
   font-size: 50px;
   font-family: 'Great Vibes', cursive;
   line-height: 1.2;
-  color: #8B5E3C; /* заменено с синего на коричневый */
+  color: #8B5E3C;
 }
-.card.first-block .date { font-size: 22px; margin-top:10px; color: #8B5E3C; /* заменено с синего */ }
-.card.first-block p { font-size: 18px; line-height: 1.5; margin-top:15px; color: #1a1a1a; font-weight: bold; }
-.card.first-block button { padding: 12px 28px; font-size: 14px; margin-top:20px; background:#8B5E3C; color:white; } /* кнопка коричневая */
+.card.first-block .date {
+  font-size: 22px;
+  margin-top:10px;
+  color: #8B5E3C;
+}
+.card.first-block p {
+  font-size: 18px;
+  line-height: 1.5;
+  margin-top:15px;
+  color: #1a1a1a;
+  font-weight: bold;
+}
+.card.first-block button {
+  padding: 12px 28px;
+  font-size: 14px;
+  margin-top:20px;
+  background:#8B5E3C;
+  color:white;
+}
 
 /* Видимая карточка */
 .card.visible {
@@ -127,8 +143,22 @@ section {
 
 /* Заголовки */
 .names span { display:block; }
-h2 { font-family: 'Dancing Script', cursive; font-size:34px; color:#8B5E3C; margin-bottom:20px; } /* заменено с синего */
-p { font-family: 'Dancing Script', cursive; line-height:1.6; margin:8px 0; color:#1a1a1a; font-weight: bold; font-size: 18px; }
+
+h2 {
+  font-family: 'Dancing Script', cursive;
+  font-size:34px;
+  color:#8B5E3C;
+  margin-bottom:20px;
+}
+
+p {
+  font-family: 'Dancing Script', cursive;
+  line-height:1.6;
+  margin:8px 0;
+  color:#1a1a1a;
+  font-weight: bold;
+  font-size: 18px;
+}
 
 /* Кнопки */
 button {
@@ -136,16 +166,26 @@ button {
   padding: 15px 40px;
   border-radius: 50px;
   border: none;
-  background: #8B5E3C; /* заменено с синего */
+  background: #8B5E3C;
   color: white;
   font-size: 16px;
   cursor: pointer;
 }
 
-.date { font-size: 28px; color: #8B5E3C; font-family:'Dancing Script', cursive; }
-#timer { font-size:26px; font-family:'Dancing Script', cursive; margin-top:10px; color:#8B5E3C; }
+.date {
+  font-size: 28px;
+  color: #8B5E3C;
+  font-family:'Dancing Script', cursive;
+}
 
-/* Финальный блок S&S */
+#timer {
+  font-size:26px;
+  font-family:'Dancing Script', cursive;
+  margin-top:10px;
+  color:#8B5E3C;
+}
+
+/* Финальный блок */
 .final h1 {
   font-family: 'Great Vibes', cursive;
   font-size: 100px;
@@ -154,93 +194,14 @@ button {
     0 0 15px rgba(95,140,216,0.5),
     0 0 30px rgba(95,140,216,0.3);
 }
+
 .final p {
   opacity: 0.8;
   color: #1a1a1a;
   font-weight: bold;
   font-size: 18px;
 }
-  
-.heart {
-  display: inline-block;
-  color: #1E90FF;       /* синий, можно поменять на любой */
-  font-size: 100px;      /* такой же размер, как буквы S */
-  transform-origin: center center;
-  animation: heartBeat 1.5s ease-in-out infinite;
-}
-  .final-names {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;  /* равные промежутки между строками */
-  height: 200px;                   /* высота блока — подбирается визуально */
-  font-family: 'Great Vibes', cursive;
-  font-size: 70px;
-  color: #8B5E3C;
-}
 
-.final-names .line {
-  display: block;
-}
-
-.final-names .heart {
-  font-size: 65px;
-  color: #1E90FF;
-  animation: heartBeat 1.5s ease-in-out infinite;
-}
-  
-@keyframes heartBeat {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.15); } /* плавное увеличение */
-}
-
-@keyframes beat {
-  0%, 100% { transform: scale(1); }
-  25% { transform: scale(1.1); }
-  50% { transform: scale(1.2); }
-  75% { transform: scale(1.1); }
-}
-  .final-names {
-  font-family: 'Great Vibes', cursive;
-  font-size: 70px;       /* уменьшенный размер букв */
-  color: #8B5E3C;
-  text-align: center;
-  line-height: 0.9;      /* более компактные строки */
-}
-
-.final-names .name {
-  display: block;
-}
-
-.final-names .heart {
-  display: inline-block;
-  color: #1E90FF;
-  font-size: 65px;       /* сердце чуть меньше букв */
-  transform-origin: center center;
-  animation: heartBeat 1.5s ease-in-out infinite;
-  margin: 5px 0;         /* минимальный отступ сверху/снизу */
-}
-  .final-names {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;  /* равные промежутки между строками */
-  height: 200px;                   /* высота блока — подбирается визуально */
-  font-family: 'Great Vibes', cursive;
-  font-size: 70px;
-  color: #8B5E3C;
-}
-
-.final-names .line {
-  display: block;
-}
-
-.final-names .heart {
-  font-size: 65px;
-  color: #1E90FF;
-  animation: heartBeat 1.5s ease-in-out infinite;
-}
-  
 /* Мобильные */
 @media (max-width:600px){
   section { padding:0 20px; }
@@ -261,6 +222,7 @@ button {
   background: rgba(0,0,0,0.5);
   z-index: 1000;
 }
+
 .modal-content {
   background: rgba(255,255,255,0.3);
   backdrop-filter: blur(10px) saturate(180%);
@@ -273,6 +235,7 @@ button {
   text-align: center;
   position: relative;
 }
+
 .modal-content .close {
   position: absolute;
   top: 10px;
@@ -283,9 +246,18 @@ button {
   cursor: pointer;
   transition: color 0.2s;
 }
-.modal-content .close:hover { color: #333; }
-input { width:90%; margin:10px 0; padding:10px; }
-/* Блок карты растянутый */
+
+.modal-content .close:hover {
+  color: #333;
+}
+
+input {
+  width:90%;
+  margin:10px 0;
+  padding:10px;
+}
+
+/* Блок карты */
 .full-map {
   width: 100%;
   height: 400px;
@@ -294,6 +266,7 @@ input { width:90%; margin:10px 0; padding:10px; }
 }
 </style>
 </head>
+
 <body>
 
 <!-- Видео фон -->
@@ -303,6 +276,7 @@ input { width:90%; margin:10px 0; padding:10px; }
     Ваш браузер не поддерживает видео.
   </video>
 </div>
+
 <div class="video-overlay"></div>
 
 <!-- Первый блок -->
@@ -312,9 +286,20 @@ input { width:90%; margin:10px 0; padding:10px; }
     <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
     <img class="corner corner-tr hide-tr" src="Floral-Blue-Frame-4.png">
-    <h1 class="names"><span>Сос</span><span>и</span><span>Сусанна</span></h1>
+
+    <h1 class="names">
+      <span>Сос</span>
+      <span>и</span>
+      <span>Сусанна</span>
+    </h1>
+
     <p class="date">09.08.2026</p>
-    <p>Мы создаём нашу семью и будем искренне счастливы разделить этот особенный день вместе с вами. Для нас очень важно ваше присутствие и поддержка ❤️</p>
+
+    <p>
+      Мы создаём нашу семью и будем искренне счастливы разделить этот особенный день вместе с вами.
+      Для нас очень важно ваше присутствие и поддержка ❤️
+    </p>
+
     <button id="confirmBtn">Подтвердить присутствие</button>
   </div>
 </section>
@@ -326,252 +311,399 @@ input { width:90%; margin:10px 0; padding:10px; }
     <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br hide-br" src="Floral-Blue-Frame-3.png">
     <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
+
     <h2>Локация</h2>
+
     <p>Банкетный зал «Версаль»</p>
     <p>Элеваторная ул., 13, посёлок Мелькомбинат, Уфа</p>
+
     <button onclick="openRoute()">Проложить маршрут</button>
   </div>
 </section>
 
-<!-- Третий блок с картой (объединён с карточкой) -->
+<!-- Карта -->
 <section style="flex-direction: column; align-items: center;">
   <div class="card" style="margin-bottom:10px; max-width:600px; margin-top:0px;">
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
     <img class="corner corner-tr hide-tr" src="Floral-Blue-Frame-4.png">
+
     <h2>Локация на карте</h2>
-    <p>Для вашего удобства мы добавили интерактивную карту с отметкой места проведения</p>
+
+    <p>
+      Для вашего удобства мы добавили интерактивную карту
+      с отметкой места проведения
+    </p>
+
     <div id="map" class="full-map"></div>
   </div>
 </section>
 
-<!-- Четвёртый блок -->
+<!-- Таймер -->
 <section>
   <div class="card">
     <img class="corner corner-tl hide-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br hide-br" src="Floral-Blue-Frame-3.png">
     <img class="corner corner-tr" src="Floral-Blue-Frame-4.png">
+
     <h2>До свадьбы осталось</h2>
+
     <div id="timer"></div>
   </div>
 </section>
 
-<!-- Пятый блок -->
+<!-- Дресс-код -->
 <section>
   <div class="card">
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
     <img class="corner corner-tr hide-tr" src="Floral-Blue-Frame-4.png">
+
     <h2>Дресс-код</h2>
-    <p>Мы будем очень признательны, если вы поддержите атмосферу нашего праздника и выберете элегантные образы.</p>
-    <p>Просим дам, по возможности, воздержаться от платьев в белых и близких оттенках 🤍</p>
+
+    <p>
+      Мы будем очень признательны, если вы поддержите атмосферу нашего праздника
+      и выберете элегантные образы.
+    </p>
+
+    <p>
+      Просим дам, по возможности, воздержаться от платьев
+      в белых и близких оттенках 🤍
+    </p>
   </div>
 </section>
 
-  <!-- Шестой блок -->
+<!-- Тайминг -->
 <section>
   <div class="card">
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
     <img class="corner corner-tr hide-tr" src="Floral-Blue-Frame-4.png">
+
     <h2>Тайминг</h2>
-        <p> 17:00 - Начала банкета<p>
-          <p> 23:00 - Завершение банкета<p>
+
+    <p>17:00 — Начало банкета</p>
+    <p>23:00 — Завершение банкета</p>
   </div>
 </section>
 
-<!-- Седьмой блок с кнопкой "Вернуться наверх" -->
+<!-- Финальный блок -->
 <section>
-  <div class="card final" style="position: relative;">
+  <div class="card final">
+
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
     <img class="corner corner-tr hide-tr" src="Floral-Blue-Frame-4.png">
+
+    <h1>S&S</h1>
 
     <p>С нетерпением ждём встречи с вами</p>
-<br>
-    <br>
-    <div class="final-names">
-      <span class="line">Sos</span>
-      <span class="line heart">♥</span>
-      <span class="line">Susanna</span>
-    </div>
 
-    <p style="margin-top:30px;opacity:0.6;font-size:14px;">© 2026 Сос & Сусанна</p>
+    <p style="margin-top:30px;opacity:0.6;font-size:14px;">
+      © 2026 Сос & Сусанна
+    </p>
 
-    <button id="toTopBtn" style="background:#8B5E3C; margin-top:20px;">Вернуться наверх</button>
+    <button id="toTopBtn">Вернуться наверх</button>
   </div>
 </section>
+
 <!-- Модалка -->
 <div class="modal" id="modal">
   <div class="modal-content">
+
     <span class="close">&times;</span>
+
     <h3>Введите данные</h3>
+
     <input id="firstName" placeholder="Имя">
     <input id="lastName" placeholder="Фамилия">
+
     <button id="sendBtn">Отправить</button>
+
   </div>
 </div>
 
 <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+
 <script>
 let isMapActive = false;
-  
-  // --- Карта ---
+
+// Карта
 ymaps.ready(init);
+
 function init() {
+
   var map = new ymaps.Map("map", {
     center: [54.664614, 55.969139],
     zoom: 16,
     controls: ['zoomControl','fullscreenControl']
   });
-  var placemark = new ymaps.Placemark([54.664614, 45.880925], {
+
+  var placemark = new ymaps.Placemark([54.664614, 55.969139], {
     hintContent: 'Место проведения',
     balloonContent: 'Банкетный зал «Версаль»'
-  }, { preset: 'islands#redDotIcon' });
+  }, {
+    preset: 'islands#redDotIcon'
+  });
+
   map.geoObjects.add(placemark);
+
   const mapElement = document.getElementById('map');
 
-// Десктоп
-mapElement.addEventListener('mouseenter', () => isMapActive = true);
-mapElement.addEventListener('mouseleave', () => isMapActive = false);
+  // Десктоп
+  mapElement.addEventListener('mouseenter', () => isMapActive = true);
+  mapElement.addEventListener('mouseleave', () => isMapActive = false);
 
-// Мобильные
-mapElement.addEventListener('touchstart', () => isMapActive = true);
-mapElement.addEventListener('touchend', () => {
-  setTimeout(() => isMapActive = false, 300);
-});
+  // Мобильные
+  mapElement.addEventListener('touchstart', () => isMapActive = true);
+
+  mapElement.addEventListener('touchend', () => {
+    setTimeout(() => isMapActive = false, 300);
+  });
 }
 
-// --- Snap scroll ---
-const sectionElems=document.querySelectorAll('section');
-const markers=[];
-sectionElems.forEach(sec=>{
-  const marker=document.createElement('div');
-  marker.style.position='absolute';
-  marker.style.top='0px';
-  marker.style.left='0';
-  marker.style.width='1px';
-  marker.style.height='1px';
-  marker.style.pointerEvents='none';
+// Snap scroll
+const sectionElems = document.querySelectorAll('section');
+
+const markers = [];
+
+sectionElems.forEach(sec => {
+
+  const marker = document.createElement('div');
+
+  marker.style.position = 'absolute';
+  marker.style.top = '0px';
+  marker.style.left = '0';
+  marker.style.width = '1px';
+  marker.style.height = '1px';
+  marker.style.pointerEvents = 'none';
+
   sec.appendChild(marker);
 
-  const card=sec.querySelector('.card');
-  marker.style.top=`${card.offsetTop+card.offsetHeight/2}px`;
+  const card = sec.querySelector('.card');
+
+  marker.style.top = `${card.offsetTop + card.offsetHeight / 2}px`;
+
   markers.push(marker);
 });
 
-let currentIndex=0;
-let isScrolling=false;
+let currentIndex = 0;
+let isScrolling = false;
+
 function scrollToMarker(index){
-  if(index<0) index=0;
-  if(index>=markers.length) index=markers.length-1;
-  if(isScrolling||index===currentIndex) return;
-  isScrolling=true;
-  currentIndex=index;
-  const rect=markers[index].getBoundingClientRect();
-  const scrollTop=window.scrollY+rect.top-window.innerHeight/2;
-  window.scrollTo({top:scrollTop, behavior:'smooth'});
-  setTimeout(()=>{isScrolling=false;},700);
+
+  if(index < 0) index = 0;
+  if(index >= markers.length) index = markers.length - 1;
+
+  if(isScrolling || index === currentIndex) return;
+
+  isScrolling = true;
+  currentIndex = index;
+
+  const rect = markers[index].getBoundingClientRect();
+
+  const scrollTop =
+    window.scrollY + rect.top - window.innerHeight / 2;
+
+  window.scrollTo({
+    top: scrollTop,
+    behavior: 'smooth'
+  });
+
+  setTimeout(() => {
+    isScrolling = false;
+  }, 700);
 }
 
 // Wheel
-window.addEventListener('wheel', e=>{
+window.addEventListener('wheel', e => {
+
   if(isScrolling || isMapActive) return;
-  if(e.deltaY>20) scrollToMarker(currentIndex+1);
-  else if(e.deltaY<-20) scrollToMarker(currentIndex-1);
-},{passive:false});
+
+  if(e.deltaY > 20) {
+    scrollToMarker(currentIndex + 1);
+  }
+  else if(e.deltaY < -20) {
+    scrollToMarker(currentIndex - 1);
+  }
+
+}, { passive:false });
 
 // Touch
-let touchStartY=null;
-window.addEventListener('touchstart', e=>{ touchStartY=e.touches[0].clientY;},{passive:false});
-window.addEventListener('touchend', e=>{
-  if(isMapActive) return;
-  if(touchStartY===null) return;
-  let diff=touchStartY-e.changedTouches[0].clientY;
-  if(Math.abs(diff)<30) return;
-  if(diff>0) scrollToMarker(currentIndex+1);
-  else scrollToMarker(currentIndex-1);
-  touchStartY=null;
-},{passive:false});
+let touchStartY = null;
 
-// IntersectionObserver для углов
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    const card=entry.target.querySelector('.card');
-    const corners=entry.target.querySelectorAll('.corner');
+window.addEventListener('touchstart', e => {
+  touchStartY = e.touches[0].clientY;
+}, { passive:false });
+
+window.addEventListener('touchend', e => {
+
+  if(isMapActive) return;
+
+  if(touchStartY === null) return;
+
+  let diff = touchStartY - e.changedTouches[0].clientY;
+
+  if(Math.abs(diff) < 30) return;
+
+  if(diff > 0) {
+    scrollToMarker(currentIndex + 1);
+  }
+  else {
+    scrollToMarker(currentIndex - 1);
+  }
+
+  touchStartY = null;
+
+}, { passive:false });
+
+// Анимация карточек
+const observer = new IntersectionObserver(entries => {
+
+  entries.forEach(entry => {
+
+    const card = entry.target.querySelector('.card');
+
+    const corners = entry.target.querySelectorAll('.corner');
+
     if(entry.isIntersecting){
+
       card.classList.remove('visible');
-      corners.forEach(c=>{
-        c.style.transition='none';
-        c.style.opacity='0';
-        c.style.transform='scale(0.7)';
+
+      corners.forEach(c => {
+        c.style.transition = 'none';
+        c.style.opacity = '0';
+        c.style.transform = 'scale(0.7)';
       });
+
       void card.offsetWidth;
-      setTimeout(()=>{
+
+      setTimeout(() => {
+
         card.classList.add('visible');
-        corners.forEach(c=>{
-          c.style.transition='all 1.2s ease';
-          c.style.opacity='1';
-          c.style.transform='scale(1)';
+
+        corners.forEach(c => {
+          c.style.transition = 'all 1.2s ease';
+          c.style.opacity = '1';
+          c.style.transform = 'scale(1)';
         });
-      },50);
+
+      }, 50);
     }
   });
-},{threshold:0.6});
-sectionElems.forEach(s=>observer.observe(s));
+
+}, { threshold:0.6 });
+
+sectionElems.forEach(s => observer.observe(s));
 
 // Таймер
-const targetDate=new Date('2026-08-09T00:00:00');
-setInterval(()=>{
-  const now=new Date();
-  let diff=targetDate-now;
-  const d=Math.floor(diff/86400000);
-  const h=Math.floor(diff/3600000%24);
-  const m=Math.floor(diff/60000%60);
-  const s=Math.floor(diff/1000%60);
-  document.getElementById('timer').innerHTML=`${d} дней ${h} часов ${m} минут ${s} секунд`;
-},1000);
+const targetDate = new Date('2026-08-09T00:00:00');
+
+setInterval(() => {
+
+  const now = new Date();
+
+  let diff = targetDate - now;
+
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor(diff / 3600000 % 24);
+  const m = Math.floor(diff / 60000 % 60);
+  const s = Math.floor(diff / 1000 % 60);
+
+  document.getElementById('timer').innerHTML =
+    `${d} дней ${h} часов ${m} минут ${s} секунд`;
+
+}, 1000);
 
 // Модалка
-const modal=document.getElementById('modal');
-const closeBtn=modal.querySelector('.close');
-document.getElementById('confirmBtn').onclick=()=>modal.style.display='block';
-closeBtn.onclick=()=>modal.style.display='none';
-document.getElementById('sendBtn').onclick=function(){
-  const firstName=document.getElementById('firstName').value.trim();
-  const lastName=document.getElementById('lastName').value.trim();
-  if(!firstName||!lastName){ alert('Заполните поля'); return; }
-  fetch('/api/send',{
+const modal = document.getElementById('modal');
+
+const closeBtn = modal.querySelector('.close');
+
+document.getElementById('confirmBtn').onclick = () => {
+  modal.style.display = 'block';
+};
+
+closeBtn.onclick = () => {
+  modal.style.display = 'none';
+};
+
+document.getElementById('sendBtn').onclick = function(){
+
+  const firstName =
+    document.getElementById('firstName').value.trim();
+
+  const lastName =
+    document.getElementById('lastName').value.trim();
+
+  if(!firstName || !lastName){
+    alert('Заполните поля');
+    return;
+  }
+
+  fetch('/api/send', {
     method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({firstName,lastName})
-  }).then(()=>{ alert('Отправлено ❤️'); modal.style.display='none'; })
-    .catch(()=>{ alert('Ошибка отправки.'); });
+    headers:{
+      'Content-Type':'application/json'
+    },
+    body:JSON.stringify({
+      firstName,
+      lastName
+    })
+  })
+  .then(() => {
+    alert('Отправлено ❤️');
+    modal.style.display='none';
+  })
+  .catch(() => {
+    alert('Ошибка отправки.');
+  });
+};
+
+window.onclick = e => {
+  if(e.target == modal){
+    modal.style.display = 'none';
+  }
+};
+
+// Видео
+const video = document.getElementById('bgVideo');
+
+function forcePlay(){
+  if(video.paused){
+    video.play().catch(() => {});
+  }
 }
-window.onclick=e=>{ if(e.target==modal) modal.style.display='none'; };
 
-// Видеофон
-const video=document.getElementById('bgVideo');
-function forcePlay(){ if(video.paused){ video.play().catch(()=>{}); } }
-document.addEventListener('touchstart',forcePlay,{once:true});
-document.addEventListener('visibilitychange',()=>{ if(!document.hidden) forcePlay(); });
-video.addEventListener('pause',forcePlay);
+document.addEventListener('touchstart', forcePlay, { once:true });
 
-<div class="video-overlay"></div>
+document.addEventListener('visibilitychange', () => {
+  if(!document.hidden){
+    forcePlay();
+  }
+});
 
-// Кнопка наверх через snap scroll
-document.getElementById('toTopBtn').addEventListener('click', ()=>{ scrollToMarker(0); });
+video.addEventListener('pause', forcePlay);
 
-// Проложить маршрут
-function openRoute(){ 
-  window.open('https://yandex.ru/maps/?rtext=~54.664614,55.969139','_blank'); 
+// Наверх
+document.getElementById('toTopBtn')
+.addEventListener('click', () => {
+  scrollToMarker(0);
+});
+
+// Маршрут
+function openRoute(){
+  window.open(
+    'https://yandex.ru/maps/?rtext=~54.664614,55.969139',
+    '_blank'
+  );
 }
-
 </script>
+
 </body>
 </html>
