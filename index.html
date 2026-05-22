@@ -569,5 +569,39 @@ document.getElementById('toTopBtn').addEventListener('click', ()=>{ scrollToMark
 function openRoute(){ window.open('https://yandex.ru/maps/?rtext=~54.664614,55.969139','_blank'); } 
 </script>
 
+  // Фоновая музыка
+const music = document.getElementById('bgMusic');
+
+function tryPlayMusic() {
+  if (!music) return;
+
+  music.volume = 0.35;
+
+  const playPromise = music.play();
+
+  if (playPromise !== undefined) {
+    playPromise.catch(() => {
+      // браузер может заблокировать автозапуск
+    });
+  }
+}
+
+// Автозапуск после загрузки
+window.addEventListener('load', () => {
+  tryPlayMusic();
+});
+
+// Для Safari / iPhone
+window.addEventListener('touchstart', () => {
+  tryPlayMusic();
+}, { once: true });
+
+// Для desktop
+window.addEventListener('click', () => {
+  tryPlayMusic();
+}, { once: true });
+  <audio id="bgMusic" loop preload="auto">
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
 </body>
 </html>
