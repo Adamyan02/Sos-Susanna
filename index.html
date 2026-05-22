@@ -562,11 +562,6 @@ document.addEventListener('touchstart',forcePlay,{once:true});
 document.addEventListener('visibilitychange',()=>{ if(!document.hidden) forcePlay(); });
 video.addEventListener('pause',forcePlay);
 
-  <!-- Музыка -->
-<audio id="bgMusic" loop>
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
-
 <div class="video-overlay"></div>
 
 // Кнопка наверх через snap scroll
