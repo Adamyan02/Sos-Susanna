@@ -554,6 +554,9 @@ input {
 <script>
 let isMapActive = false;
   let soundEnabled = false;
+  
+  const music = document.getElementById('bgMusic');
+const overlay = document.getElementById('soundOverlay');
 
 // Карта
 ymaps.ready(init);
@@ -854,9 +857,6 @@ function openRoute(){
   }
 });
 
-  .video-bg video {
-  pointer-events: none;
-}
 </script>
 
 </body>
