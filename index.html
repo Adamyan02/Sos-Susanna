@@ -555,8 +555,38 @@ input {
 let isMapActive = false;
   let soundEnabled = false;
   
-  const music = document.getElementById('bgMusic');
-const overlay = document.getElementById('soundOverlay');
+ let music;
+let overlay;
+
+function initAudioOverlay() {
+  music = document.getElementById('bgMusic');
+  overlay = document.getElementById('soundOverlay');
+
+  if (!music || !overlay) return;
+
+  overlay.addEventListener('click', async () => {
+    if (soundEnabled) return;
+
+    try {
+      music.volume = 0.5;
+      await music.play();
+
+      soundEnabled = true;
+
+      overlay.style.opacity = '0';
+
+      setTimeout(() => {
+        overlay.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }, 300);
+
+    } catch (e) {
+      console.log('Музыка заблокирована', e);
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', initAudioOverlay);
 
 // Карта
 ymaps.ready(init);
