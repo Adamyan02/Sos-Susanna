@@ -202,6 +202,47 @@ button {
   font-size: 18px;
 }
 
+  .final-names {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Great Vibes', cursive;
+  color: #8B5E3C;
+  line-height: 0.9;
+}
+
+.final-names .line {
+  display: block;
+  font-size: 100px;
+}
+
+.final-names .heart {
+  display: inline-block;
+  font-size: 100px;
+  color: red;
+  animation: heartBeat 1.2s infinite;
+  transform-origin: center;
+}
+
+@keyframes heartBeat {
+  0% {
+    transform: scale(1);
+  }
+  15% {
+    transform: scale(1.25);
+  }
+  30% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.25);
+  }
+  60% {
+    transform: scale(1);
+  }
+}
+
 /* Мобильные */
 @media (max-width:600px){
   section { padding:0 20px; }
@@ -214,6 +255,14 @@ button {
   .full-map { margin-top:10px; height:350px; }
 }
 
+.final-names .line {
+  font-size: 70px;
+}
+
+.final-names .heart {
+  font-size: 70px;
+}
+  
 /* Модалка */
 .modal {
   display: none;
