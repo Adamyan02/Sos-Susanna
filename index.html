@@ -698,44 +698,46 @@ closeBtn.onclick = () => {
   modal.style.display = 'none';
 };
 
-document.getElementById('sendBtn').onclick = function(){
+document.getElementById('sendBtn').onclick = function () {
 
-const firstName =
-  document.getElementById('firstName').value.trim();
+  const firstName =
+    document.getElementById('firstName').value.trim();
 
-const lastName =
-  document.getElementById('lastName').value.trim();
+  const lastName =
+    document.getElementById('lastName').value.trim();
 
-const peopleCount =
-const peopleCountEl = document.getElementById('peopleCount');
-const peopleCount = peopleCountEl ? peopleCountEl.value.trim() : '';
+  const peopleCountEl =
+    document.getElementById('peopleCount');
 
-if(!firstName || !lastName || !peopleCount){
-  alert('Заполните все поля');
-  return;
-}
+  const peopleCount =
+    peopleCountEl ? peopleCountEl.value.trim() : '';
 
-fetch('/api/send', {
-  method:'POST',
-  headers:{
-    'Content-Type':'application/json'
-  },
-  body:JSON.stringify({
-    firstName,
-    lastName,
-    peopleCount: Number(peopleCount)
+  if (!firstName || !lastName || !peopleCount) {
+    alert('Заполните все поля');
+    return;
+  }
+
+  fetch('/api/send', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      firstName,
+      lastName,
+      peopleCount: Number(peopleCount)
+    })
   })
-})
-  })
-  .then(() => {
-    alert('Отправлено ❤️');
-    modal.style.display='none';
-  })
-  .catch(() => {
-    alert('Ошибка отправки.');
-  });
+    .then(() => {
+      alert('Отправлено ❤️');
+      modal.style.display = 'none';
+    })
+    .catch(() => {
+      alert('Ошибка отправки.');
+    });
+
 };
-
+  
 window.onclick = e => {
   if(e.target == modal){
     modal.style.display = 'none';
