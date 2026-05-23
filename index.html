@@ -677,7 +677,7 @@ function scrollToMarker(index){
 
 window.addEventListener('wheel', e => {
 
-  if (isScrolling || isMapActive) return;
+ if (isScrolling) return;
 
   if (e.deltaY > 20) {
     scrollToMarker(currentIndex + 1);
@@ -855,7 +855,12 @@ video.addEventListener('pause', forcePlay);
 // Наверх
 document.getElementById('toTopBtn')
 .addEventListener('click', () => {
-  scrollToMarker(0);
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+
+  currentIndex = 0;
 });
 
 // Маршрут
