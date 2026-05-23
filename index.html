@@ -707,7 +707,8 @@ const lastName =
   document.getElementById('lastName').value.trim();
 
 const peopleCount =
-  document.getElementById('peopleCount').value.trim();
+const peopleCountEl = document.getElementById('peopleCount');
+const peopleCount = peopleCountEl ? peopleCountEl.value.trim() : '';
 
 if(!firstName || !lastName || !peopleCount){
   alert('Заполните все поля');
