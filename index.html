@@ -486,6 +486,7 @@ input {
 
     <input id="firstName" placeholder="Имя">
     <input id="lastName" placeholder="Фамилия">
+    <input id="peopleCount" type="number" min="1" placeholder="Количество людей">
 
     <button id="sendBtn">Отправить</button>
 
@@ -699,26 +700,31 @@ closeBtn.onclick = () => {
 
 document.getElementById('sendBtn').onclick = function(){
 
-  const firstName =
-    document.getElementById('firstName').value.trim();
+const firstName =
+  document.getElementById('firstName').value.trim();
 
-  const lastName =
-    document.getElementById('lastName').value.trim();
+const lastName =
+  document.getElementById('lastName').value.trim();
 
-  if(!firstName || !lastName){
-    alert('Заполните поля');
-    return;
-  }
+const peopleCount =
+  document.getElementById('peopleCount').value.trim();
 
-  fetch('/api/send', {
-    method:'POST',
-    headers:{
-      'Content-Type':'application/json'
-    },
-    body:JSON.stringify({
-      firstName,
-      lastName
-    })
+if(!firstName || !lastName || !peopleCount){
+  alert('Заполните все поля');
+  return;
+}
+
+fetch('/api/send', {
+  method:'POST',
+  headers:{
+    'Content-Type':'application/json'
+  },
+  body:JSON.stringify({
+    firstName,
+    lastName,
+    peopleCount: Number(peopleCount)
+  })
+})
   })
   .then(() => {
     alert('Отправлено ❤️');
