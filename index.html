@@ -331,6 +331,40 @@ input {
 
 <body>
 
+  <audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+  <div id="soundOverlay" style="
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.75);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  z-index:9999;
+  color:white;
+  font-family:'Dancing Script', cursive;
+  cursor:pointer;
+">
+  <div style="font-size:28px; margin-bottom:15px;">
+    Включите звук
+  </div>
+
+  <div style="font-size:50px; animation:pulse 1.5s infinite;">
+    🔊
+  </div>
+</div>
+
+<style>
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.6; }
+  100% { transform: scale(1); opacity: 1; }
+}
+</style>
+
 <!-- Видео фон -->
 <div class="video-bg">
   <video id="bgVideo" autoplay muted loop playsinline webkit-playsinline>
@@ -776,6 +810,18 @@ function openRoute(){
     '_blank'
   );
 }
+
+  const music = document.getElementById('bgMusic');
+const overlay = document.getElementById('soundOverlay');
+
+overlay.addEventListener('click', async () => {
+  try {
+    await music.play();
+    overlay.style.display = 'none';
+  } catch (e) {
+    console.log('Автовоспроизведение заблокировано');
+  }
+});
 </script>
 
 </body>
