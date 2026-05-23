@@ -326,6 +326,10 @@ input {
   border-radius: 20px;
   touch-action: auto;
 }
+  #soundOverlay{
+  cursor: pointer;
+  touch-action: none;
+}
 </style>
 </head>
 
@@ -637,7 +641,8 @@ function scrollToMarker(index){
 }
 
 // Wheel
-window.addEventListener('wheel', e => {
+if(document.getElementById('soundOverlay').style.display !== 'none') return;
+if(isScrolling || isMapActive) return;
 
   if(isScrolling || isMapActive) return;
 
@@ -839,6 +844,35 @@ overlay.addEventListener('click', async () => {
     console.log('Автовоспроизведение заблокировано');
   }
 });
+
+  const music = document.getElementById('bgMusic');
+const overlay = document.getElementById('soundOverlay');
+
+document.body.style.overflow = 'hidden';
+
+overlay.addEventListener('click', async () => {
+
+  console.log('overlay clicked');
+
+  overlay.style.opacity = '0';
+
+  setTimeout(() => {
+    overlay.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }, 400);
+
+  try {
+    music.volume = 0.5;
+    await music.play();
+  } catch (e) {
+    console.log('Музыка заблокирована');
+  }
+});
+
+overlay.addEventListener('touchstart', () => {
+  overlay.click();
+});
+  
 </script>
 
 </body>
