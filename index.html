@@ -655,7 +655,7 @@ function scrollToMarker(index){
   if(index < 0) index = 0;
   if(index >= markers.length) index = markers.length - 1;
 
-  if(isScrolling || index === currentIndex) return;
+  if(isScrolling) return;
 
   isScrolling = true;
   currentIndex = index;
@@ -855,12 +855,13 @@ video.addEventListener('pause', forcePlay);
 // Наверх
 document.getElementById('toTopBtn')
 .addEventListener('click', () => {
+  isScrolling = false;
+  currentIndex = 0;
+
   window.scrollTo({
     top: 0,
     behavior: 'smooth'
   });
-
-  currentIndex = 0;
 });
 
 // Маршрут
