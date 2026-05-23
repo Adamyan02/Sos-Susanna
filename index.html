@@ -655,15 +655,14 @@ function scrollToMarker(index){
   if(index < 0) index = 0;
   if(index >= markers.length) index = markers.length - 1;
 
-  if(isScrolling) return;
-
-  isScrolling = true;
-  currentIndex = index;
+  currentIndex = index; // 👈 ВАЖНО: обновляем сразу
 
   const rect = markers[index].getBoundingClientRect();
 
   const scrollTop =
     window.scrollY + rect.top - window.innerHeight / 2;
+
+  isScrolling = true;
 
   window.scrollTo({
     top: scrollTop,
@@ -672,7 +671,7 @@ function scrollToMarker(index){
 
   setTimeout(() => {
     isScrolling = false;
-  }, 900);
+  }, 700);
 }
 
 window.addEventListener('wheel', e => {
@@ -853,7 +852,10 @@ document.addEventListener('visibilitychange', () => {
 video.addEventListener('pause', forcePlay);
 
 // Кнопка наверх через snap scroll
-document.getElementById('toTopBtn').addEventListener('click', ()=>{ scrollToMarker(0); });
+document.getElementById('toTopBtn').addEventListener('click', () => {
+  isScrolling = false;
+  scrollToMarker(0);
+});
 
 // Маршрут
 function openRoute(){
