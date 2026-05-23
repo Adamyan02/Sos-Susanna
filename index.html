@@ -672,7 +672,7 @@ function scrollToMarker(index){
 
   setTimeout(() => {
     isScrolling = false;
-  }, 700);
+  }, 900);
 }
 
 window.addEventListener('wheel', e => {
@@ -855,17 +855,7 @@ video.addEventListener('pause', forcePlay);
 // Наверх
 document.getElementById('toTopBtn')
 .addEventListener('click', () => {
-  isScrolling = true;
-  currentIndex = 0;
-
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
-
-  setTimeout(() => {
-    isScrolling = false;
-  }, 800);
+  scrollToMarker(0);
 });
 
 // Маршрут
