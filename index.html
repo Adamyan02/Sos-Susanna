@@ -644,7 +644,6 @@ function scrollToMarker(index){
 
 window.addEventListener('wheel', e => {
 
-  if (document.getElementById('soundOverlay').style.display !== 'none') return;
   if (isScrolling || isMapActive) return;
 
   if (e.deltaY > 20) {
@@ -834,11 +833,7 @@ function openRoute(){
   );
 }
 
-  const music = document.getElementById('bgMusic');
-const overlay = document.getElementById('soundOverlay');
-
-overlay.addEventListener('click', async () => {
-
+ overlay.addEventListener('click', async () => {
   if (soundEnabled) return;
 
   try {
@@ -855,9 +850,13 @@ overlay.addEventListener('click', async () => {
     }, 300);
 
   } catch (e) {
-    console.log('Музыка заблокирована браузером');
+    console.log('Музыка заблокирована');
   }
 });
+
+  .video-bg video {
+  pointer-events: none;
+}
 </script>
 
 </body>
