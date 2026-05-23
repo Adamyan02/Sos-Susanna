@@ -640,20 +640,19 @@ function scrollToMarker(index){
   }, 700);
 }
 
-// Wheel
-if(document.getElementById('soundOverlay').style.display !== 'none') return;
-if(isScrolling || isMapActive) return;
+window.addEventListener('wheel', e => {
 
-  if(isScrolling || isMapActive) return;
+  if (document.getElementById('soundOverlay').style.display !== 'none') return;
+  if (isScrolling || isMapActive) return;
 
-  if(e.deltaY > 20) {
+  if (e.deltaY > 20) {
     scrollToMarker(currentIndex + 1);
-  }
-  else if(e.deltaY < -20) {
+  } 
+  else if (e.deltaY < -20) {
     scrollToMarker(currentIndex - 1);
   }
 
-}, { passive:false });
+}, { passive: false });
 
 // Touch
 let touchStartY = null;
@@ -837,17 +836,27 @@ function openRoute(){
 const overlay = document.getElementById('soundOverlay');
 
 overlay.addEventListener('click', async () => {
+
   try {
+    music.volume = 0.5;
     await music.play();
-    overlay.style.display = 'none';
+
+    overlay.style.opacity = '0';
+
+    setTimeout(() => {
+      overlay.style.display = 'none';
+    }, 300);
+
   } catch (e) {
-    console.log('Автовоспроизведение заблокировано');
+    console.log('Музыка заблокирована браузером');
   }
+
 });
 
-  const music = document.getElementById('bgMusic');
-const overlay = document.getElementById('soundOverlay');
-
+overlay.addEventListener('touchstart', () => {
+  overlay.click();
+});
+  
 document.body.style.overflow = 'hidden';
 
 overlay.addEventListener('click', async () => {
