@@ -552,6 +552,7 @@ input {
 
 <script>
 let isMapActive = false;
+  let soundEnabled = false;
 
 // Карта
 ymaps.ready(init);
@@ -837,45 +838,28 @@ const overlay = document.getElementById('soundOverlay');
 
 overlay.addEventListener('click', async () => {
 
+  if (soundEnabled) return;
+
   try {
     music.volume = 0.5;
     await music.play();
+
+    soundEnabled = true;
 
     overlay.style.opacity = '0';
 
     setTimeout(() => {
       overlay.style.display = 'none';
+      document.body.style.overflow = 'auto';
     }, 300);
 
   } catch (e) {
     console.log('Музыка заблокирована браузером');
   }
-
 });
 
 overlay.addEventListener('touchstart', () => {
   overlay.click();
-});
-  
-document.body.style.overflow = 'hidden';
-
-overlay.addEventListener('click', async () => {
-
-  console.log('overlay clicked');
-
-  overlay.style.opacity = '0';
-
-  setTimeout(() => {
-    overlay.style.display = 'none';
-    document.body.style.overflow = 'auto';
-  }, 400);
-
-  try {
-    music.volume = 0.5;
-    await music.play();
-  } catch (e) {
-    console.log('Музыка заблокирована');
-  }
 });
 
 overlay.addEventListener('touchstart', () => {
