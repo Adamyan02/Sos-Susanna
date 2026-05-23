@@ -623,29 +623,8 @@ function init() {
 }
 
 // Snap scroll
-const sectionElems = document.querySelectorAll('section');
-
-const markers = [];
-
-sectionElems.forEach(sec => {
-
-  const marker = document.createElement('div');
-
-  marker.style.position = 'absolute';
-  marker.style.top = '0px';
-  marker.style.left = '0';
-  marker.style.width = '1px';
-  marker.style.height = '1px';
-  marker.style.pointerEvents = 'none';
-
-  sec.appendChild(marker);
-
-  const card = sec.querySelector('.card');
-
-  marker.style.top = `${card.offsetTop + card.offsetHeight / 2}px`;
-
-  markers.push(marker);
-});
+let markers = [];
+let sectionElems = [];
 
 let currentIndex = 0;
 let isScrolling = false;
@@ -885,7 +864,36 @@ function openRoute(){
     console.log('Музыка заблокирована');
   }
 });
+window.addEventListener('load', () => {
 
+  sectionElems = document.querySelectorAll('section');
+  markers = [];
+
+  sectionElems.forEach(sec => {
+
+    const marker = document.createElement('div');
+
+    marker.style.position = 'absolute';
+    marker.style.top = '0px';
+    marker.style.left = '0';
+    marker.style.width = '1px';
+    marker.style.height = '1px';
+    marker.style.pointerEvents = 'none';
+
+    sec.appendChild(marker);
+
+    const card = sec.querySelector('.card');
+
+    // важно: теперь DOM уже полностью посчитан
+    const rect = card.getBoundingClientRect();
+    const scrollTop = window.scrollY + rect.top + rect.height / 2;
+
+    marker.dataset.scroll = scrollTop;
+
+    markers.push(marker);
+  });
+});
+  
 </script>
 
 </body>
