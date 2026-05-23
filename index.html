@@ -326,9 +326,10 @@ input {
   border-radius: 20px;
   touch-action: auto;
 }
-  #soundOverlay{
+ #soundOverlay{
   cursor: pointer;
-  touch-action: none;
+  touch-action: manipulation;
+  pointer-events: auto;
 }
 </style>
 </head>
@@ -862,9 +863,6 @@ overlay.addEventListener('touchstart', () => {
   overlay.click();
 });
 
-overlay.addEventListener('touchstart', () => {
-  overlay.click();
-});
   
 </script>
 
