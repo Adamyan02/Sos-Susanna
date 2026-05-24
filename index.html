@@ -836,8 +836,9 @@ const sections = document.querySelectorAll('section');
 
 let currentIndex = 0;
 let isScrolling = false;
+let scrollTimeout = null;
 
-/* определяем активную секцию по экрану */
+/* Определяем текущую секцию */
 
 function updateCurrentSection(){
 
@@ -848,8 +849,7 @@ function updateCurrentSection(){
 
     const rect = section.getBoundingClientRect();
 
-    const distance =
-      Math.abs(rect.top);
+    const distance = Math.abs(rect.top);
 
     if(distance < closestDistance){
 
@@ -864,7 +864,7 @@ function updateCurrentSection(){
 
 }
 
-/* скролл */
+/* Скролл к секции */
 
 function scrollToSection(index){
 
@@ -879,7 +879,6 @@ function scrollToSection(index){
   if(isScrolling) return;
 
   isScrolling = true;
-
   currentIndex = index;
 
   sections[index].scrollIntoView({
@@ -887,13 +886,13 @@ function scrollToSection(index){
     block:'start'
   });
 
-  setTimeout(() => {
+  clearTimeout(scrollTimeout);
+
+  scrollTimeout = setTimeout(() => {
 
     isScrolling = false;
 
-    updateCurrentSection();
-
-  }, 1000);
+  }, 900);
 
 }
 
@@ -922,7 +921,7 @@ window.addEventListener('wheel', e => {
 
 /* Touch */
 
-let touchStartY = 0;
+let touchStartY = null;
 
 window.addEventListener('touchstart', e => {
 
@@ -932,13 +931,13 @@ window.addEventListener('touchstart', e => {
 
 window.addEventListener('touchend', e => {
 
-  if(isScrolling || isMapActive) return;
+  if(isMapActive) return;
 
-  const touchEndY =
-    e.changedTouches[0].clientY;
+  if(touchStartY === null) return;
 
-  const diff =
-    touchStartY - touchEndY;
+  const touchEndY = e.changedTouches[0].clientY;
+
+  const diff = touchStartY - touchEndY;
 
   if(Math.abs(diff) < 50) return;
 
@@ -955,9 +954,11 @@ window.addEventListener('touchend', e => {
 
   }
 
+  touchStartY = null;
+
 }, { passive:true });
 
-/* обновление при ручном скролле */
+/* Подсветка текущей секции при ручном скролле */
 
 window.addEventListener('scroll', () => {
 
@@ -967,7 +968,8 @@ window.addEventListener('scroll', () => {
 
   }
 
-});
+}, { passive:true });
+
 /* Анимация карточек */
 
 const observer = new IntersectionObserver(entries => {
