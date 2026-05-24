@@ -831,160 +831,105 @@ function initMap(){
 }
 
 
+
 /* =========================================================
-   PREMIUM SNAP SCROLL (smooth + velocity + marker-based)
+   STABLE SNAP SCROLL (FIXED — no invisible content bug)
 ========================================================= */
 
 const sectionElems = document.querySelectorAll('section');
-const markers = [];
-
-/* ===== создаём якоря ===== */
-sectionElems.forEach(sec => {
-
-  const marker = document.createElement('div');
-
-  marker.style.position = 'absolute';
-  marker.style.left = '0';
-  marker.style.width = '1px';
-  marker.style.height = '1px';
-  marker.style.pointerEvents = 'none';
-
-  sec.appendChild(marker);
-
-  const card = sec.querySelector('.card');
-
-  // фиксируем центр карточки
-  requestAnimationFrame(() => {
-    const rect = card.getBoundingClientRect();
-    marker.style.top = `${rect.top + card.offsetHeight / 2}px`;
-  });
-
-  markers.push(marker);
-});
 
 let currentIndex = 0;
 let isScrolling = false;
 
-/* ===== velocity tracking ===== */
-let lastWheelTime = 0;
-let wheelDeltaBuffer = 0;
+/* пересчёт центров секций */
+const centers = [];
 
-/* ===== scroll core ===== */
-function scrollToMarker(index, instant = false){
+function recalcCenters(){
+
+  centers.length = 0;
+
+  sectionElems.forEach(sec => {
+
+    const card = sec.querySelector('.card');
+
+    if(!card) return;
+
+    const sectionTop = sec.offsetTop;
+    const cardCenter = card.offsetTop + card.offsetHeight / 2;
+
+    centers.push(sectionTop + cardCenter);
+
+  });
+
+}
+
+recalcCenters();
+
+function scrollToIndex(index){
 
   if(index < 0) index = 0;
-  if(index >= markers.length) index = markers.length - 1;
+  if(index >= centers.length) index = centers.length - 1;
 
-  if(isScrolling && !instant) return;
+  if(isScrolling || index === currentIndex) return;
 
   isScrolling = true;
   currentIndex = index;
 
-  const rect = markers[index].getBoundingClientRect();
-
-  const target = window.scrollY + rect.top - window.innerHeight / 2;
+  const target = centers[index] - window.innerHeight / 2;
 
   window.scrollTo({
     top: target,
-    behavior: instant ? 'auto' : 'smooth'
+    behavior: 'smooth'
   });
 
   setTimeout(() => {
     isScrolling = false;
-    wheelDeltaBuffer = 0;
-  }, instant ? 0 : 750);
+  }, 700);
+
 }
 
-/* =========================================================
-   WHEEL (velocity-aware)
-========================================================= */
+/* WHEEL */
 window.addEventListener('wheel', (e) => {
 
-  if (isMapActive) return;
+  if(isScrolling || isMapActive) return;
 
-  const now = Date.now();
-
-  // буферизация быстрых прокруток
-  wheelDeltaBuffer += e.deltaY;
-
-  if (isScrolling) return;
-
-  // скорость скролла
-  const fastScroll = (now - lastWheelTime) < 80;
-
-  lastWheelTime = now;
-
-  if (wheelDeltaBuffer > 30 || (e.deltaY > 20 && !fastScroll)) {
-
-    scrollToMarker(currentIndex + 1);
-    wheelDeltaBuffer = 0;
-
+  if(e.deltaY > 20){
+    scrollToIndex(currentIndex + 1);
   }
-  else if (wheelDeltaBuffer < -30 || (e.deltaY < -20 && !fastScroll)) {
-
-    scrollToMarker(currentIndex - 1);
-    wheelDeltaBuffer = 0;
-
+  else if(e.deltaY < -20){
+    scrollToIndex(currentIndex - 1);
   }
 
-}, { passive: true });
+}, { passive:true });
 
-/* =========================================================
-   TOUCH (iOS-like swipe)
-========================================================= */
+/* TOUCH */
 let touchStartY = null;
-let touchStartTime = 0;
 
-window.addEventListener('touchstart', (e) => {
-
+window.addEventListener('touchstart', e => {
   touchStartY = e.touches[0].clientY;
-  touchStartTime = Date.now();
+}, { passive:true });
 
-}, { passive: true });
+window.addEventListener('touchend', e => {
 
-window.addEventListener('touchend', (e) => {
+  if(isMapActive) return;
+  if(touchStartY === null) return;
 
-  if (isMapActive) return;
-  if (touchStartY === null) return;
+  const diff = touchStartY - e.changedTouches[0].clientY;
 
-  const diffY = touchStartY - e.changedTouches[0].clientY;
-  const duration = Date.now() - touchStartTime;
+  if(Math.abs(diff) < 40) return;
 
-  // минимальный свайп
-  if (Math.abs(diffY) < 40) return;
-
-  // быстрый свайп = ускоренный переход
-  const fastSwipe = duration < 250;
-
-  if (diffY > 0) {
-    scrollToMarker(currentIndex + 1, fastSwipe);
+  if(diff > 0){
+    scrollToIndex(currentIndex + 1);
   } else {
-    scrollToMarker(currentIndex - 1, fastSwipe);
+    scrollToIndex(currentIndex - 1);
   }
 
   touchStartY = null;
 
-}, { passive: true });
+}, { passive:true });
 
-/* =========================================================
-   optional: recalc on resize (важно для mobile rotate)
-========================================================= */
-window.addEventListener('resize', () => {
-
-  sectionElems.forEach((sec, i) => {
-
-    const card = sec.querySelector('.card');
-    const marker = markers[i];
-
-    if (!card || !marker) return;
-
-    const rect = card.getBoundingClientRect();
-    marker.style.top = `${rect.top + card.offsetHeight / 2}px`;
-
-  });
-
-});
-
+/* resize fix */
+window.addEventListener('resize', recalcCenters);
 /* Анимация карточек */
 
 const observer = new IntersectionObserver(entries => {
@@ -1104,9 +1049,6 @@ video.addEventListener('pause', forcePlay);
 /* Наверх */
 
 document.getElementById('toTopBtn').addEventListener('click', () => {
-
-  scrollToSection(0);
-
 });
 
 /* Маршрут */
