@@ -832,95 +832,88 @@ function initMap(){
 
 
 /* =========================================================
-   SAFE SNAP SCROLL (NO CONTENT DISAPPEAR BUG)
+   HARD SNAP SYSTEM (stable like reference site)
 ========================================================= */
 
-const sections = document.querySelectorAll('section');
+const sections = Array.from(document.querySelectorAll('section'));
 
-let isSnapping = false;
-let snapTimeout = null;
+let currentIndex = 0;
+let isAnimating = false;
 
-/* проверка ближайшей секции */
-function getClosestSectionIndex() {
-  const scrollTop = window.scrollY;
-  const middle = scrollTop + window.innerHeight / 2;
-
-  let bestIndex = 0;
-  let bestDistance = Infinity;
-
-  sections.forEach((sec, i) => {
-    const rect = sec.getBoundingClientRect();
-    const secTop = rect.top + scrollTop;
-    const secCenter = secTop + sec.offsetHeight / 2;
-
-    const distance = Math.abs(secCenter - middle);
-
-    if (distance < bestDistance) {
-      bestDistance = distance;
-      bestIndex = i;
-    }
-  });
-
-  return bestIndex;
-}
-
-/* основной snap */
-function snapTo(index) {
+function goToSection(index) {
   if (index < 0 || index >= sections.length) return;
+  if (isAnimating) return;
 
-  isSnapping = true;
+  isAnimating = true;
+  currentIndex = index;
 
   sections[index].scrollIntoView({
     behavior: 'smooth',
-    block: 'center'
+    block: 'start'
   });
 
   setTimeout(() => {
-    isSnapping = false;
+    isAnimating = false;
   }, 700);
 }
 
-/* debounce snap */
-function scheduleSnap() {
-  if (isSnapping || isMapActive) return;
+/* wheel control (strict delta) */
+window.addEventListener('wheel', (e) => {
+  if (isMapActive || isAnimating) return;
 
-  clearTimeout(snapTimeout);
+  const delta = e.deltaY;
 
-  snapTimeout = setTimeout(() => {
-    const closest = getClosestSectionIndex();
-    snapTo(closest);
-  }, 120);
-}
+  if (Math.abs(delta) < 20) return;
 
-/* WHEEL */
-window.addEventListener('wheel', () => {
-  scheduleSnap();
+  if (delta > 0) {
+    goToSection(currentIndex + 1);
+  } else {
+    goToSection(currentIndex - 1);
+  }
+
 }, { passive: true });
 
-/* TOUCH */
+/* touch swipe control */
 let startY = null;
 
-window.addEventListener('touchstart', e => {
+window.addEventListener('touchstart', (e) => {
   startY = e.touches[0].clientY;
 }, { passive: true });
 
-window.addEventListener('touchend', e => {
+window.addEventListener('touchend', (e) => {
   if (startY === null || isMapActive) return;
 
   const diff = startY - e.changedTouches[0].clientY;
 
-  if (Math.abs(diff) > 40) {
-    scheduleSnap();
+  if (Math.abs(diff) < 50) return;
+
+  if (diff > 0) {
+    goToSection(currentIndex + 1);
+  } else {
+    goToSection(currentIndex - 1);
   }
 
   startY = null;
+
 }, { passive: true });
 
-/* защита от ручного скролла */
+/* keep index synced on manual scroll (optional safety) */
 window.addEventListener('scroll', () => {
-  if (isSnapping) return;
-  scheduleSnap();
-});
+  if (isAnimating) return;
+
+  const scrollPos = window.scrollY + window.innerHeight / 2;
+
+  sections.forEach((sec, i) => {
+    const top = sec.offsetTop;
+    const bottom = top + sec.offsetHeight;
+
+    if (scrollPos >= top && scrollPos < bottom) {
+      currentIndex = i;
+    }
+  });
+
+}, { passive: true });
+
 /* Анимация карточек */
 const observer = new IntersectionObserver(entries => {
 
