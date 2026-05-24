@@ -914,26 +914,35 @@ window.addEventListener('scroll', () => {
 
 }, { passive: true });
 
-/* Анимация карточек */
-const observer = new IntersectionObserver(entries => {
+/* =========================
+   АНИМАЦИЯ КАРТОЧЕК (FIX)
+========================= */
 
-  entries.forEach(entry => {
+document.addEventListener('DOMContentLoaded', () => {
 
-    const card = entry.target.querySelector('.card');
-    if (!card) return;
+  const sections = document.querySelectorAll('section');
 
-    if (entry.isIntersecting) {
-      card.classList.add('visible');
-    }
+  const observer = new IntersectionObserver((entries) => {
 
+    entries.forEach(entry => {
+
+      const card = entry.target.querySelector('.card');
+      if (!card) return;
+
+      if (entry.isIntersecting) {
+        card.classList.add('visible');
+      }
+
+    });
+
+  }, {
+    threshold: 0.25
   });
 
-}, {
-  threshold: 0.25
-});
+  sections.forEach(section => {
+    observer.observe(section);
+  });
 
-sectionElems.forEach(section => {
-  observer.observe(section);
 });
 
 /* Таймер */
