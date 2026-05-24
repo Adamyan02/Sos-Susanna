@@ -832,19 +832,27 @@ function initMap(){
 
 
 /* =========================================================
-   HARD SNAP SYSTEM (stable like reference site)
+   HARD LOCK FULL-PAGE SCROLL (STABLE VERSION)
+   - no multi-step skipping
+   - strict one-section-per-gesture
+   - stable on fast wheel / trackpad
 ========================================================= */
 
 const sections = Array.from(document.querySelectorAll('section'));
 
 let currentIndex = 0;
 let isAnimating = false;
+let inputLocked = false;
+
+const ANIMATION_TIME = 750;   // scrollIntoView smooth duration buffer
+const LOCK_EXTRA = 150;       // safety buffer to prevent overlap
 
 function goToSection(index) {
   if (index < 0 || index >= sections.length) return;
-  if (isAnimating) return;
+  if (isAnimating || inputLocked) return;
 
   isAnimating = true;
+  inputLocked = true;
   currentIndex = index;
 
   sections[index].scrollIntoView({
@@ -852,18 +860,28 @@ function goToSection(index) {
     block: 'start'
   });
 
+  // unlock after animation safely completes
   setTimeout(() => {
     isAnimating = false;
-  }, 700);
+
+    setTimeout(() => {
+      inputLocked = false;
+    }, LOCK_EXTRA);
+
+  }, ANIMATION_TIME);
 }
 
-/* wheel control (strict delta) */
+/* =========================
+   WHEEL CONTROL (STRICT)
+========================= */
+
 window.addEventListener('wheel', (e) => {
-  if (isMapActive || isAnimating) return;
+  if (isMapActive || inputLocked || isAnimating) return;
 
   const delta = e.deltaY;
 
-  if (Math.abs(delta) < 20) return;
+  // фильтр микродвижений трекпада
+  if (Math.abs(delta) < 45) return;
 
   if (delta > 0) {
     goToSection(currentIndex + 1);
@@ -873,19 +891,27 @@ window.addEventListener('wheel', (e) => {
 
 }, { passive: true });
 
-/* touch swipe control */
+/* =========================
+   TOUCH CONTROL (STRICT)
+========================= */
+
 let startY = null;
 
 window.addEventListener('touchstart', (e) => {
+  if (isAnimating) return;
   startY = e.touches[0].clientY;
 }, { passive: true });
 
 window.addEventListener('touchend', (e) => {
-  if (startY === null || isMapActive) return;
+  if (startY === null || isMapActive || inputLocked) return;
 
   const diff = startY - e.changedTouches[0].clientY;
 
-  if (Math.abs(diff) < 50) return;
+  // увеличенный порог = меньше случайных перелистываний
+  if (Math.abs(diff) < 80) {
+    startY = null;
+    return;
+  }
 
   if (diff > 0) {
     goToSection(currentIndex + 1);
@@ -897,20 +923,25 @@ window.addEventListener('touchend', (e) => {
 
 }, { passive: true });
 
-/* keep index synced on manual scroll (optional safety) */
+/* =========================
+   SYNC INDEX (SAFE)
+========================= */
+
 window.addEventListener('scroll', () => {
   if (isAnimating) return;
 
-  const scrollPos = window.scrollY + window.innerHeight / 2;
+  const middle = window.scrollY + window.innerHeight / 2;
 
-  sections.forEach((sec, i) => {
+  for (let i = 0; i < sections.length; i++) {
+    const sec = sections[i];
     const top = sec.offsetTop;
     const bottom = top + sec.offsetHeight;
 
-    if (scrollPos >= top && scrollPos < bottom) {
+    if (middle >= top && middle < bottom) {
       currentIndex = i;
+      break;
     }
-  });
+  }
 
 }, { passive: true });
 /* =========================
