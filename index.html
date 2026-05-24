@@ -831,119 +831,57 @@ function initMap(){
 }
 
 
-/* =========================================================
-   HARD LOCK FULL-PAGE SCROLL (STABLE VERSION)
-   - no multi-step skipping
-   - strict one-section-per-gesture
-   - stable on fast wheel / trackpad
-========================================================= */
+// --- Snap scroll ---
+const sectionElems=document.querySelectorAll('section');
+const markers=[];
+sectionElems.forEach(sec=>{
+  const marker=document.createElement('div');
+  marker.style.position='absolute';
+  marker.style.top='0px';
+  marker.style.left='0';
+  marker.style.width='1px';
+  marker.style.height='1px';
+  marker.style.pointerEvents='none';
+  sec.appendChild(marker);
 
-const sections = Array.from(document.querySelectorAll('section'));
+  const card=sec.querySelector('.card');
+  marker.style.top=`${card.offsetTop+card.offsetHeight/2}px`;
+  markers.push(marker);
+});
 
-let currentIndex = 0;
-let isAnimating = false;
-let inputLocked = false;
-
-const ANIMATION_TIME = 750;   // scrollIntoView smooth duration buffer
-const LOCK_EXTRA = 150;       // safety buffer to prevent overlap
-
-function goToSection(index) {
-  if (index < 0 || index >= sections.length) return;
-  if (isAnimating || inputLocked) return;
-
-  isAnimating = true;
-  inputLocked = true;
-  currentIndex = index;
-
-  sections[index].scrollIntoView({
-    behavior: 'smooth',
-    block: 'start'
-  });
-
-  // unlock after animation safely completes
-  setTimeout(() => {
-    isAnimating = false;
-
-    setTimeout(() => {
-      inputLocked = false;
-    }, LOCK_EXTRA);
-
-  }, ANIMATION_TIME);
+let currentIndex=0;
+let isScrolling=false;
+function scrollToMarker(index){
+  if(index<0) index=0;
+  if(index>=markers.length) index=markers.length-1;
+  if(isScrolling||index===currentIndex) return;
+  isScrolling=true;
+  currentIndex=index;
+  const rect=markers[index].getBoundingClientRect();
+  const scrollTop=window.scrollY+rect.top-window.innerHeight/2;
+  window.scrollTo({top:scrollTop, behavior:'smooth'});
+  setTimeout(()=>{isScrolling=false;},700);
 }
 
-/* =========================
-   WHEEL CONTROL (STRICT)
-========================= */
+// Wheel
+window.addEventListener('wheel', e=>{
+  if(isScrolling || isMapActive) return;
+  if(e.deltaY>20) scrollToMarker(currentIndex+1);
+  else if(e.deltaY<-20) scrollToMarker(currentIndex-1);
+},{passive:false});
 
-window.addEventListener('wheel', (e) => {
-  if (isMapActive || inputLocked || isAnimating) return;
-
-  const delta = e.deltaY;
-
-  // фильтр микродвижений трекпада
-  if (Math.abs(delta) < 45) return;
-
-  if (delta > 0) {
-    goToSection(currentIndex + 1);
-  } else {
-    goToSection(currentIndex - 1);
-  }
-
-}, { passive: true });
-
-/* =========================
-   TOUCH CONTROL (STRICT)
-========================= */
-
-let startY = null;
-
-window.addEventListener('touchstart', (e) => {
-  if (isAnimating) return;
-  startY = e.touches[0].clientY;
-}, { passive: true });
-
-window.addEventListener('touchend', (e) => {
-  if (startY === null || isMapActive || inputLocked) return;
-
-  const diff = startY - e.changedTouches[0].clientY;
-
-  // увеличенный порог = меньше случайных перелистываний
-  if (Math.abs(diff) < 80) {
-    startY = null;
-    return;
-  }
-
-  if (diff > 0) {
-    goToSection(currentIndex + 1);
-  } else {
-    goToSection(currentIndex - 1);
-  }
-
-  startY = null;
-
-}, { passive: true });
-
-/* =========================
-   SYNC INDEX (SAFE)
-========================= */
-
-window.addEventListener('scroll', () => {
-  if (isAnimating) return;
-
-  const middle = window.scrollY + window.innerHeight / 2;
-
-  for (let i = 0; i < sections.length; i++) {
-    const sec = sections[i];
-    const top = sec.offsetTop;
-    const bottom = top + sec.offsetHeight;
-
-    if (middle >= top && middle < bottom) {
-      currentIndex = i;
-      break;
-    }
-  }
-
-}, { passive: true });
+// Touch
+let touchStartY=null;
+window.addEventListener('touchstart', e=>{ touchStartY=e.touches[0].clientY;},{passive:false});
+window.addEventListener('touchend', e=>{
+  if(isMapActive) return;
+  if(touchStartY===null) return;
+  let diff=touchStartY-e.changedTouches[0].clientY;
+  if(Math.abs(diff)<30) return;
+  if(diff>0) scrollToMarker(currentIndex+1);
+  else scrollToMarker(currentIndex-1);
+  touchStartY=null;
+},{passive:false});
 /* =========================
    АНИМАЦИЯ КАРТОЧЕК (FIX)
 ========================= */
