@@ -830,151 +830,146 @@ function initMap(){
 
 }
 
-// --- Snap scroll ---
-const sectionElems = document.querySelectorAll('section');
-const markers = [];
+/* Snap Scroll */
 
-/* создаём маркеры */
-sectionElems.forEach(sec => {
+const sections = document.querySelectorAll('section');
 
-  const marker = document.createElement('div');
+let currentIndex = 0;
+let isScrolling = false;
+let scrollTimeout = null;
 
-  marker.style.position = 'absolute';
-  marker.style.left = '0';
-  marker.style.width = '1px';
-  marker.style.height = '1px';
-  marker.style.pointerEvents = 'none';
+/* Определяем текущую секцию */
 
-  sec.style.position = 'relative';
-  sec.appendChild(marker);
+function updateCurrentSection(){
 
-  markers.push({ sec, marker });
+  let closestIndex = 0;
+  let closestDistance = Infinity;
 
-});
+  sections.forEach((section, index) => {
 
-/* пересчёт центров (ВАЖНО) */
-function updateMarkers(){
+    const rect = section.getBoundingClientRect();
 
-  markers.forEach(obj => {
+    const distance = Math.abs(rect.top);
 
-    const card = obj.sec.querySelector('.card');
-    if(!card) return;
+    if(distance < closestDistance){
 
-    const rect = card.getBoundingClientRect();
-    const secRect = obj.sec.getBoundingClientRect();
+      closestDistance = distance;
+      closestIndex = index;
 
-    const offset = (rect.top - secRect.top) + rect.height / 2;
-
-    obj.marker.style.top = offset + 'px';
+    }
 
   });
 
+  currentIndex = closestIndex;
+
 }
 
-/* вызываем после загрузки */
-window.addEventListener('load', updateMarkers);
-window.addEventListener('resize', updateMarkers);
+/* Скролл к секции */
 
-/* scroll engine */
-let currentIndex = 0;
-let isScrolling = false;
+function scrollToSection(index){
 
-function scrollToMarker(index){
+  if(index < 0){
+    index = 0;
+  }
 
-  if(index < 0) index = 0;
-  if(index >= markers.length) index = markers.length - 1;
+  if(index >= sections.length){
+    index = sections.length - 1;
+  }
 
-  if(isScrolling || index === currentIndex) return;
+  if(isScrolling) return;
 
   isScrolling = true;
   currentIndex = index;
 
-  const target = markers[index].marker;
-
-  const rect = target.getBoundingClientRect();
-  const scrollTop = window.scrollY + rect.top - window.innerHeight / 2;
-
-  window.scrollTo({
-    top: scrollTop,
-    behavior: 'smooth'
+  sections[index].scrollIntoView({
+    behavior:'smooth',
+    block:'start'
   });
 
-  setTimeout(() => {
+  clearTimeout(scrollTimeout);
+
+  scrollTimeout = setTimeout(() => {
+
     isScrolling = false;
-  }, 800);
+
+  }, 900);
 
 }
 
-/* wheel */
+/* Wheel */
+
 window.addEventListener('wheel', e => {
 
   if(isScrolling || isMapActive) return;
 
   e.preventDefault();
 
-  if(e.deltaY > 20){
-    scrollToMarker(currentIndex + 1);
+  updateCurrentSection();
+
+  if(e.deltaY > 30){
+
+    scrollToSection(currentIndex + 1);
+
   }
-  else if(e.deltaY < -20){
-    scrollToMarker(currentIndex - 1);
+  else if(e.deltaY < -30){
+
+    scrollToSection(currentIndex - 1);
+
   }
 
 }, { passive:false });
 
-/* touch */
+/* Touch */
+
 let touchStartY = null;
 
 window.addEventListener('touchstart', e => {
+
   touchStartY = e.touches[0].clientY;
+
 }, { passive:true });
 
 window.addEventListener('touchend', e => {
 
   if(isMapActive) return;
+
   if(touchStartY === null) return;
 
-  const diff = touchStartY - e.changedTouches[0].clientY;
+  const touchEndY = e.changedTouches[0].clientY;
 
-  if(Math.abs(diff) < 40) return;
+  const diff = touchStartY - touchEndY;
+
+  if(Math.abs(diff) < 50) return;
+
+  updateCurrentSection();
 
   if(diff > 0){
-    scrollToMarker(currentIndex + 1);
-  } else {
-    scrollToMarker(currentIndex - 1);
+
+    scrollToSection(currentIndex + 1);
+
+  }
+  else{
+
+    scrollToSection(currentIndex - 1);
+
   }
 
   touchStartY = null;
 
 }, { passive:true });
 
-/* IntersectionObserver */
-const observer = new IntersectionObserver(entries => {
+/* Подсветка текущей секции при ручном скролле */
 
-  entries.forEach(entry => {
+window.addEventListener('scroll', () => {
 
-    const card = entry.target.querySelector('.card');
-    const corners = entry.target.querySelectorAll('.corner');
+  if(!isScrolling){
 
-    if(!card) return;
+    updateCurrentSection();
 
-    if(entry.isIntersecting){
+  }
 
-      card.classList.add('visible');
+}, { passive:true });
 
-      corners.forEach(c => {
-        c.style.opacity = '1';
-        c.style.transform = 'scale(1)';
-      });
-
-    }
-
-  });
-
-}, {
-  threshold: 0.6
-});
-
-sectionElems.forEach(s => observer.observe(s));
 /* Анимация карточек */
 
 const observer = new IntersectionObserver(entries => {
