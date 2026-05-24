@@ -837,6 +837,35 @@ const sections = document.querySelectorAll('section');
 let currentIndex = 0;
 let isScrolling = false;
 
+/* определяем активную секцию по экрану */
+
+function updateCurrentSection(){
+
+  let closestIndex = 0;
+  let closestDistance = Infinity;
+
+  sections.forEach((section, index) => {
+
+    const rect = section.getBoundingClientRect();
+
+    const distance =
+      Math.abs(rect.top);
+
+    if(distance < closestDistance){
+
+      closestDistance = distance;
+      closestIndex = index;
+
+    }
+
+  });
+
+  currentIndex = closestIndex;
+
+}
+
+/* скролл */
+
 function scrollToSection(index){
 
   if(index < 0){
@@ -850,16 +879,21 @@ function scrollToSection(index){
   if(isScrolling) return;
 
   isScrolling = true;
+
   currentIndex = index;
 
   sections[index].scrollIntoView({
     behavior:'smooth',
-    block:'center'
+    block:'start'
   });
 
   setTimeout(() => {
+
     isScrolling = false;
-  }, 900);
+
+    updateCurrentSection();
+
+  }, 1000);
 
 }
 
@@ -871,18 +905,24 @@ window.addEventListener('wheel', e => {
 
   e.preventDefault();
 
-  if(e.deltaY > 20){
+  updateCurrentSection();
+
+  if(e.deltaY > 30){
+
     scrollToSection(currentIndex + 1);
+
   }
-  else if(e.deltaY < -20){
+  else if(e.deltaY < -30){
+
     scrollToSection(currentIndex - 1);
+
   }
 
 }, { passive:false });
 
 /* Touch */
 
-let touchStartY = null;
+let touchStartY = 0;
 
 window.addEventListener('touchstart', e => {
 
@@ -892,26 +932,42 @@ window.addEventListener('touchstart', e => {
 
 window.addEventListener('touchend', e => {
 
-  if(isMapActive) return;
+  if(isScrolling || isMapActive) return;
 
-  if(touchStartY === null) return;
+  const touchEndY =
+    e.changedTouches[0].clientY;
 
   const diff =
-    touchStartY - e.changedTouches[0].clientY;
+    touchStartY - touchEndY;
 
-  if(Math.abs(diff) < 40) return;
+  if(Math.abs(diff) < 50) return;
+
+  updateCurrentSection();
 
   if(diff > 0){
+
     scrollToSection(currentIndex + 1);
+
   }
   else{
-    scrollToSection(currentIndex - 1);
-  }
 
-  touchStartY = null;
+    scrollToSection(currentIndex - 1);
+
+  }
 
 }, { passive:true });
 
+/* обновление при ручном скролле */
+
+window.addEventListener('scroll', () => {
+
+  if(!isScrolling){
+
+    updateCurrentSection();
+
+  }
+
+});
 /* Анимация карточек */
 
 const observer = new IntersectionObserver(entries => {
