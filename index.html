@@ -832,101 +832,94 @@ function initMap(){
 
 
 /* =========================================================
-   ROBUST SNAP SCROLL (DIRECTION INDEPENDENT + STABLE)
+   SAFE SNAP SCROLL (NO CONTENT DISAPPEAR BUG)
 ========================================================= */
 
 const sections = document.querySelectorAll('section');
 
-let isLocked = false;
-let scrollTimeout = null;
+let isSnapping = false;
+let snapTimeout = null;
 
-/* возвращает ближайшую секцию */
-function getClosestSection() {
-  const scroll = window.scrollY;
-  const middle = scroll + window.innerHeight / 2;
+/* проверка ближайшей секции */
+function getClosestSectionIndex() {
+  const scrollTop = window.scrollY;
+  const middle = scrollTop + window.innerHeight / 2;
 
-  let closestIndex = 0;
-  let closestDist = Infinity;
+  let bestIndex = 0;
+  let bestDistance = Infinity;
 
   sections.forEach((sec, i) => {
     const rect = sec.getBoundingClientRect();
-    const secCenter = rect.top + scroll + sec.offsetHeight / 2;
+    const secTop = rect.top + scrollTop;
+    const secCenter = secTop + sec.offsetHeight / 2;
 
-    const dist = Math.abs(secCenter - middle);
+    const distance = Math.abs(secCenter - middle);
 
-    if (dist < closestDist) {
-      closestDist = dist;
-      closestIndex = i;
+    if (distance < bestDistance) {
+      bestDistance = distance;
+      bestIndex = i;
     }
   });
 
-  return closestIndex;
+  return bestIndex;
 }
 
 /* основной snap */
-function snapToSection(index) {
-  const sec = sections[index];
-  if (!sec) return;
+function snapTo(index) {
+  if (index < 0 || index >= sections.length) return;
 
-  isLocked = true;
+  isSnapping = true;
 
-  sec.scrollIntoView({
+  sections[index].scrollIntoView({
     behavior: 'smooth',
     block: 'center'
   });
 
   setTimeout(() => {
-    isLocked = false;
+    isSnapping = false;
   }, 700);
 }
 
-/* WHEEL (не двигаем вручную, только триггер стабилизации) */
+/* debounce snap */
+function scheduleSnap() {
+  if (isSnapping || isMapActive) return;
+
+  clearTimeout(snapTimeout);
+
+  snapTimeout = setTimeout(() => {
+    const closest = getClosestSectionIndex();
+    snapTo(closest);
+  }, 120);
+}
+
+/* WHEEL */
 window.addEventListener('wheel', () => {
-  if (isLocked || isMapActive) return;
-
-  clearTimeout(scrollTimeout);
-
-  scrollTimeout = setTimeout(() => {
-    const closest = getClosestSection();
-    snapToSection(closest);
-  }, 80);
+  scheduleSnap();
 }, { passive: true });
 
 /* TOUCH */
-let touchStartY = null;
+let startY = null;
 
 window.addEventListener('touchstart', e => {
-  touchStartY = e.touches[0].clientY;
+  startY = e.touches[0].clientY;
 }, { passive: true });
 
 window.addEventListener('touchend', e => {
-  if (isMapActive) return;
-  if (touchStartY === null) return;
+  if (startY === null || isMapActive) return;
 
-  const diff = touchStartY - e.changedTouches[0].clientY;
+  const diff = startY - e.changedTouches[0].clientY;
 
-  if (Math.abs(diff) < 40) return;
+  if (Math.abs(diff) > 40) {
+    scheduleSnap();
+  }
 
-  clearTimeout(scrollTimeout);
-
-  scrollTimeout = setTimeout(() => {
-    const closest = getClosestSection();
-    snapToSection(closest);
-  }, 80);
-
-  touchStartY = null;
+  startY = null;
 }, { passive: true });
 
-/* защита от “разлёта” при ручном скролле */
+/* защита от ручного скролла */
 window.addEventListener('scroll', () => {
-  if (isLocked) return;
-
-  clearTimeout(scrollTimeout);
-
-  scrollTimeout = setTimeout(() => {
-    const closest = getClosestSection();
-    snapToSection(closest);
-  }, 120);
+  if (isSnapping) return;
+  scheduleSnap();
 });
 /* Анимация карточек */
 const observer = new IntersectionObserver(entries => {
