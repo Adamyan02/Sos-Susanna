@@ -830,48 +830,40 @@ function initMap(){
 
 }
 
-
-
-
 /* =========================================================
-   STABLE SNAP SCROLL (FIXED — no invisible content bug)
+   STABLE SNAP SCROLL + CARD ANIMATION (FIXED)
 ========================================================= */
 
 const sectionElems = document.querySelectorAll('section');
 
 let currentIndex = 0;
 let isScrolling = false;
+let centers = [];
 
 /* пересчёт центров секций */
-const centers = [];
-
-function recalcCenters(){
-
-  centers.length = 0;
+function recalcCenters() {
+  centers = [];
 
   sectionElems.forEach(sec => {
-
     const card = sec.querySelector('.card');
+    if (!card) return;
 
-    if(!card) return;
+    const rect = sec.getBoundingClientRect();
+    const scrollTop = window.scrollY || window.pageYOffset;
 
-    const sectionTop = sec.offsetTop;
-    const cardCenter = card.offsetTop + card.offsetHeight / 2;
+    const sectionTop = rect.top + scrollTop;
 
-    centers.push(sectionTop + cardCenter);
+    const center = sectionTop + (sec.offsetHeight / 2);
 
+    centers.push(center);
   });
-
 }
 
-recalcCenters();
-
-function scrollToIndex(index){
-
-  if(index < 0) index = 0;
-  if(index >= centers.length) index = centers.length - 1;
-
-  if(isScrolling || index === currentIndex) return;
+/* скролл к секции */
+function scrollToIndex(index) {
+  if (index < 0) index = 0;
+  if (index >= centers.length) index = centers.length - 1;
+  if (isScrolling || index === currentIndex) return;
 
   isScrolling = true;
   currentIndex = index;
@@ -885,52 +877,48 @@ function scrollToIndex(index){
 
   setTimeout(() => {
     isScrolling = false;
-  }, 700);
-
+  }, 800);
 }
 
-/* WHEEL */
+/* wheel scroll */
 window.addEventListener('wheel', (e) => {
+  if (isScrolling || isMapActive) return;
 
-  if(isScrolling || isMapActive) return;
-
-  if(e.deltaY > 20){
+  if (e.deltaY > 20) {
     scrollToIndex(currentIndex + 1);
-  }
-  else if(e.deltaY < -20){
+  } else if (e.deltaY < -20) {
     scrollToIndex(currentIndex - 1);
   }
+}, { passive: true });
 
-}, { passive:true });
-
-/* TOUCH */
+/* touch scroll */
 let touchStartY = null;
 
-window.addEventListener('touchstart', e => {
+window.addEventListener('touchstart', (e) => {
   touchStartY = e.touches[0].clientY;
-}, { passive:true });
+}, { passive: true });
 
-window.addEventListener('touchend', e => {
-
-  if(isMapActive) return;
-  if(touchStartY === null) return;
+window.addEventListener('touchend', (e) => {
+  if (isMapActive) return;
+  if (touchStartY === null) return;
 
   const diff = touchStartY - e.changedTouches[0].clientY;
 
-  if(Math.abs(diff) < 40) return;
+  if (Math.abs(diff) < 40) return;
 
-  if(diff > 0){
+  if (diff > 0) {
     scrollToIndex(currentIndex + 1);
   } else {
     scrollToIndex(currentIndex - 1);
   }
 
   touchStartY = null;
+}, { passive: true });
 
-}, { passive:true });
-
-/* resize fix */
+/* пересчёт при изменениях */
 window.addEventListener('resize', recalcCenters);
+window.addEventListener('load', recalcCenters);
+
 /* Анимация карточек */
 const observer = new IntersectionObserver(entries => {
 
