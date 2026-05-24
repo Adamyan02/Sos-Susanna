@@ -932,9 +932,6 @@ window.addEventListener('touchend', e => {
 /* resize fix */
 window.addEventListener('resize', recalcCenters);
 /* Анимация карточек */
-
-const sectionElems = document.querySelectorAll('section');
-
 const observer = new IntersectionObserver(entries => {
 
   entries.forEach(entry => {
