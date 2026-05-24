@@ -1,183 +1,242 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
 <title>Сос и Сусанна ❤️</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
-html, body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  overflow: hidden;
-  font-family: 'Dancing Script', cursive;
-  color: #1a1a1a;
-  touch-action: pan-y;
-  scroll-behavior: auto;
+
+html,
+body{
+  margin:0;
+  padding:0;
+  overflow-x:hidden;
+  overflow-y:auto;
+  font-family:'Dancing Script', cursive;
+  color:#1a1a1a;
+  touch-action:pan-y;
+  scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
 }
+
 /* Видео фон */
-.video-bg {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
+
+.video-bg{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
 }
-.video-bg video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+
+.video-bg video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
 }
-.video-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(245,235,220,0);
-  z-index: 1;
-  pointer-events: none;
+
+.video-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(245,235,220,0);
+  z-index:1;
+  pointer-events:none;
 }
 
 /* Секции */
-section {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 120px;
-  perspective: 1600px;
-  box-sizing: border-box;
-  position: relative;
-  z-index: 5;
+
+section{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:0 120px;
+  perspective:1600px;
+  box-sizing:border-box;
+  position:relative;
+  z-index:5;
 }
 
 /* Карточки */
-.card {
-  position: relative;
-  background: rgba(255,255,255,0.3);
-  backdrop-filter: blur(10px) saturate(180%);
-  -webkit-backdrop-filter: blur(10px) saturate(180%);
-  padding: 40px 40px;
-  border-radius: 30px;
-  max-width: 600px;
-  width: 100%;
-  text-align: center;
-  outline: 6px solid #8B5E3C;
-  outline-offset: 10px;
-  box-shadow: 0 30px 70px rgba(0,0,0,0.2);
-  transform-origin: center bottom;
-  transform: rotateX(25deg) translateY(150px) scale(0.95);
-  opacity: 1;
-  transition: opacity 1.2s ease, transform 1.2s ease;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  box-sizing: border-box;
-  margin: 20px 0;
-  z-index: 10
+
+.card{
+  position:relative;
+  background:rgba(255,255,255,0.3);
+  backdrop-filter:blur(10px) saturate(180%);
+  -webkit-backdrop-filter:blur(10px) saturate(180%);
+  padding:40px;
+  border-radius:30px;
+  max-width:600px;
+  width:100%;
+  text-align:center;
+  outline:6px solid #8B5E3C;
+  outline-offset:10px;
+  box-shadow:0 30px 70px rgba(0,0,0,0.2);
+
+  transform-origin:center bottom;
+  transform:rotateX(10deg) translateY(80px) scale(0.97);
+
+  opacity:0;
+  transition:
+    opacity 1.1s ease,
+    transform 1.1s ease;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  box-sizing:border-box;
+  margin:20px 0;
+  z-index:10;
 }
 
-/* Первый блок компактный */
-.card.first-block {
-  max-width: 480px;
-  padding: 30px 30px;
+/* Видимая карточка */
+
+.card.visible{
+  transform:rotateX(0deg) translateY(0) scale(1);
+  opacity:1;
 }
-.card.first-block .names {
-  font-size: 50px;
-  font-family: 'Great Vibes', cursive;
-  line-height: 1.2;
-  color: #8B5E3C;
+
+/* Первый блок */
+
+.card.first-block{
+  max-width:480px;
+  padding:30px;
 }
-.card.first-block .date {
-  font-size: 22px;
+
+.card.first-block .names{
+  font-size:50px;
+  font-family:'Great Vibes', cursive;
+  line-height:1.2;
+  color:#8B5E3C;
+}
+
+.card.first-block .date{
+  font-size:22px;
   margin-top:10px;
-  color: #8B5E3C;
+  color:#8B5E3C;
 }
-.card.first-block p {
-  font-size: 18px;
-  line-height: 1.5;
+
+.card.first-block p{
+  font-size:18px;
+  line-height:1.5;
   margin-top:15px;
-  color: #1a1a1a;
-  font-weight: bold;
+  color:#1a1a1a;
+  font-weight:bold;
 }
-.card.first-block button {
-  padding: 12px 28px;
-  font-size: 14px;
+
+.card.first-block button{
+  padding:12px 28px;
+  font-size:14px;
   margin-top:20px;
   background:#8B5E3C;
   color:white;
 }
 
-/* Видимая карточка */
-.card.visible {
-  transform: rotateX(0deg) translateY(0) scale(1);
-  opacity: 1;
-}
-
 /* Цветы */
-.corner {
-  position: absolute;
-  width: 117px;
-  pointer-events: none;
-  opacity: 0;
-  transform: scale(0.7);
-  transform-origin: center center;
-  transition: all 1.2s ease;
-}
-.card.visible .corner {
-  opacity: 1;
-  transform: scale(1);
-}
-.corner-tl { top:-30px; left:-30px; }
-.corner-tr { top:-30px; right:-30px; }
-.corner-bl { bottom:-30px; left:-30px; }
-.corner-br { bottom:-30px; right:-30px; }
 
-/* Классы для скрытия углов */
-.corner.hide-tl { display: none !important; }
-.corner.hide-tr { display: none !important; }
-.corner.hide-bl { display: none !important; }
-.corner.hide-br { display: none !important; }
+.corner{
+  position:absolute;
+  width:117px;
+  pointer-events:none;
+  opacity:0;
+  transform:scale(0.7);
+  transform-origin:center center;
+  transition:all 1.2s ease;
+}
+
+.card.visible .corner{
+  opacity:1;
+  transform:scale(1);
+}
+
+.corner-tl{
+  top:-30px;
+  left:-30px;
+}
+
+.corner-tr{
+  top:-30px;
+  right:-30px;
+}
+
+.corner-bl{
+  bottom:-30px;
+  left:-30px;
+}
+
+.corner-br{
+  bottom:-30px;
+  right:-30px;
+}
+
+/* Скрытие углов */
+
+.corner.hide-tl{
+  display:none !important;
+}
+
+.corner.hide-tr{
+  display:none !important;
+}
+
+.corner.hide-bl{
+  display:none !important;
+}
+
+.corner.hide-br{
+  display:none !important;
+}
 
 /* Заголовки */
-.names span { display:block; }
 
-h2 {
-  font-family: 'Dancing Script', cursive;
+.names span{
+  display:block;
+}
+
+h2{
+  font-family:'Dancing Script', cursive;
   font-size:34px;
   color:#8B5E3C;
   margin-bottom:20px;
 }
 
-p {
-  font-family: 'Dancing Script', cursive;
+p{
+  font-family:'Dancing Script', cursive;
   line-height:1.6;
   margin:8px 0;
   color:#1a1a1a;
-  font-weight: bold;
-  font-size: 18px;
+  font-weight:bold;
+  font-size:18px;
 }
 
 /* Кнопки */
-button {
-  margin-top: 20px;
-  padding: 15px 40px;
-  border-radius: 50px;
-  border: none;
-  background: #8B5E3C;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
+
+button{
+  margin-top:20px;
+  padding:15px 40px;
+  border-radius:50px;
+  border:none;
+  background:#8B5E3C;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  transition:.25s ease;
 }
 
-.date {
-  font-size: 28px;
-  color: #8B5E3C;
+button:hover{
+  transform:translateY(-2px);
+}
+
+.date{
+  font-size:28px;
+  color:#8B5E3C;
   font-family:'Dancing Script', cursive;
 }
 
-#timer {
+#timer{
   font-size:26px;
   font-family:'Dancing Script', cursive;
   margin-top:10px;
@@ -185,173 +244,233 @@ button {
 }
 
 /* Финальный блок */
-.final h1 {
-  font-family: 'Great Vibes', cursive;
-  font-size: 100px;
-  color: #8B5E3C;
+
+.final h1{
+  font-family:'Great Vibes', cursive;
+  font-size:100px;
+  color:#8B5E3C;
   text-shadow:
     0 0 15px rgba(95,140,216,0.5),
     0 0 30px rgba(95,140,216,0.3);
 }
 
-.final p {
-  opacity: 0.8;
-  color: #1a1a1a;
-  font-weight: bold;
-  font-size: 18px;
+.final p{
+  opacity:0.8;
+  color:#1a1a1a;
+  font-weight:bold;
+  font-size:18px;
 }
 
-  .final-names {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Great Vibes', cursive;
-  color: #8B5E3C;
-  line-height: 0.9;
+.final-names{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  font-family:'Great Vibes', cursive;
+  color:#8B5E3C;
+  line-height:0.9;
 }
 
-.final-names .line {
-  display: block;
-  font-size: 100px;
+.final-names .line{
+  display:block;
+  font-size:100px;
 }
 
-.final-names .heart {
-  display: inline-block;
-  font-size: 100px;
-  color: red;
-  animation: heartBeat 2.4s infinite;
-  transform-origin: center;
-  margin: 12px 0;
+.final-names .heart{
+  display:inline-block;
+  font-size:100px;
+  color:red;
+  animation:heartBeat 2.4s infinite;
+  transform-origin:center;
+  margin:12px 0;
 }
-  
-@keyframes heartBeat {
-  0% {
-    transform: scale(1);
+
+@keyframes heartBeat{
+
+  0%{
+    transform:scale(1);
   }
 
-  10% {
-    transform: scale(1.08);
+  10%{
+    transform:scale(1.08);
   }
 
-  20% {
-    transform: scale(1);
+  20%{
+    transform:scale(1);
   }
 
-  40% {
-    transform: scale(1);
+  40%{
+    transform:scale(1);
   }
 
-  55% {
-    transform: scale(1.18);
+  55%{
+    transform:scale(1.18);
   }
 
-  70% {
-    transform: scale(1);
+  70%{
+    transform:scale(1);
   }
 
-  100% {
-    transform: scale(1);
+  100%{
+    transform:scale(1);
   }
 }
 
 /* Мобильные */
+
 @media (max-width:600px){
-  section { padding:0 20px; }
-  .card { padding:25px 20px; }
-  .card.first-block { padding:25px 20px; }
-  .names { font-size:36px; }
-  h2 { font-size:28px; }
-  #timer { font-size:20px; }
-  .final h1 { font-size:70px; }
-  .full-map { margin-top:10px; height:350px; }
+
+  section{
+    padding:0 20px;
+  }
+
+  .card{
+    padding:25px 20px;
+  }
+
+  .card.first-block{
+    padding:25px 20px;
+  }
+
+  .names{
+    font-size:36px;
+  }
+
+  h2{
+    font-size:28px;
+  }
+
+  #timer{
+    font-size:20px;
+  }
+
+  .final h1{
+    font-size:70px;
+  }
+
+  .full-map{
+    margin-top:10px;
+    height:350px;
+  }
+
+  .final-names .line{
+    font-size:70px;
+  }
+
+  .final-names .heart{
+    font-size:70px;
+  }
+
 }
 
-.final-names .line {
-  font-size: 70px;
-}
-
-.final-names .heart {
-  font-size: 70px;
-}
-  
 /* Модалка */
-.modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-  z-index: 1000;
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.5);
+  z-index:1000;
 }
 
-.modal-content {
-  background: rgba(255,255,255,0.3);
-  backdrop-filter: blur(10px) saturate(180%);
-  -webkit-backdrop-filter: blur(10px) saturate(180%);
-  margin: 30% auto;
-  padding: 20px 20px 30px 20px;
-  border-radius: 20px;
-  width: 80%;
-  max-width: 300px;
-  text-align: center;
-  position: relative;
+.modal-content{
+  background:rgba(255,255,255,0.3);
+  backdrop-filter:blur(10px) saturate(180%);
+  -webkit-backdrop-filter:blur(10px) saturate(180%);
+  margin:30% auto;
+  padding:20px 20px 30px;
+  border-radius:20px;
+  width:80%;
+  max-width:300px;
+  text-align:center;
+  position:relative;
 }
 
-.modal-content .close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 24px;
-  font-weight: bold;
-  color: #aaa;
-  cursor: pointer;
-  transition: color 0.2s;
+.modal-content .close{
+  position:absolute;
+  top:10px;
+  right:15px;
+  font-size:24px;
+  font-weight:bold;
+  color:#aaa;
+  cursor:pointer;
+  transition:color .2s;
 }
 
-.modal-content .close:hover {
-  color: #333;
+.modal-content .close:hover{
+  color:#333;
 }
 
-input {
+input{
   width:90%;
   margin:10px 0;
   padding:10px;
+  border:none;
+  border-radius:12px;
+  box-sizing:border-box;
 }
 
-/* Блок карты */
-.full-map {
-  width: 100%;
-  height: 400px;
-  border-radius: 20px;
-  touch-action: auto;
+/* Карта */
+
+.full-map{
+  width:100%;
+  height:400px;
+  border-radius:20px;
+  touch-action:auto;
+  overflow:hidden;
 }
- #soundOverlay{
-  cursor: pointer;
-  touch-action: manipulation;
-  pointer-events: auto;
+
+#soundOverlay{
+  cursor:pointer;
+  touch-action:manipulation;
+  pointer-events:auto;
 }
+
+/* Pulse */
+
+@keyframes pulse{
+
+  0%{
+    transform:scale(1);
+    opacity:1;
+  }
+
+  50%{
+    transform:scale(1.2);
+    opacity:0.6;
+  }
+
+  100%{
+    transform:scale(1);
+    opacity:1;
+  }
+
+}
+
 </style>
 </head>
 
 <body>
 
-  <audio id="bgMusic" loop>
+<audio id="bgMusic" loop>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-  <div id="soundOverlay" style="
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.75);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  z-index:9999;
-  color:white;
-  font-family:'Dancing Script', cursive;
-  cursor:pointer;
+<div id="soundOverlay"
+style="
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.75);
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+z-index:9999;
+color:white;
+font-family:'Dancing Script', cursive;
+cursor:pointer;
 ">
+
   <div style="font-size:28px; margin-bottom:15px;">
     Включите звук
   </div>
@@ -359,29 +478,34 @@ input {
   <div style="font-size:50px; animation:pulse 1.5s infinite;">
     🔊
   </div>
+
 </div>
 
-<style>
-@keyframes pulse {
-  0% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.2); opacity: 0.6; }
-  100% { transform: scale(1); opacity: 1; }
-}
-</style>
+<!-- Видео -->
 
-<!-- Видео фон -->
 <div class="video-bg">
-  <video id="bgVideo" autoplay muted loop playsinline webkit-playsinline>
+
+  <video
+    id="bgVideo"
+    autoplay
+    muted
+    loop
+    playsinline
+    webkit-playsinline
+  >
     <source src="IMG_3309.mp4" type="video/mp4">
-    Ваш браузер не поддерживает видео.
   </video>
+
 </div>
 
 <div class="video-overlay"></div>
 
 <!-- Первый блок -->
+
 <section>
+
   <div class="card first-block">
+
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
@@ -396,15 +520,21 @@ input {
     <p class="date">09.08.2026</p>
 
     <p>
-      Мы создаём нашу семью и будем искренне счастливы разделить этот особенный день вместе с вами.
+      Мы создаём нашу семью и будем искренне счастливы
+      разделить этот особенный день вместе с вами.
       Для нас очень важно ваше присутствие и поддержка ❤️
     </p>
+
   </div>
+
 </section>
 
-<!-- Второй блок -->
+<!-- Локация -->
+
 <section>
+
   <div class="card">
+
     <img class="corner corner-tl hide-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br hide-br" src="Floral-Blue-Frame-3.png">
@@ -413,15 +543,26 @@ input {
     <h2>Локация</h2>
 
     <p>Банкетный зал «Версаль»</p>
-    <p>Элеваторная ул., 13, посёлок Мелькомбинат, Уфа</p>
 
-    <button onclick="openRoute()">Проложить маршрут</button>
+    <p>
+      Элеваторная ул., 13,
+      посёлок Мелькомбинат, Уфа
+    </p>
+
+    <button onclick="openRoute()">
+      Проложить маршрут
+    </button>
+
   </div>
+
 </section>
 
 <!-- Карта -->
-<section style="flex-direction: column; align-items: center;">
+
+<section style="flex-direction:column; align-items:center;">
+
   <div class="card" style="margin-bottom:10px; max-width:600px; margin-top:0px;">
+
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
@@ -435,12 +576,17 @@ input {
     </p>
 
     <div id="map" class="full-map"></div>
+
   </div>
+
 </section>
 
 <!-- Таймер -->
+
 <section>
+
   <div class="card">
+
     <img class="corner corner-tl hide-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br hide-br" src="Floral-Blue-Frame-3.png">
@@ -449,12 +595,17 @@ input {
     <h2>До свадьбы осталось</h2>
 
     <div id="timer"></div>
+
   </div>
+
 </section>
 
 <!-- Дресс-код -->
+
 <section>
+
   <div class="card">
+
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
@@ -463,20 +614,27 @@ input {
     <h2>Дресс-код</h2>
 
     <p>
-      Мы будем очень признательны, если вы поддержите атмосферу нашего праздника
+      Мы будем очень признательны,
+      если вы поддержите атмосферу нашего праздника
       и выберете элегантные образы.
     </p>
 
     <p>
-      Просим дам, по возможности, воздержаться от платьев
+      Просим дам, по возможности,
+      воздержаться от платьев
       в белых и близких оттенках 🤍
     </p>
+
   </div>
+
 </section>
 
 <!-- Тайминг -->
+
 <section>
+
   <div class="card">
+
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
@@ -486,12 +644,17 @@ input {
 
     <p>17:00 — Начало банкета</p>
     <p>23:00 — Завершение банкета</p>
+
   </div>
+
 </section>
 
-<!-- Подтвердить присутствие -->
+<!-- Подтверждение -->
+
 <section>
+
   <div class="card">
+
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
@@ -499,84 +662,97 @@ input {
 
     <h2>Подтвердить присутствие</h2>
 
-    <input id="firstName" placeholder="Имя">
-    <input id="lastName" placeholder="Фамилия">
-    <input id="peopleCount" type="number" min="1" placeholder="Количество людей">
+    <input id="mainFirstName" placeholder="Имя">
+    <input id="mainLastName" placeholder="Фамилия">
+    <input id="mainPeopleCount" type="number" min="1" placeholder="Количество людей">
 
     <button id="sendBtn">Отправить</button>
 
   </div>
+
 </section>
-  
-<!-- Седьмой блок с кнопкой "Вернуться наверх" -->
+
+<!-- Финальный блок -->
+
 <section>
-  <div class="card final" style="position: relative;">
+
+  <div class="card final" style="position:relative;">
+
     <img class="corner corner-tl" src="Floral-Blue-Frame-1.png">
     <img class="corner corner-bl hide-bl" src="Floral-Blue-Frame-2.png">
     <img class="corner corner-br" src="Floral-Blue-Frame-3.png">
     <img class="corner corner-tr hide-tr" src="Floral-Blue-Frame-4.png">
 
     <p>С нетерпением ждём встречи с вами</p>
-<br>
+
     <br>
+    <br>
+
     <div class="final-names">
       <span class="line">Sos</span>
       <span class="line heart">♥</span>
       <span class="line">Susanna</span>
     </div>
 
-    <p style="margin-top:30px;opacity:0.6;font-size:14px;">© 2026 Сос & Сусанна</p>
+    <p style="margin-top:30px;opacity:0.6;font-size:14px;">
+      © 2026 Сос & Сусанна
+    </p>
 
-    <button id="toTopBtn" style="background:#8B5E3C; margin-top:20px;">Вернуться наверх</button>
+    <button id="toTopBtn" style="background:#8B5E3C; margin-top:20px;">
+      Вернуться наверх
+    </button>
+
   </div>
+
 </section>
 
 <!-- Модалка -->
+
 <div class="modal" id="modal">
+
   <div class="modal-content">
 
     <span class="close">&times;</span>
 
     <h3>Введите данные</h3>
 
-    <input id="firstName" placeholder="Имя">
-    <input id="lastName" placeholder="Фамилия">
-    <input id="peopleCount" type="number" min="1" placeholder="Количество людей">
+    <input id="modalFirstName" placeholder="Имя">
+    <input id="modalLastName" placeholder="Фамилия">
+    <input id="modalPeopleCount" type="number" min="1" placeholder="Количество людей">
 
-    <button id="sendBtn">Отправить</button>
+    <button id="modalSendBtn">Отправить</button>
 
   </div>
+
 </div>
 
 <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
 
 <script>
+
 let isMapActive = false;
-  let soundEnabled = false;
-  
- let music;
-let overlay;
+let soundEnabled = false;
 
-function initAudioOverlay() {
+const music = document.getElementById('bgMusic');
+const overlay = document.getElementById('soundOverlay');
+const video = document.getElementById('bgVideo');
 
-  music = document.getElementById('bgMusic');
-  overlay = document.getElementById('soundOverlay');
-  const video = document.getElementById('bgVideo');
+/* Аудио */
 
-  if (!music || !overlay) return;
+function initAudioOverlay(){
 
   overlay.addEventListener('click', async () => {
 
-    if (soundEnabled) return;
+    if(soundEnabled) return;
 
-    try {
+    try{
 
       music.volume = 0.5;
 
       await music.play();
 
-      if (video.paused) {
-        await video.play().catch(()=>{});
+      if(video.paused){
+        await video.play().catch(() => {});
       }
 
       soundEnabled = true;
@@ -588,7 +764,8 @@ function initAudioOverlay() {
         overlay.style.display = 'none';
       }, 400);
 
-    } catch(e) {
+    }
+    catch(e){
       console.log(e);
     }
 
@@ -598,118 +775,112 @@ function initAudioOverlay() {
 
 document.addEventListener('DOMContentLoaded', initAudioOverlay);
 
-// Карта
-ymaps.ready(init);
+/* Карта */
 
-function init() {
+ymaps.ready(initMap);
 
-  var map = new ymaps.Map("map", {
-    center: [54.664614, 55.969139],
-    zoom: 16,
-    controls: ['zoomControl','fullscreenControl']
+function initMap(){
+
+  const map = new ymaps.Map("map", {
+
+    center:[54.664614, 55.969139],
+    zoom:16,
+    controls:['zoomControl', 'fullscreenControl']
+
   });
 
-  var placemark = new ymaps.Placemark([54.664614, 55.969139], {
-    hintContent: 'Место проведения',
-    balloonContent: 'Банкетный зал «Версаль»'
-  }, {
-    preset: 'islands#redDotIcon'
-  });
+  const placemark = new ymaps.Placemark(
+
+    [54.664614, 55.969139],
+
+    {
+      hintContent:'Место проведения',
+      balloonContent:'Банкетный зал «Версаль»'
+    },
+
+    {
+      preset:'islands#redDotIcon'
+    }
+
+  );
 
   map.geoObjects.add(placemark);
 
   const mapElement = document.getElementById('map');
 
-  // Десктоп
-  mapElement.addEventListener('mouseenter', () => isMapActive = true);
-  mapElement.addEventListener('mouseleave', () => isMapActive = false);
+  mapElement.addEventListener('mouseenter', () => {
+    isMapActive = true;
+  });
 
-  // Мобильные
-  mapElement.addEventListener('touchstart', () => isMapActive = true);
+  mapElement.addEventListener('mouseleave', () => {
+    isMapActive = false;
+  });
+
+  mapElement.addEventListener('touchstart', () => {
+    isMapActive = true;
+  });
 
   mapElement.addEventListener('touchend', () => {
-    setTimeout(() => isMapActive = false, 300);
+
+    setTimeout(() => {
+      isMapActive = false;
+    }, 300);
+
   });
+
 }
 
-// --- Snap scroll ---
+/* Snap Scroll */
 
-const sectionElems = document.querySelectorAll('section');
-const markers = [];
-
-sectionElems.forEach(sec => {
-
-  const marker = document.createElement('div');
-
-  marker.style.position = 'absolute';
-  marker.style.top = '0px';
-  marker.style.left = '0';
-  marker.style.width = '1px';
-  marker.style.height = '1px';
-  marker.style.pointerEvents = 'none';
-
-  sec.appendChild(marker);
-
-  const card = sec.querySelector('.card');
-
-  marker.style.top =
-    `${card.offsetTop + card.offsetHeight / 2}px`;
-
-  markers.push(marker);
-
-});
+const sections = document.querySelectorAll('section');
 
 let currentIndex = 0;
 let isScrolling = false;
 
-function scrollToMarker(index){
+function scrollToSection(index){
 
-  if(index < 0) index = 0;
+  if(index < 0){
+    index = 0;
+  }
 
-  if(index >= markers.length)
-    index = markers.length - 1;
+  if(index >= sections.length){
+    index = sections.length - 1;
+  }
 
-  if(isScrolling || index === currentIndex)
-    return;
+  if(isScrolling) return;
 
   isScrolling = true;
-
   currentIndex = index;
 
-  const rect =
-    markers[index].getBoundingClientRect();
-
-  const scrollTop =
-    window.scrollY +
-    rect.top -
-    window.innerHeight / 2;
-
-  window.scrollTo({
-    top: scrollTop,
-    behavior: 'smooth'
+  sections[index].scrollIntoView({
+    behavior:'smooth',
+    block:'center'
   });
 
   setTimeout(() => {
     isScrolling = false;
-  }, 700);
+  }, 900);
+
 }
 
-// Wheel
+/* Wheel */
 
 window.addEventListener('wheel', e => {
 
   if(isScrolling || isMapActive) return;
 
+  e.preventDefault();
+
   if(e.deltaY > 20){
-    scrollToMarker(currentIndex + 1);
+    scrollToSection(currentIndex + 1);
   }
   else if(e.deltaY < -20){
-    scrollToMarker(currentIndex - 1);
+    scrollToSection(currentIndex - 1);
   }
 
 }, { passive:false });
 
-// Touch
+/* Touch */
 
 let touchStartY = null;
 
@@ -717,7 +888,7 @@ window.addEventListener('touchstart', e => {
 
   touchStartY = e.touches[0].clientY;
 
-}, { passive:false });
+}, { passive:true });
 
 window.addEventListener('touchend', e => {
 
@@ -725,109 +896,55 @@ window.addEventListener('touchend', e => {
 
   if(touchStartY === null) return;
 
-  let diff =
-    touchStartY -
-    e.changedTouches[0].clientY;
+  const diff =
+    touchStartY - e.changedTouches[0].clientY;
 
-  if(Math.abs(diff) < 30) return;
+  if(Math.abs(diff) < 40) return;
 
   if(diff > 0){
-    scrollToMarker(currentIndex + 1);
+    scrollToSection(currentIndex + 1);
   }
   else{
-    scrollToMarker(currentIndex - 1);
+    scrollToSection(currentIndex - 1);
   }
 
   touchStartY = null;
 
-}, { passive:false });
-  
- if (isScrolling) return;
+}, { passive:true });
 
-  if (e.deltaY > 20) {
-    scrollToMarker(currentIndex + 1);
-  } 
-  else if (e.deltaY < -20) {
-    scrollToMarker(currentIndex - 1);
-  }
+/* Анимация карточек */
 
-}, { passive: false });
-
-// Touch
-let touchStartY = null;
-
-window.addEventListener('touchstart', e => {
-  touchStartY = e.touches[0].clientY;
-}, { passive:false });
-
-window.addEventListener('touchend', e => {
-
-  if(isMapActive) return;
-
-  if(touchStartY === null) return;
-
-  let diff = touchStartY - e.changedTouches[0].clientY;
-
-  if(Math.abs(diff) < 30) return;
-
-  if(diff > 0) {
-    scrollToMarker(currentIndex + 1);
-  }
-  else {
-    scrollToMarker(currentIndex - 1);
-  }
-
-  touchStartY = null;
-
-}, { passive:false });
-
-// Анимация карточек
 const observer = new IntersectionObserver(entries => {
 
   entries.forEach(entry => {
 
     const card = entry.target.querySelector('.card');
 
-    const corners = entry.target.querySelectorAll('.corner');
-
     if(entry.isIntersecting){
 
-      card.classList.remove('visible');
+      card.classList.add('visible');
 
-      corners.forEach(c => {
-        c.style.transition = 'none';
-        c.style.opacity = '0';
-        c.style.transform = 'scale(0.7)';
-      });
-
-      void card.offsetWidth;
-
-      setTimeout(() => {
-
-        card.classList.add('visible');
-
-        corners.forEach(c => {
-          c.style.transition = 'all 1.2s ease';
-          c.style.opacity = '1';
-          c.style.transform = 'scale(1)';
-        });
-
-      }, 50);
     }
+
   });
 
-}, { threshold:0.6 });
+}, {
+  threshold:0.25
+});
 
-sectionElems.forEach(s => observer.observe(s));
+sections.forEach(section => {
+  observer.observe(section);
+});
 
-// Таймер
+/* Таймер */
+
 const targetDate = new Date('2026-08-09T00:00:00');
 
 setInterval(() => {
 
   const now = new Date();
 
-  let diff = targetDate - now;
+  const diff = targetDate - now;
 
   const d = Math.floor(diff / 86400000);
   const h = Math.floor(diff / 3600000 % 24);
@@ -839,98 +956,97 @@ setInterval(() => {
 
 }, 1000);
 
-// Модалка
-const modal = document.getElementById('modal');
+/* Отправка */
 
-const closeBtn = modal.querySelector('.close');
-
-document.getElementById('confirmBtn').onclick = () => {
-  modal.style.display = 'block';
-};
-
-closeBtn.onclick = () => {
-  modal.style.display = 'none';
-};
-
-document.getElementById('sendBtn').onclick = function () {
+document.getElementById('sendBtn').onclick = function(){
 
   const firstName =
-    document.getElementById('firstName').value.trim();
+    document.getElementById('mainFirstName').value.trim();
 
   const lastName =
-    document.getElementById('lastName').value.trim();
-
-  const peopleCountEl =
-    document.getElementById('peopleCount');
+    document.getElementById('mainLastName').value.trim();
 
   const peopleCount =
-    peopleCountEl ? peopleCountEl.value.trim() : '';
+    document.getElementById('mainPeopleCount').value.trim();
 
-  if (!firstName || !lastName || !peopleCount) {
+  if(!firstName || !lastName || !peopleCount){
+
     alert('Заполните все поля');
     return;
+
   }
 
   fetch('/api/send', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
+
+    method:'POST',
+
+    headers:{
+      'Content-Type':'application/json'
     },
-    body: JSON.stringify({
+
+    body:JSON.stringify({
+
       firstName,
       lastName,
-      peopleCount: Number(peopleCount)
+      peopleCount:Number(peopleCount)
+
     })
+
   })
-    .then(() => {
-      alert('Отправлено ❤️');
-      modal.style.display = 'none';
-    })
-    .catch(() => {
-      alert('Ошибка отправки.');
-    });
+
+  .then(() => {
+    alert('Отправлено ❤️');
+  })
+
+  .catch(() => {
+    alert('Ошибка отправки.');
+  });
 
 };
-  
-window.onclick = e => {
-  if(e.target == modal){
-    modal.style.display = 'none';
-  }
-};
 
-// Видео
-const video = document.getElementById('bgVideo');
+/* Видео */
 
 function forcePlay(){
+
   if(video.paused){
+
     video.play().catch(() => {});
+
   }
+
 }
 
 document.addEventListener('touchstart', forcePlay, { once:true });
 
 document.addEventListener('visibilitychange', () => {
+
   if(!document.hidden){
     forcePlay();
   }
+
 });
 
 video.addEventListener('pause', forcePlay);
 
-// Кнопка наверх через snap scroll
+/* Наверх */
+
 document.getElementById('toTopBtn').addEventListener('click', () => {
-  isScrolling = false;
-  scrollToMarker(0);
+
+  scrollToSection(0);
+
 });
 
-// Маршрут
+/* Маршрут */
+
 function openRoute(){
+
   window.open(
     'https://yandex.ru/maps/?rtext=~54.664614,55.969139',
     '_blank'
   );
+
 }
-  
+
 </script>
 
 </body>
