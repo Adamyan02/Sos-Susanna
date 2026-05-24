@@ -879,36 +879,32 @@ window.addEventListener('touchend', e=>{
   else scrollToMarker(currentIndex-1);
   touchStartY=null;
 },{passive:false});
-/* =========================
-   АНИМАЦИЯ КАРТОЧЕК (FIX)
-========================= */
 
-document.addEventListener('DOMContentLoaded', () => {
-
-  const sections = document.querySelectorAll('section');
-
-  const observer = new IntersectionObserver((entries) => {
-
-    entries.forEach(entry => {
-
-      const card = entry.target.querySelector('.card');
-      if (!card) return;
-
-      if (entry.isIntersecting) {
+// IntersectionObserver для углов
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    const card=entry.target.querySelector('.card');
+    const corners=entry.target.querySelectorAll('.corner');
+    if(entry.isIntersecting){
+      card.classList.remove('visible');
+      corners.forEach(c=>{
+        c.style.transition='none';
+        c.style.opacity='0';
+        c.style.transform='scale(0.7)';
+      });
+      void card.offsetWidth;
+      setTimeout(()=>{
         card.classList.add('visible');
-      }
-
-    });
-
-  }, {
-    threshold: 0.25
+        corners.forEach(c=>{
+          c.style.transition='all 1.2s ease';
+          c.style.opacity='1';
+          c.style.transform='scale(1)';
+        });
+      },50);
+    }
   });
-
-  sections.forEach(section => {
-    observer.observe(section);
-  });
-
-});
+},{threshold:0.6});
+sectionElems.forEach(s=>observer.observe(s));
 
 /* Таймер */
 
