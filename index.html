@@ -49,6 +49,7 @@ section {
   perspective: 1600px;
   box-sizing: border-box;
   position: relative;
+  z-index: 5;
 }
 
 /* Карточки */
@@ -67,13 +68,14 @@ section {
   box-shadow: 0 30px 70px rgba(0,0,0,0.2);
   transform-origin: center bottom;
   transform: rotateX(25deg) translateY(150px) scale(0.95);
-  opacity: 0;
+  opacity: 1;
   transition: opacity 1.2s ease, transform 1.2s ease;
   display: flex;
   flex-direction: column;
   justify-content: center;
   box-sizing: border-box;
   margin: 20px 0;
+  z-index: 10
 }
 
 /* Первый блок компактный */
@@ -556,31 +558,42 @@ let isMapActive = false;
 let overlay;
 
 function initAudioOverlay() {
+
   music = document.getElementById('bgMusic');
   overlay = document.getElementById('soundOverlay');
+  const video = document.getElementById('bgVideo');
 
   if (!music || !overlay) return;
 
   overlay.addEventListener('click', async () => {
+
     if (soundEnabled) return;
 
     try {
+
       music.volume = 0.5;
+
       await music.play();
+
+      if (video.paused) {
+        await video.play().catch(()=>{});
+      }
 
       soundEnabled = true;
 
+      overlay.style.transition = 'opacity .4s ease';
       overlay.style.opacity = '0';
 
       setTimeout(() => {
         overlay.style.display = 'none';
-        document.body.style.overflow = 'auto';
-      }, 300);
+      }, 400);
 
-    } catch (e) {
-      console.log('Музыка заблокирована', e);
+    } catch(e) {
+      console.log(e);
     }
-  });
+
+  }, { passive:true });
+
 }
 
 document.addEventListener('DOMContentLoaded', initAudioOverlay);
@@ -728,7 +741,13 @@ const observer = new IntersectionObserver(entries => {
 
 }, { threshold:0.6 });
 
-sectionElems.forEach(s => observer.observe(s));
+window.addEventListener('load', () => {
+
+  sectionElems = document.querySelectorAll('section');
+
+  sectionElems.forEach(s => observer.observe(s));
+
+});
 
 // Таймер
 const targetDate = new Date('2026-08-09T00:00:00');
@@ -840,27 +859,6 @@ function openRoute(){
     '_blank'
   );
 }
-
- overlay.addEventListener('click', async () => {
-  if (soundEnabled) return;
-
-  try {
-    music.volume = 0.5;
-    await music.play();
-
-    soundEnabled = true;
-
-    overlay.style.opacity = '0';
-
-    setTimeout(() => {
-      overlay.style.display = 'none';
-      document.body.style.overflow = 'auto';
-    }, 300);
-
-  } catch (e) {
-    console.log('Музыка заблокирована');
-  }
-});
 window.addEventListener('load', () => {
 
   sectionElems = document.querySelectorAll('section');
