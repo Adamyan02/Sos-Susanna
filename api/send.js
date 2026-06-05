@@ -1,8 +1,8 @@
 export default async function handler(req, res) {
   const { firstName, lastName, peopleCount } = req.body;
 
-  const TOKEN = process.env.TELEGRAM_TOKEN;
-  const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+  const TOKEN = "8709950732:AAEN7Tu0J4SM0S9QqRj7_QpPV_oivytg1lI";
+  const CHAT_ID = "323969398";
 
   const text = `
 💍 Новый гость!
