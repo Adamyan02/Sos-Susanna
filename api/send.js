@@ -1,17 +1,25 @@
 export default async function handler(req, res) {
-  const { firstName, lastName } = req.body;
+  const { firstName, lastName, peopleCount } = req.body;
 
-  const TOKEN = "8709950732:AAEN7Tu0J4SM0S9QqRj7_QpPV_oivytg1lI";
-  const CHAT_ID = "323969398";
+  const TOKEN = process.env.TELEGRAM_TOKEN;
+  const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
-  const text = `💍 Новый гость!\n${firstName} ${lastName}`;
+  const text = `
+💍 Новый гость!
+
+👤 Имя: ${firstName}
+👤 Фамилия: ${lastName}
+👥 Количество гостей: ${peopleCount}
+`;
 
   await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
+    headers: {
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify({
       chat_id: CHAT_ID,
-      text: text
+      text
     })
   });
 
