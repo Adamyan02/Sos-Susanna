@@ -14,7 +14,6 @@ body{
   padding:0;
   overflow-x:hidden;
   overflow-y:auto;
-  font-family:'Dancing Script', cursive;
   color:#1a1a1a;
   touch-action:pan-y;
   scroll-behavior:smooth;
@@ -253,12 +252,10 @@ button:hover{
 .date{
   font-size:28px;
   color:#8B5E3C;
-  font-family:'Dancing Script', cursive;
 }
 
 #timer{
   font-size:32px;
-  font-family:'Dancing Script', cursive;
   margin-top:20px;
   color:#1a1a1a;
 }
@@ -497,12 +494,23 @@ input{
   text-align: center;
 }
 p {
+.card.first-block p,
+.card:not(.first-block) p {
   font-family: 'Playfair Display', serif;
   font-size: 22px;
   line-height: 1.6;
-  font-weight: 600; /* важно: не 700 */
+  font-weight: 600;
+}
+
+  html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  font-family: 'Playfair Display', serif;
   color: #1a1a1a;
-}  
+}
+  
 </style>
 </head>
 
