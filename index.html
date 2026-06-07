@@ -14,7 +14,6 @@ body{
   padding:0;
   overflow-x:hidden;
   overflow-y:auto;
-  font-family:'Dancing Script', cursive;
   color:#1a1a1a;
   touch-action:pan-y;
   scroll-behavior:smooth;
@@ -126,6 +125,14 @@ section{
   font-weight:bold;
 }
 
+.card.first-block button{
+  padding:12px 28px;
+  font-size:14px;
+  margin-top:20px;
+  background:#8B5E3C;
+  color:white;
+}
+
 /* Цветы */
 
 .corner{
@@ -143,14 +150,40 @@ section{
   transform:scale(1);
 }
 
-.corner-tl{ top:-30px; left:-30px; }
-.corner-tr{ top:-30px; right:-30px; }
-.corner-bl{ bottom:-30px; left:-30px; }
-.corner-br{ bottom:-30px; right:-30px; }
+.corner-tl{
+  top:-30px;
+  left:-30px;
+}
 
-.corner.hide-tl,
-.corner.hide-tr,
-.corner.hide-bl,
+.corner-tr{
+  top:-30px;
+  right:-30px;
+}
+
+.corner-bl{
+  bottom:-30px;
+  left:-30px;
+}
+
+.corner-br{
+  bottom:-30px;
+  right:-30px;
+}
+
+/* Скрытие углов */
+
+.corner.hide-tl{
+  display:none !important;
+}
+
+.corner.hide-tr{
+  display:none !important;
+}
+
+.corner.hide-bl{
+  display:none !important;
+}
+
 .corner.hide-br{
   display:none !important;
 }
@@ -173,23 +206,31 @@ h1{
   font-family:'Playfair Display', serif;
 }
 
-/* ОБЫЧНЫЙ ТЕКСТ */
 p {
-  font-family:'Playfair Display', serif;
-  font-size:22px;
-  line-height:1.6;
-  font-weight:600;
+  font-family: inherit;
+  font-size: 22px;
+  line-height: 1.6;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+  
+body {
+  font-family: 'Playfair Display', serif;
   color:#1a1a1a;
 }
 
-.text{
+  .names,
+.final-names {
+  font-family:'Great Vibes', cursive;
+}
+
+  .text {
   font-size:22px;
   line-height:1.5;
   margin-top:15px;
   color:#1a1a1a;
   font-weight:bold;
 }
-
 /* Кнопки */
 
 button{
@@ -211,12 +252,10 @@ button:hover{
 .date{
   font-size:28px;
   color:#8B5E3C;
-  font-family:'Dancing Script', cursive;
 }
 
 #timer{
   font-size:32px;
-  font-family:'Dancing Script', cursive;
   margin-top:20px;
   color:#1a1a1a;
 }
@@ -264,40 +303,214 @@ button:hover{
 }
 
 @keyframes heartBeat{
-  0%{transform:scale(1);}
-  10%{transform:scale(1.08);}
-  20%{transform:scale(1);}
-  40%{transform:scale(1);}
-  55%{transform:scale(1.18);}
-  70%{transform:scale(1);}
-  100%{transform:scale(1);}
+
+  0%{
+    transform:scale(1);
+  }
+
+  10%{
+    transform:scale(1.08);
+  }
+
+  20%{
+    transform:scale(1);
+  }
+
+  40%{
+    transform:scale(1);
+  }
+
+  55%{
+    transform:scale(1.18);
+  }
+
+  70%{
+    transform:scale(1);
+  }
+
+  100%{
+    transform:scale(1);
+  }
 }
 
 /* Мобильные */
 
 @media (max-width:600px){
 
-  section{ padding:0 20px; }
+  section{
+    padding:0 20px;
+  }
 
-  .card{ padding:25px 20px; }
+  .card{
+    padding:25px 20px;
+  }
 
-  .card.first-block{ padding:25px 20px; }
+  .card.first-block{
+    padding:25px 20px;
+  }
 
-  .names{ font-size:36px; }
+  .names{
+    font-size:36px;
+  }
 
-  h2{ font-size:28px; }
+  h2{
+    font-size:28px;
+  }
 
-  #timer{ font-size:20px; }
+  #timer{
+    font-size:20px;
+  }
 
-  .final h1{ font-size:70px; }
+  .final h1{
+    font-size:70px;
+  }
 
-  .full-map{ margin-top:10px; height:350px; }
+  .full-map{
+    margin-top:10px;
+    height:350px;
+  }
 
-  .final-names .line{ font-size:70px; }
+  .final-names .line{
+    font-size:70px;
+  }
 
-  .final-names .heart{ font-size:70px; }
+  .final-names .heart{
+    font-size:70px;
+  }
+
 }
 
+/* Модалка */
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.5);
+  z-index:1000;
+}
+
+.modal-content{
+  background:rgba(255,255,255,0.3);
+  backdrop-filter:blur(10px) saturate(180%);
+  -webkit-backdrop-filter:blur(10px) saturate(180%);
+  margin:30% auto;
+  padding:20px 20px 30px;
+  border-radius:20px;
+  width:80%;
+  max-width:300px;
+  text-align:center;
+  position:relative;
+}
+
+.modal-content .close{
+  position:absolute;
+  top:10px;
+  right:15px;
+  font-size:24px;
+  font-weight:bold;
+  color:#aaa;
+  cursor:pointer;
+  transition:color .2s;
+}
+
+.modal-content .close:hover{
+  color:#333;
+}
+
+input{
+  width:90%;
+  margin:10px 0;
+  padding:10px;
+  border:none;
+  border-radius:12px;
+  box-sizing:border-box;
+}
+
+/* Карта */
+
+.full-map{
+  width:100%;
+  height:400px;
+  border-radius:20px;
+  touch-action:auto;
+  overflow:hidden;
+}
+
+#soundOverlay{
+  cursor:pointer;
+  touch-action:manipulation;
+  pointer-events:auto;
+}
+
+/* Pulse */
+
+@keyframes pulse{
+
+  0%{
+    transform:scale(1);
+    opacity:1;
+  }
+
+  50%{
+    transform:scale(1.2);
+    opacity:0.6;
+  }
+
+  100%{
+    transform:scale(1);
+    opacity:1;
+  }
+
+}
+
+.rsvp-card input{
+  width:100%;
+  max-width:420px;
+  margin:10px auto;
+  display:block;
+  box-sizing:border-box;
+}
+
+  .event-date{
+  font-family:'Playfair Display', serif;
+  font-size:80px;
+  font-weight:700;
+  color:#fff;
+  letter-spacing:6px;
+  text-align:center;
+  line-height:1;
+  margin-top:10px;
+  text-shadow:
+    0 2px 10px rgba(0,0,0,.25),
+    0 0 25px rgba(255,255,255,.25);
+}
+
+.timing-card {
+  text-align: left;
+}
+
+.timing-card h2 {
+  text-align: center;
+}
+p {
+.card.first-block p,
+.card:not(.first-block) p {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  line-height: 1.6;
+  font-weight: 600;
+}
+
+  html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  font-family: 'Playfair Display', serif;
+  color: #1a1a1a;
+}
+  
 </style>
 </head>
 
