@@ -952,6 +952,27 @@ const observer=new IntersectionObserver(entries=>{
 },{threshold:0.6});
 sectionElems.forEach(s=>observer.observe(s));
 
+  const sectionObserver = new IntersectionObserver(entries => {
+
+  entries.forEach(entry => {
+
+    if (entry.isIntersecting) {
+
+      currentIndex = Array.from(sectionElems)
+        .indexOf(entry.target);
+
+    }
+
+  });
+
+}, {
+  threshold: 0.6
+});
+
+sectionElems.forEach(section => {
+  sectionObserver.observe(section);
+});
+
 /* Таймер */
 
 const targetDate = new Date('2026-08-09T00:00:00');
