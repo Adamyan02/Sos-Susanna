@@ -874,30 +874,35 @@ function initMap(){
 }
 
 // --- Snap scroll ---
-const sectionElems = document.querySelectorAll('section');
+const sectionElems=document.querySelectorAll('section');
+const markers=[];
+sectionElems.forEach(sec=>{
+  const marker=document.createElement('div');
+  marker.style.position='absolute';
+  marker.style.top='0px';
+  marker.style.left='0';
+  marker.style.width='1px';
+  marker.style.height='1px';
+  marker.style.pointerEvents='none';
+  sec.appendChild(marker);
 
-let currentIndex = 0;
-let isScrolling = false;
+  const card=sec.querySelector('.card');
+  marker.style.top=`${card.offsetTop+card.offsetHeight/2}px`;
+  markers.push(marker);
+});
 
 let currentIndex=0;
 let isScrolling=false;
 function scrollToMarker(index){
-
-  if(index < 0) index = 0;
-  if(index >= sectionElems.length) index = sectionElems.length - 1;
-  if(isScrolling || index === currentIndex) return;
-
-  isScrolling = true;
-  currentIndex = index;
-
-  sectionElems[index].scrollIntoView({
-    behavior: 'smooth',
-    block: 'center'
-  });
-
-  setTimeout(() => {
-    isScrolling = false;
-  }, 800);
+  if(index<0) index=0;
+  if(index>=markers.length) index=markers.length-1;
+  if(isScrolling||index===currentIndex) return;
+  isScrolling=true;
+  currentIndex=index;
+  const rect=markers[index].getBoundingClientRect();
+  const scrollTop=window.scrollY+rect.top-window.innerHeight/2;
+  window.scrollTo({top:scrollTop, behavior:'smooth'});
+  setTimeout(()=>{isScrolling=false;},700);
 }
 
 // Wheel
@@ -919,15 +924,14 @@ window.addEventListener('touchend', e=>{
   else scrollToMarker(currentIndex-1);
   touchStartY=null;
 },{passive:false});
-  
+
+// IntersectionObserver для углов
 const observer=new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     const card=entry.target.querySelector('.card');
     const corners=entry.target.querySelectorAll('.corner');
     if(entry.isIntersecting){
-
-
-  card.classList.remove('visible');
+      card.classList.remove('visible');
       corners.forEach(c=>{
         c.style.transition='none';
         c.style.opacity='0';
@@ -946,28 +950,6 @@ const observer=new IntersectionObserver(entries=>{
   });
 },{threshold:0.6});
 sectionElems.forEach(s=>observer.observe(s));
-
-  const sectionObserver = new IntersectionObserver(entries => {
-
-  entries.forEach(entry => {
-
-    if (entry.isIntersecting) {
-
-      currentIndex = Array.from(sectionElems)
-        .indexOf(entry.target);
-
-    }
-
-  });
-
-}, {
-  threshold: 0.6
-});
-
-sectionElems.forEach(section => {
-  sectionObserver.observe(section);
-});
-
 /* Таймер */
 
 const targetDate = new Date('2026-08-09T00:00:00');
