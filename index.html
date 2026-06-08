@@ -495,14 +495,13 @@ input{
   text-align: center;
 }
 p {
-.card.first-block p,
+..card.first-block p,
 .card:not(.first-block) p {
   font-family:'Playfair Display', serif;
   font-size:22px;
   line-height:1.6;
   font-weight:600;
 }
-
   html, body {
   margin: 0;
   padding: 0;
@@ -874,6 +873,45 @@ function initMap(){
 
 }
 
+// --- Snap scroll ---
+const sectionElems=document.querySelectorAll('section');
+const markers=[];
+sectionElems.forEach(sec=>{
+  const marker=document.createElement('div');
+  marker.style.position='absolute';
+  marker.style.top='0px';
+  marker.style.left='0';
+  marker.style.width='1px';
+  marker.style.height='1px';
+  marker.style.pointerEvents='none';
+  sec.appendChild(marker);
+
+  const card=sec.querySelector('.card');
+  marker.style.top=`${card.offsetTop+card.offsetHeight/2}px`;
+  markers.push(marker);
+});
+
+let currentIndex=0;
+let isScrolling=false;
+function scrollToMarker(index){
+  if(index<0) index=0;
+  if(index>=markers.length) index=markers.length-1;
+  if(isScrolling||index===currentIndex) return;
+  isScrolling=true;
+  currentIndex=index;
+  const rect=markers[index].getBoundingClientRect();
+  const scrollTop=window.scrollY+rect.top-window.innerHeight/2;
+  window.scrollTo({top:scrollTop, behavior:'smooth'});
+  setTimeout(()=>{isScrolling=false;},700);
+}
+
+// Wheel
+window.addEventListener('wheel', e=>{
+  if(isScrolling || isMapActive) return;
+  if(e.deltaY>20) scrollToMarker(currentIndex+1);
+  else if(e.deltaY<-20) scrollToMarker(currentIndex-1);
+},{passive:false});
+
 // Touch
 let touchStartY=null;
 window.addEventListener('touchstart', e=>{ touchStartY=e.touches[0].clientY;},{passive:false});
@@ -886,53 +924,6 @@ window.addEventListener('touchend', e=>{
   else scrollToMarker(currentIndex-1);
   touchStartY=null;
 },{passive:false});
-
-// IntersectionObserver для углов
-  const sections = document.querySelectorAll('section');
-
-let currentSection = 0;
-let locked = false;
-
-function goToSection(index){
-
-  if(index < 0) index = 0;
-  if(index >= sections.length) index = sections.length - 1;
-
-  locked = true;
-  currentSection = index;
-
-  sections[index].scrollIntoView({
-    behavior:'smooth',
-    block:'center'
-  });
-
-  setTimeout(()=>{
-    locked = false;
-  },800);
-}
-
-let touchStartY = 0;
-
-window.addEventListener('touchstart',(e)=>{
-  touchStartY = e.touches[0].clientY;
-},{passive:true});
-
-window.addEventListener('touchend',(e)=>{
-
-  if(locked || isMapActive) return;
-
-  const diff =
-    touchStartY - e.changedTouches[0].clientY;
-
-  if(Math.abs(diff) < 40) return;
-
-  if(diff > 0){
-    goToSection(currentSection + 1);
-  }else{
-    goToSection(currentSection - 1);
-  }
-
-},{passive:true});
   
 const sectionElems = document.querySelectorAll('section')
 const observer=new IntersectionObserver(entries=>{
@@ -941,8 +932,6 @@ const observer=new IntersectionObserver(entries=>{
     const corners=entry.target.querySelectorAll('.corner');
     if(entry.isIntersecting){
 
-  currentSection =
-    [...sections].indexOf(entry.target);
 
   card.classList.remove('visible');
       corners.forEach(c=>{
