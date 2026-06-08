@@ -902,7 +902,7 @@ function scrollToMarker(index){
   const rect=markers[index].getBoundingClientRect();
   const scrollTop=window.scrollY+rect.top-window.innerHeight/2;
   window.scrollTo({top:scrollTop, behavior:'smooth'});
-  setTimeout(()=>{isScrolling=false;},700);
+  setTimeout(()=>{isScrolling=false;},1000);
 }
 
 // Wheel
