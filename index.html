@@ -891,6 +891,7 @@ window.addEventListener('touchend', e=>{
 },{passive:false});
 
 // IntersectionObserver для углов
+const sectionElems = document.querySelectorAll('section')
 const observer=new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     const card=entry.target.querySelector('.card');
