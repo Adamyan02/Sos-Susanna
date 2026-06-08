@@ -495,7 +495,7 @@ input{
   text-align: center;
 }
 p {
-..card.first-block p,
+.card.first-block p,
 .card:not(.first-block) p {
   font-family:'Playfair Display', serif;
   font-size:22px;
@@ -925,7 +925,6 @@ window.addEventListener('touchend', e=>{
   touchStartY=null;
 },{passive:false});
   
-const sectionElems = document.querySelectorAll('section')
 const observer=new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     const card=entry.target.querySelector('.card');
