@@ -870,44 +870,6 @@ function initMap(){
 
 }
 
-// --- Snap scroll ---
-const sectionElems=document.querySelectorAll('section');
-const markers=[];
-sectionElems.forEach(sec=>{
-  const marker=document.createElement('div');
-  marker.style.position='absolute';
-  marker.style.top='0px';
-  marker.style.left='0';
-  marker.style.width='1px';
-  marker.style.height='1px';
-  marker.style.pointerEvents='none';
-  sec.appendChild(marker);
-
-  const card=sec.querySelector('.card');
-  marker.style.top=`${card.offsetTop+card.offsetHeight/2}px`;
-  markers.push(marker);
-});
-
-let currentIndex=0;
-let isScrolling=false;
-function scrollToMarker(index){
-  if(index<0) index=0;
-  if(index>=markers.length) index=markers.length-1;
-  if(isScrolling||index===currentIndex) return;
-  isScrolling=true;
-  currentIndex=index;
-  const rect=markers[index].getBoundingClientRect();
-  const scrollTop=window.scrollY+rect.top-window.innerHeight/2;
-  window.scrollTo({top:scrollTop, behavior:'smooth'});
-  setTimeout(()=>{isScrolling=false;},700);
-}
-
-// Wheel
-window.addEventListener('wheel', e=>{
-  if(isScrolling || isMapActive) return;
-  if(e.deltaY>20) scrollToMarker(currentIndex+1);
-  else if(e.deltaY<-20) scrollToMarker(currentIndex-1);
-},{passive:false});
 
 // Touch
 let touchStartY=null;
